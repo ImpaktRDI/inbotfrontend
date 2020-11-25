@@ -22,6 +22,9 @@ const configDefault: AppConfig = {
     key: 'default-key',
     sampleRate: 100,
   },
+  indexPostComments: {
+    enabled: true,
+  },
   indexDashboards: {
     enabled: false,
   },
@@ -184,6 +187,9 @@ const configDefault: AppConfig = {
     },
     [ResourceType.user]: {
       displayName: 'People',
+    },
+    [ResourceType.post_comment]: {
+      displayName: 'Post comments',
     },
   },
   tableLineage: {

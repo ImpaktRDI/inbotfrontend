@@ -8,6 +8,7 @@ import filterReducer, {
 } from './filters/reducer';
 
 import {
+  PostCommentSearchResults,
   DashboardSearchResults,
   SearchAll,
   SearchAllRequest,
@@ -48,11 +49,13 @@ export interface SearchReducerState {
   dashboards: DashboardSearchResults;
   tables: TableSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults;
   inlineResults: {
     isLoading: boolean;
     dashboards: DashboardSearchResults;
     tables: TableSearchResults;
     users: UserSearchResults;
+    post_comments: PostCommentSearchResults;
   };
   filters: FilterReducerState;
 }
@@ -246,6 +249,11 @@ export const initialInlineResultsState = {
     results: [],
     total_results: 0,
   },
+  post_comments: {
+    page_index: 0,
+    results: [],
+    total_results: 0,
+  },
 };
 export const initialState: SearchReducerState = {
   search_term: '',
@@ -262,6 +270,11 @@ export const initialState: SearchReducerState = {
     total_results: 0,
   },
   users: {
+    page_index: 0,
+    results: [],
+    total_results: 0,
+  },
+  post_comments: {
     page_index: 0,
     results: [],
     total_results: 0,
@@ -327,6 +340,7 @@ export default function reducer(
           dashboards: newState.dashboards,
           tables: newState.tables,
           users: newState.users,
+          post_comments: newState.post_comments,
           isLoading: false,
         },
       };
@@ -345,7 +359,7 @@ export default function reducer(
         search_term: state.search_term,
       };
     case InlineSearch.UPDATE:
-      const { searchTerm, resource, dashboards, tables, users } = (<
+      const { searchTerm, resource, dashboards, tables, users, post_comments: post_comments } = (<
         InlineSearchUpdate
       >action).payload;
       return {
@@ -354,6 +368,7 @@ export default function reducer(
         dashboards,
         tables,
         users,
+        post_comments: post_comments,
         search_term: searchTerm,
         filters: initialFilterState,
       };
@@ -370,6 +385,7 @@ export default function reducer(
           dashboards: inlineResults.dashboards,
           tables: inlineResults.tables,
           users: inlineResults.users,
+          post_comments: inlineResults.post_comments,
           isLoading: false,
         },
       };

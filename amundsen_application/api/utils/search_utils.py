@@ -38,6 +38,16 @@ def map_table_result(result: Dict) -> Dict:
     }
 
 
+def map_post_comment_result(result: Dict) -> Dict:
+    return {
+        'type': 'post_comment',
+        'person_name': result.get('person_name', None),
+        'post_like_count': result.get('post_like_count', None),
+        'post_comment_count': result.get('post_comment_count', None),
+        'post_url': result.get('post_url', None),
+    }
+
+
 def transform_filters(*, filters: Dict = {}, resource: str) -> Dict:
     """
     Transforms the data shape of filters from the application to the data

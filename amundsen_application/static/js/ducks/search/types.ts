@@ -2,6 +2,7 @@ import { Search as UrlSearch } from 'history';
 
 import {
   DashboardResource,
+  PostCommentResource,
   Resource,
   ResourceType,
   SearchType,
@@ -22,23 +23,27 @@ export interface SearchResults<T extends Resource> {
 export type DashboardSearchResults = SearchResults<DashboardResource>;
 export type TableSearchResults = SearchResults<TableResource>;
 export type UserSearchResults = SearchResults<UserResource>;
+export type PostCommentSearchResults = SearchResults<PostCommentResource>;
 
 export interface SearchResponsePayload {
   search_term: string;
   dashboards?: DashboardSearchResults;
   tables?: TableSearchResults;
   users?: UserSearchResults;
+  post_comments?: PostCommentSearchResults;
 }
 export interface SearchAllResponsePayload extends SearchResponsePayload {
   resource: ResourceType;
   dashboards: DashboardSearchResults;
   tables: TableSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults;
 }
 export interface InlineSearchResponsePayload {
   dashboards: DashboardSearchResults;
   tables: TableSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults;
 }
 export interface InlineSearchUpdatePayload {
   searchTerm: string;
@@ -46,6 +51,7 @@ export interface InlineSearchUpdatePayload {
   dashboards: DashboardSearchResults;
   tables: TableSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults;
 }
 
 export enum SearchAll {

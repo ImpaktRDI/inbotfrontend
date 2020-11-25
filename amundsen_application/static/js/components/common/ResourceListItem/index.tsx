@@ -9,6 +9,7 @@ import {
   DashboardResource,
   TableResource,
   UserResource,
+  PostCommentResource,
 } from 'interfaces';
 
 import { LoggingParams } from './types';
@@ -17,6 +18,7 @@ import TableListItem from './TableListItem';
 import UserListItem from './UserListItem';
 
 import './styles.scss';
+import PostCommentListItem from './PostCommentListItem';
 
 export interface ListItemProps {
   logging: LoggingParams;
@@ -44,6 +46,13 @@ export default class ResourceListItem extends React.Component<ListItemProps> {
         return (
           <UserListItem
             user={this.props.item as UserResource}
+            logging={this.props.logging}
+          />
+        );
+      case ResourceType.post_comment:
+        return (
+          <PostCommentListItem
+            post_comment={this.props.item as PostCommentResource}
             logging={this.props.logging}
           />
         );

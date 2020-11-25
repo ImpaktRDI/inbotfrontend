@@ -120,6 +120,13 @@ export function indexUsersEnabled(): boolean {
 }
 
 /**
+ * Returns whether or not user features should be shown
+ */
+export function indexPostCommentsEnabled(): boolean {
+  return AppConfig.indexPostComments.enabled;
+}
+
+/**
  * Returns whether or not the issue tracking feature should be shown
  */
 export function issueTrackingEnabled(): boolean {

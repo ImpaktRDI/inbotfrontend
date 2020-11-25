@@ -27,3 +27,4 @@ export const TABLE_RESOURCE_TITLE = getDisplayNameByResource(
   ResourceType.table
 );
 export const USER_RESOURCE_TITLE = getDisplayNameByResource(ResourceType.user);
+export const POST_COMMENT_RESOURCE_TITLE = getDisplayNameByResource(ResourceType.post_comment);

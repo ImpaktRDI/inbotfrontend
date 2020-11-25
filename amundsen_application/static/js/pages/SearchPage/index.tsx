@@ -15,6 +15,7 @@ import ShimmeringResourceLoader from 'components/common/ShimmeringResourceLoader
 import { GlobalState } from 'ducks/rootReducer';
 import { submitSearchResource, urlDidUpdate } from 'ducks/search/reducer';
 import {
+  PostCommentSearchResults,
   DashboardSearchResults,
   SearchResults,
   SubmitSearchResourceRequest,
@@ -38,6 +39,7 @@ import {
   SEARCH_ERROR_MESSAGE_PREFIX,
   SEARCH_ERROR_MESSAGE_SUFFIX,
   SEARCH_SOURCE_NAME,
+  POST_COMMENT_RESOURCE_TITLE as POST_COMMENT_RESOURCE_TITLE,
   DASHBOARD_RESOURCE_TITLE,
   TABLE_RESOURCE_TITLE,
   USER_RESOURCE_TITLE,
@@ -52,6 +54,7 @@ export interface StateFromProps {
   tables: TableSearchResults;
   dashboards: DashboardSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults;
 }
 
 export interface DispatchFromProps {
@@ -87,6 +90,9 @@ export class SearchPage extends React.Component<SearchPageProps> {
           this.props.dashboards,
           ResourceType.dashboard
         );
+      case ResourceType.post_comment:
+        return this.getTabContent(this.props.post_comments, ResourceType.post_comment
+        );
     }
     return null;
   };
@@ -99,6 +105,8 @@ export class SearchPage extends React.Component<SearchPageProps> {
         return TABLE_RESOURCE_TITLE;
       case ResourceType.user:
         return USER_RESOURCE_TITLE;
+      case ResourceType.post_comment:
+        return POST_COMMENT_RESOURCE_TITLE;
       default:
         return '';
     }
@@ -203,6 +211,7 @@ export const mapStateToProps = (state: GlobalState) => {
     tables: state.search.tables,
     users: state.search.users,
     dashboards: state.search.dashboards,
+    post_comments: state.search.post_comments
   };
 };
 
