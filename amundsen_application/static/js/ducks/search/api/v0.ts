@@ -52,7 +52,7 @@ export function searchResource(
   }
 
   /* Note: This logic must exist until query string endpoints are created for all resources */
-  if (resource === ResourceType.table || resource === ResourceType.dashboard || resource === ResourceType.post_comment) {
+  if (resource === ResourceType.post_comment) {
     return axios
       .post(`${BASE_URL}/${resource}`, {
         filters,

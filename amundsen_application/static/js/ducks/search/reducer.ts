@@ -258,7 +258,7 @@ export const initialInlineResultsState = {
 export const initialState: SearchReducerState = {
   search_term: '',
   isLoading: false,
-  resource: ResourceType.table,
+  resource: ResourceType.post_comment,
   dashboards: {
     page_index: 0,
     results: [],
@@ -359,7 +359,7 @@ export default function reducer(
         search_term: state.search_term,
       };
     case InlineSearch.UPDATE:
-      const { searchTerm, resource, dashboards, tables, users, post_comments: post_comments } = (<
+      const { searchTerm, resource, dashboards, tables, users, post_comments } = (<
         InlineSearchUpdate
       >action).payload;
       return {
@@ -368,12 +368,14 @@ export default function reducer(
         dashboards,
         tables,
         users,
-        post_comments: post_comments,
+        post_comments,
         search_term: searchTerm,
         filters: initialFilterState,
       };
     case InlineSearch.SUCCESS:
       const inlineResults = (<InlineSearchResponse>action).payload;
+      console.log("inline success. results:")
+      console.log(inlineResults)
       if (inlineResults === undefined) {
         throw Error(
           'InlineSearchResponse.payload must be specified for SUCCESS type'

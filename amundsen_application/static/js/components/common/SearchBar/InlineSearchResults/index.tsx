@@ -8,6 +8,7 @@ import {
   getSourceDisplayName,
   getSourceIconClass,
   indexDashboardsEnabled,
+  indexPostCommentsEnabled,
   indexUsersEnabled,
 } from 'config/config-utils';
 import { buildDashboardURL } from 'utils/navigationUtils';
@@ -15,6 +16,7 @@ import { buildDashboardURL } from 'utils/navigationUtils';
 import { GlobalState } from 'ducks/rootReducer';
 import {
   DashboardSearchResults,
+  PostCommentSearchResults,
   TableSearchResults,
   UserSearchResults,
 } from 'ducks/search/types';
@@ -25,6 +27,7 @@ import {
   DashboardResource,
   TableResource,
   UserResource,
+  PostCommentResource,
 } from 'interfaces';
 import ResultItemList from './ResultItemList';
 import SearchItemList from './SearchItemList';
@@ -38,6 +41,7 @@ export interface StateFromProps {
   dashboards: DashboardSearchResults;
   tables: TableSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults
 }
 
 export interface OwnProps {
@@ -68,6 +72,8 @@ export class InlineSearchResults extends React.Component<
         return CONSTANTS.DATASETS;
       case ResourceType.user:
         return CONSTANTS.PEOPLE;
+      case ResourceType.post_comment:
+        return CONSTANTS.POST_COMMENTS;
       default:
         return '';
     }
@@ -81,6 +87,8 @@ export class InlineSearchResults extends React.Component<
         return this.props.tables.total_results;
       case ResourceType.user:
         return this.props.users.total_results;
+      case ResourceType.post_comment:
+        return this.props.post_comments.total_results;
       default:
         return 0;
     }
@@ -94,6 +102,8 @@ export class InlineSearchResults extends React.Component<
         return this.props.tables.results.slice(0, 2);
       case ResourceType.user:
         return this.props.users.results.slice(0, 2);
+      case ResourceType.post_comment:
+        return this.props.post_comments.results.slice(0, 2);
       default:
         return [];
     }
@@ -134,6 +144,8 @@ export class InlineSearchResults extends React.Component<
         const user = result as UserResource;
 
         return `/user/${user.user_id}?${logParams}`;
+      case ResourceType.post_comment:
+        return '';
       default:
         return '';
     }
@@ -150,6 +162,8 @@ export class InlineSearchResults extends React.Component<
       case ResourceType.table:
         const table = result as TableResource;
         return getSourceIconClass(table.database, resourceType);
+      case ResourceType.post_comment:
+        return CONSTANTS.USER_ICON_CLASS;
       case ResourceType.user:
         return CONSTANTS.USER_ICON_CLASS;
       default:
@@ -171,6 +185,9 @@ export class InlineSearchResults extends React.Component<
       case ResourceType.user:
         const user = result as UserResource;
         return user.team_name;
+      case ResourceType.post_comment:
+        const post_comment = result as PostCommentResource;
+        return post_comment.person_name;
       default:
         return '';
     }
@@ -199,6 +216,9 @@ export class InlineSearchResults extends React.Component<
       case ResourceType.user:
         const user = result as UserResource;
         return <div className="title-2 truncated">{user.display_name}</div>;
+      case ResourceType.post_comment:
+        const post_comment = result as PostCommentResource;
+        return <div className="title-2 truncated">{post_comment.person_name}</div>;
       default:
         return <div className="title-2 truncated" />;
     }
@@ -208,6 +228,8 @@ export class InlineSearchResults extends React.Component<
     resourceType: ResourceType,
     result: Resource
   ): string => {
+    console.log("getSuggestedResultType")
+    console.log(resourceType)
     switch (resourceType) {
       case ResourceType.dashboard:
         const dashboard = result as DashboardResource;
@@ -217,6 +239,9 @@ export class InlineSearchResults extends React.Component<
         return getSourceDisplayName(table.database, resourceType);
       case ResourceType.user:
         return CONSTANTS.PEOPLE_USER_TYPE;
+      case ResourceType.post_comment:
+        const post_comment = result as PostCommentResource;
+        return getSourceDisplayName(post_comment.person_name, resourceType);
       default:
         return '';
     }
@@ -251,6 +276,7 @@ export class InlineSearchResults extends React.Component<
         {indexDashboardsEnabled() &&
           this.renderResultsByResource(ResourceType.dashboard)}
         {indexUsersEnabled() && this.renderResultsByResource(ResourceType.user)}
+        {indexPostCommentsEnabled() && this.renderResultsByResource(ResourceType.post_comment)}
       </>
     );
   };
@@ -269,12 +295,13 @@ export class InlineSearchResults extends React.Component<
 }
 
 export const mapStateToProps = (state: GlobalState) => {
-  const { isLoading, dashboards, tables, users } = state.search.inlineResults;
+  const { isLoading, dashboards, tables, users, post_comments } = state.search.inlineResults;
   return {
     isLoading,
     dashboards,
     tables,
     users,
+    post_comments,
   };
 };
 

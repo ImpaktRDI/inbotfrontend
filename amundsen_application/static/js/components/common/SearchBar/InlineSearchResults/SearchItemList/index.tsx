@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 
-import { indexDashboardsEnabled, indexUsersEnabled } from 'config/config-utils';
+import { indexDashboardsEnabled, indexPostCommentsEnabled, indexUsersEnabled } from 'config/config-utils';
 
 import { ResourceType } from 'interfaces';
 
@@ -25,6 +25,8 @@ class SearchItemList extends React.Component<SearchItemListProps, {}> {
         return CONSTANTS.DATASETS_ITEM_TEXT;
       case ResourceType.user:
         return CONSTANTS.PEOPLE_ITEM_TEXT;
+      case ResourceType.post_comment:
+        return CONSTANTS.POST_COMMENT_ITEM_TEXT;
       default:
         return '';
     }
@@ -54,6 +56,14 @@ class SearchItemList extends React.Component<SearchItemListProps, {}> {
             onItemSelect={onItemSelect}
             searchTerm={searchTerm}
             resourceType={ResourceType.user}
+          />
+        )}
+        {indexPostCommentsEnabled() && (
+          <SearchItem
+            listItemText={this.getListItemText(ResourceType.post_comment)}
+            onItemSelect={onItemSelect}
+            searchTerm={searchTerm}
+            resourceType={ResourceType.post_comment}
           />
         )}
       </ul>

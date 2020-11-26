@@ -10,6 +10,9 @@ export const PEOPLE_ITEM_TEXT = `in ${PEOPLE}`;
 export const DASHBOARDS = getDisplayNameByResource(ResourceType.dashboard);
 export const DASHBOARD_ITEM_TEXT = `in ${DASHBOARDS}`;
 
+export const POST_COMMENTS = getDisplayNameByResource(ResourceType.post_comment);
+export const POST_COMMENT_ITEM_TEXT = `in ${POST_COMMENTS}`;
+
 export const PEOPLE_USER_TYPE = 'User';
 export const USER_ICON_CLASS = 'icon-users';
 
