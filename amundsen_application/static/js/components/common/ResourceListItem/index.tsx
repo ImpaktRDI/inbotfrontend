@@ -10,15 +10,17 @@ import {
   TableResource,
   UserResource,
   PostCommentResource,
+  PersonResource,
 } from 'interfaces';
 
 import { LoggingParams } from './types';
 import DashboardListItem from './DashboardListItem';
 import TableListItem from './TableListItem';
 import UserListItem from './UserListItem';
+import PersonListItem from './PersonListItem'
+import PostCommentListItem from './PostCommentListItem';
 
 import './styles.scss';
-import PostCommentListItem from './PostCommentListItem';
 
 export interface ListItemProps {
   logging: LoggingParams;
@@ -53,6 +55,13 @@ export default class ResourceListItem extends React.Component<ListItemProps> {
         return (
           <PostCommentListItem
             post_comment={this.props.item as PostCommentResource}
+            logging={this.props.logging}
+          />
+        );
+      case ResourceType.person:
+        return (
+          <PersonListItem
+            person={this.props.item as PersonResource}
             logging={this.props.logging}
           />
         );

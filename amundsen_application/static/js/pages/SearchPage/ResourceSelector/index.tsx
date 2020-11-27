@@ -5,12 +5,17 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { indexDashboardsEnabled, indexUsersEnabled, indexPostCommentsEnabled } from 'config/config-utils';
+import {
+  indexDashboardsEnabled,
+  indexUsersEnabled,
+  indexPostCommentsEnabled,
+  indexPeopleEnabled } from 'config/config-utils';
 import { GlobalState } from 'ducks/rootReducer';
 import { updateSearchState } from 'ducks/search/reducer';
 import {
   DashboardSearchResults,
   PostCommentSearchResults,
+  PersonSearchResults,
   TableSearchResults,
   UpdateSearchStateRequest,
   UserSearchResults,
@@ -19,6 +24,7 @@ import { ResourceType } from 'interfaces/Resources';
 import {
   DASHBOARD_RESOURCE_TITLE,
   POST_COMMENT_RESOURCE_TITLE,
+  PERSON_RESOURCE_TITLE,
   TABLE_RESOURCE_TITLE,
   USER_RESOURCE_TITLE,
 } from '../constants';
@@ -30,7 +36,8 @@ export interface StateFromProps {
   tables: TableSearchResults;
   dashboards: DashboardSearchResults;
   users: UserSearchResults;
-  post_comments: PostCommentSearchResults
+  post_comments: PostCommentSearchResults;
+  people: PersonSearchResults
 }
 
 export interface DispatchFromProps {
@@ -101,6 +108,14 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
       });
     }
 
+    if (indexPeopleEnabled()) {
+      resourceOptions.push({
+        type: ResourceType.person,
+        label: PERSON_RESOURCE_TITLE,
+        count: this.props.people.total_results,
+      });
+    }
+
     return (
       <>
         <h2 className="title-2">{RESOURCE_SELECTOR_TITLE}</h2>
@@ -119,6 +134,7 @@ export const mapStateToProps = (state: GlobalState) => {
     users: state.search.users,
     dashboards: state.search.dashboards,
     post_comments: state.search.post_comments,
+    people: state.search.people,
   };
 };
 

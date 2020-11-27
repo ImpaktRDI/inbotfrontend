@@ -6,13 +6,25 @@ export enum ResourceType {
   user = 'user',
   dashboard = 'dashboard',
   query = 'query',
-  post_comment = 'post_comment'
+  post_comment = 'post_comment',
+  person = 'person'
 }
 
 export const DEFAULT_RESOURCE_TYPE = ResourceType.table;
 
 export interface Resource {
   type: ResourceType;
+}
+
+export interface PersonResource extends Resource {
+  type: ResourceType.person;
+  name: string;
+  profile_link: string;
+  headline: string;
+  company: string;
+  company_url: string;
+  description: string;
+  location: string;
 }
 
 export interface PostCommentResource extends Resource {

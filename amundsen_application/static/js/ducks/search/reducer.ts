@@ -40,6 +40,7 @@ import {
   UpdateSearchState,
   UrlDidUpdateRequest,
   UrlDidUpdate,
+  PersonSearchResults,
 } from './types';
 
 export interface SearchReducerState {
@@ -50,12 +51,14 @@ export interface SearchReducerState {
   tables: TableSearchResults;
   users: UserSearchResults;
   post_comments: PostCommentSearchResults;
+  people: PersonSearchResults;
   inlineResults: {
     isLoading: boolean;
     dashboards: DashboardSearchResults;
     tables: TableSearchResults;
     users: UserSearchResults;
     post_comments: PostCommentSearchResults;
+    people: PersonSearchResults;
   };
   filters: FilterReducerState;
 }
@@ -254,11 +257,16 @@ export const initialInlineResultsState = {
     results: [],
     total_results: 0,
   },
+  people: {
+    page_index: 0,
+    results: [],
+    total_results: 0,
+  },
 };
 export const initialState: SearchReducerState = {
   search_term: '',
   isLoading: false,
-  resource: ResourceType.post_comment,
+  resource: ResourceType.person,
   dashboards: {
     page_index: 0,
     results: [],
@@ -275,6 +283,11 @@ export const initialState: SearchReducerState = {
     total_results: 0,
   },
   post_comments: {
+    page_index: 0,
+    results: [],
+    total_results: 0,
+  },
+  people: {
     page_index: 0,
     results: [],
     total_results: 0,
@@ -341,6 +354,7 @@ export default function reducer(
           tables: newState.tables,
           users: newState.users,
           post_comments: newState.post_comments,
+          people: newState.people,
           isLoading: false,
         },
       };
@@ -359,7 +373,7 @@ export default function reducer(
         search_term: state.search_term,
       };
     case InlineSearch.UPDATE:
-      const { searchTerm, resource, dashboards, tables, users, post_comments } = (<
+      const { searchTerm, resource, dashboards, tables, users, post_comments, people } = (<
         InlineSearchUpdate
       >action).payload;
       return {
@@ -369,6 +383,7 @@ export default function reducer(
         tables,
         users,
         post_comments,
+        people,
         search_term: searchTerm,
         filters: initialFilterState,
       };
@@ -388,6 +403,7 @@ export default function reducer(
           tables: inlineResults.tables,
           users: inlineResults.users,
           post_comments: inlineResults.post_comments,
+          people: inlineResults.people,
           isLoading: false,
         },
       };

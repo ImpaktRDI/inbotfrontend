@@ -47,6 +47,18 @@ def map_post_comment_result(result: Dict) -> Dict:
         'post_url': result.get('post_url', None),
     }
 
+def map_person_result(result: Dict) -> Dict:
+    return {
+        'type': 'person',
+        'name': result.get('name', None),
+        'profile_link': result.get('profile_link', None),
+        'headline': result.get('headline', None),
+        'company': result.get('company', None),
+        'company_url': result.get('company_url', None),
+        'description': result.get('description', None),
+        'location': result.get('location', None),
+    }
+
 
 def transform_filters(*, filters: Dict = {}, resource: str) -> Dict:
     """

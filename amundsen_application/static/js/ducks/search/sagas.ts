@@ -257,9 +257,10 @@ export function* searchAllWorker(action: SearchAllRequest): SagaIterator {
   const userIndex = resource === ResourceType.user ? pageIndex : 0;
   const dashboardIndex = resource === ResourceType.dashboard ? pageIndex : 0;
   const postCommentIndex = resource === ResourceType.post_comment ? pageIndex : 0;
+  const personIndex = resource === ResourceType.person ? pageIndex : 0;
 
   try {
-    const [tableResponse, userResponse, dashboardResponse, postCommentResponse] = yield all([
+    const [tableResponse, userResponse, dashboardResponse, postCommentResponse, personResponse] = yield all([
       call(
         API.searchResource,
         tableIndex,
@@ -292,6 +293,14 @@ export function* searchAllWorker(action: SearchAllRequest): SagaIterator {
         state.filters[ResourceType.post_comment],
         searchType
       ),
+      call(
+        API.searchResource,
+        personIndex,
+        ResourceType.person,
+        term,
+        state.filters[ResourceType.person],
+        searchType
+      ),
     ]);
     console.log("searchAllWorker")
     console.log(postCommentResponse)
@@ -301,7 +310,8 @@ export function* searchAllWorker(action: SearchAllRequest): SagaIterator {
       tables: tableResponse.tables || initialState.tables,
       users: userResponse.users || initialState.users,
       dashboards: dashboardResponse.dashboards || initialState.dashboards,
-      post_comments: postCommentResponse.post_comments ||  initialState.post_comments,
+      post_comments: postCommentResponse.post_comments || initialState.post_comments,
+      people: personResponse.people || initialState.people,
       isLoading: false,
     };
     if (resource === undefined) {
@@ -328,7 +338,7 @@ export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
   console.log(action.payload)
   const { term } = action.payload;
   try {
-    const [dashboardResponse, tableResponse, userResponse, postCommentResponse] = yield all([
+    const [dashboardResponse, tableResponse, userResponse, postCommentResponse, personResponse] = yield all([
       call(
         API.searchResource,
         0,
@@ -361,6 +371,14 @@ export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
         {},
         SearchType.INLINE_SEARCH
       ),
+      call(
+        API.searchResource,
+        0,
+        ResourceType.person,
+        term,
+        {},
+        SearchType.INLINE_SEARCH
+      ),
     ]);
     const inlineSearchResponse = {
       dashboards:
@@ -368,6 +386,7 @@ export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
       tables: tableResponse.tables || initialInlineResultsState.tables,
       users: userResponse.users || initialInlineResultsState.users,
       post_comments: postCommentResponse.post_comments || initialInlineResultsState.post_comments,
+      people: personResponse.people || initialInlineResultsState.people,
     };
     console.log("inlineSearchWorker")
     console.log(postCommentResponse)
@@ -414,6 +433,7 @@ export function* selectInlineResultWorker(action): SagaIterator {
       tables: state.search.inlineResults.tables,
       users: state.search.inlineResults.users,
       post_comments: state.search.inlineResults.post_comments,
+      people: state.search.inlineResults.people,
     };
     yield put(updateFromInlineResult(data));
   }

@@ -100,7 +100,7 @@ const globalState: GlobalState = {
   },
   search: {
     search_term: 'testName',
-    resource: ResourceType.post_comment,
+    resource: ResourceType.person,
     isLoading: false,
     dashboards: {
       page_index: 0,

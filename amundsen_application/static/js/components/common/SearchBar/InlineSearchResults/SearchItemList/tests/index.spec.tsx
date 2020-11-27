@@ -50,7 +50,7 @@ describe('SearchItemList', () => {
 
     it('returns the correct value for ResourceType.user', () => {
       const output = wrapper.instance().getListItemText(ResourceType.user);
-      expect(output).toEqual(CONSTANTS.PEOPLE_ITEM_TEXT);
+      expect(output).toEqual(CONSTANTS.USER_ITEM_TEXT);
     });
 
     it('returns the correct value for ResourceType.dashboard', () => {
