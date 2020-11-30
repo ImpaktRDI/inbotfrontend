@@ -32,20 +32,20 @@ class SearchItemList extends React.Component<SearchItemListProps, {}> {
     const { onItemSelect, searchTerm } = this.props;
     return (
       <ul className="list-group">
-        {indexPostCommentsEnabled() && (
-          <SearchItem
-            listItemText={this.getListItemText(ResourceType.post_comment)}
-            onItemSelect={onItemSelect}
-            searchTerm={searchTerm}
-            resourceType={ResourceType.post_comment}
-          />
-        )}
         {indexPeopleEnabled() && (
           <SearchItem
             listItemText={this.getListItemText(ResourceType.person)}
             onItemSelect={onItemSelect}
             searchTerm={searchTerm}
             resourceType={ResourceType.person}
+          />
+        )}
+        {indexPostCommentsEnabled() && (
+          <SearchItem
+            listItemText={this.getListItemText(ResourceType.post_comment)}
+            onItemSelect={onItemSelect}
+            searchTerm={searchTerm}
+            resourceType={ResourceType.post_comment}
           />
         )}
       </ul>

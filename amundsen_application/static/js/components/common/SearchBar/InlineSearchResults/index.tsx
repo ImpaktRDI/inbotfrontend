@@ -290,8 +290,8 @@ export class InlineSearchResults extends React.Component<
     }
     return (
       <>
-        {indexPostCommentsEnabled() && this.renderResultsByResource(ResourceType.post_comment)}
         {indexPeopleEnabled() && this.renderResultsByResource(ResourceType.person)}
+        {indexPostCommentsEnabled() && this.renderResultsByResource(ResourceType.post_comment)}
       </>
     );
   };

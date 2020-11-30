@@ -72,19 +72,19 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
   render = () => {
     const resourceOptions: ResourceOptionConfig[] = [];
 
-    if (indexPostCommentsEnabled()) {
-      resourceOptions.push({
-        type: ResourceType.post_comment,
-        label: POST_COMMENT_RESOURCE_TITLE,
-        count: this.props.post_comments.total_results,
-      });
-    }
-
     if (indexPeopleEnabled()) {
       resourceOptions.push({
         type: ResourceType.person,
         label: PERSON_RESOURCE_TITLE,
         count: this.props.people.total_results,
+      });
+    }
+
+    if (indexPostCommentsEnabled()) {
+      resourceOptions.push({
+        type: ResourceType.post_comment,
+        label: POST_COMMENT_RESOURCE_TITLE,
+        count: this.props.post_comments.total_results,
       });
     }
 
