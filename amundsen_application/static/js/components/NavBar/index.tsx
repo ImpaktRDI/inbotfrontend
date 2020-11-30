@@ -7,7 +7,6 @@ import { RouteComponentProps } from 'react-router';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import AppConfig from 'config/config';
 import { LinkConfig } from 'config/config-types';
 import { GlobalState } from 'ducks/rootReducer';
 import { logClick } from 'ducks/utilMethods';
@@ -26,7 +25,8 @@ import SearchBar from 'components/common/SearchBar';
 
 import './styles.scss';
 
-const LOGO_TITLE = 'AMUNDSEN';
+import InbotNoIcon from '../../../images/inbot-transparent-white.svg';
+
 const PROFILE_LINK_TEXT = 'My Profile';
 
 // Props
@@ -92,15 +92,13 @@ export class NavBar extends React.Component<NavBarProps> {
           <div className="nav-bar">
             <div id="nav-bar-left" className="nav-bar-left">
               <Link to="/">
-                {AppConfig.logoPath && (
-                  <img
+                <img
                     id="logo-icon"
                     className="logo-icon"
-                    src={AppConfig.logoPath}
+                    src={InbotNoIcon}
+                    height={32}
                     alt=""
                   />
-                )}
-                <span className="title-3">{LOGO_TITLE}</span>
               </Link>
             </div>
             {this.renderSearchBar()}

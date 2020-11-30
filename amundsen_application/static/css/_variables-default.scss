@@ -3,6 +3,10 @@
 
 @import 'colors';
 
+// Inbot colors
+$inbot-black: #030030;
+$inbot-red: #e30030;
+
 // TODO - consider using more descriptive names, or replacing with more specific variables.
 // Colors
 $brand-color-1: $indigo10 !default;
@@ -94,7 +98,7 @@ $icon-bg-disabled: $gray20 !default;
 $red-triangle-warning: $sunset60;
 
 // Header, Body, & Footer
-$nav-bar-color: $indigo100;
+$nav-bar-color: $inbot-black;
 $nav-bar-height: 60px;
 $body-min-width: 1048px;
 $footer-height: 60px;
