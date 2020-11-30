@@ -71,18 +71,9 @@ export class SearchItem extends React.Component<SearchItemProps, {}> {
 }
 
 export const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
-  const { isLoading, dashboards, tables, users, post_comments, people } = state.search.inlineResults;
+  const { isLoading, post_comments, people } = state.search.inlineResults;
   let hasResults = false;
   switch (ownProps.resourceType) {
-    case ResourceType.dashboard:
-      hasResults = dashboards.results.length > 0;
-      break;
-    case ResourceType.table:
-      hasResults = tables.results.length > 0;
-      break;
-    case ResourceType.user:
-      hasResults = users.results.length > 0;
-      break;
     case ResourceType.post_comment:
       hasResults = post_comments.results.length > 0;
       break;

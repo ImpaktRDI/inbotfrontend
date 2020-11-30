@@ -22,22 +22,16 @@ import {
 } from 'ducks/search/types';
 import { ResourceType } from 'interfaces/Resources';
 import {
-  DASHBOARD_RESOURCE_TITLE,
   POST_COMMENT_RESOURCE_TITLE,
   PERSON_RESOURCE_TITLE,
-  TABLE_RESOURCE_TITLE,
-  USER_RESOURCE_TITLE,
 } from '../constants';
 
 const RESOURCE_SELECTOR_TITLE = 'Resource';
 
 export interface StateFromProps {
   resource: ResourceType;
-  tables: TableSearchResults;
-  dashboards: DashboardSearchResults;
-  users: UserSearchResults;
   post_comments: PostCommentSearchResults;
-  people: PersonSearchResults
+  people: PersonSearchResults;
 }
 
 export interface DispatchFromProps {
@@ -76,29 +70,7 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
   };
 
   render = () => {
-    const resourceOptions = [
-      {
-        type: ResourceType.table,
-        label: TABLE_RESOURCE_TITLE,
-        count: this.props.tables.total_results,
-      },
-    ];
-
-    if (indexDashboardsEnabled()) {
-      resourceOptions.push({
-        type: ResourceType.dashboard,
-        label: DASHBOARD_RESOURCE_TITLE,
-        count: this.props.dashboards.total_results,
-      });
-    }
-
-    if (indexUsersEnabled()) {
-      resourceOptions.push({
-        type: ResourceType.user,
-        label: USER_RESOURCE_TITLE,
-        count: this.props.users.total_results,
-      });
-    }
+    const resourceOptions: ResourceOptionConfig[] = [];
 
     if (indexPostCommentsEnabled()) {
       resourceOptions.push({
@@ -130,9 +102,6 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
 export const mapStateToProps = (state: GlobalState) => {
   return {
     resource: state.search.resource,
-    tables: state.search.tables,
-    users: state.search.users,
-    dashboards: state.search.dashboards,
     post_comments: state.search.post_comments,
     people: state.search.people,
   };
