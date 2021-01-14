@@ -8,11 +8,12 @@ import './styles.scss';
 import InfluencersBox from './InfluencersBox';
 import { dummydata } from './dummydata'
 
-
+//<{}, { [key: string]: string }> THIS WAS GOOGLED, NOT SURE WHAT IT DOES
 class TestProfilePage extends React.Component<{}, { [key: string]: string }> {
   constructor(props) {
     super(props)
     this.state = {
+      id: '8f65b345-fb66-4a2c-a52c-1cfaca2a9d56',
       profile_name: 'John Doe',
       company_name: '',
       title: '' 
@@ -20,7 +21,11 @@ class TestProfilePage extends React.Component<{}, { [key: string]: string }> {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5000/api/profile/v0/person_details")
+    fetch("http://localhost:5000/api/profile/v0/person_details", 
+    {
+      method: "POST", 
+      body:'{"id": "8f65b345-fb66-4a2c-a52c-1cfaca2a9d56"}',
+      headers: { 'Content-Type': 'application/json' }})
       .then(response => {
         return response.json();
       })

@@ -28,20 +28,40 @@ REQUEST_SESSION_TIMEOUT_SEC = 3
 profile_blueprint = Blueprint('profile', __name__, url_prefix='/api/profile/v0')
 
 
-@profile_blueprint.route('/person_details', methods=['GET'])
+@profile_blueprint.route('/person_details', methods=['GET', 'POST'])
 def profile_person_details() -> Response:
     """
-    Parse the request arguments and call the helper method to execute a table search
-    :return: a Response created with the results from the helper method
+     Receives the id of a person in json format {"id":"XXXXXX"} and finds corresponding data from database
+     :return: Profile info as a json {"Job1":{"Title":"XXXXX", "Company":"YYYYY"}, "Job2":{"Title":"XXXXX", "Company":"YYYYY"}, ...,"Name":"Full Name"}
+    """
+    if request.method == "POST":
+        result = request.json
+        profile_json = get_profile_by_id(result['id'])
+        return profile_json
+    else:
+        #TODO change the error handling to route back to /Home
+        return "ERROR"
+
+def get_profile_by_id(id):
+    """
+    Gets an id and finds corresponding Person and their occupations and LinkedinCompanies
+    :return: returns person and their occupations and LinkedinCompany as json
     """
     graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="test")
     session = graphdb.session()
-    result = session.run('MATCH (n {id:"8f65b345-fb66-4a2c-a52c-1cfaca2a9d56"})-[:OCCUPATION]-(m:Job)-[:ROLE]-(x:LinkedinCompany) RETURN n,m,x')
+    #The query shows now all Companies person ever worked. Can be reduced to current by adding WHERE end_date = NaN ?
+    result = session.run('MATCH (n:Person { id: $person_id })-[:OCCUPATION]-(m:Job)-[:ROLE]-(x:LinkedinCompany) RETURN n,m,x', person_id=id)
     record = result.values()
-    refined_data = jsonify(refineData(record))
-    return refined_data
+    profile_data = jsonify(refine_data(record))
+    return profile_data
 
-def refineData(record):
+def refine_data(record):
+    """
+    Gets a record of a Person profile and refines it into a simplified dictionary.
+    Collecting only 'full_name', 'company_name' and 'job_title' (for now)
+    TODO Refine data already in the neo4j query
+    :return: refined data {Name, Job1, Job2,...}
+    """
     refined_dict = {}
     profile_name = record[0][0].get("full_name")
     refined_dict["Name"] = profile_name
