@@ -54,7 +54,7 @@ export function searchResource(
   }
 
   /* Note: This logic must exist until query string endpoints are created for all resources */
-  if (resource === ResourceType.person || resource === ResourceType.post_comment) {
+  if (resource === ResourceType.person) {
     return axios
       .post(`${BASE_URL}/${resource}`, {
         filters,
