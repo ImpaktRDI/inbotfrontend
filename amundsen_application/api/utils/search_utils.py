@@ -50,11 +50,13 @@ def map_post_comment_result(result: Dict) -> Dict:
 def map_person_result(result: Dict) -> Dict:
     return {
         'type': 'person',
+        'id': result.get('id', None),
         'name': result.get('name', None),
-        'profile_link': result.get('profile_link', None),
+        'profile_url': result.get('profile_url', None),
         'headline': result.get('headline', None),
-        'company': result.get('company', None),
-        'company_url': result.get('company_url', None),
+        'job_titles': result.get('job_titles', None),
+        'company_names': result.get('company_names', None),
+        'company_urls': result.get('company_urls', None),
         'description': result.get('description', None),
         'location': result.get('location', None),
     }

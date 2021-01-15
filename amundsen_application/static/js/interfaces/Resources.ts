@@ -18,11 +18,13 @@ export interface Resource {
 
 export interface PersonResource extends Resource {
   type: ResourceType.person;
+  id: string;
   name: string;
-  profile_link: string;
+  profile_url: string;
   headline: string;
-  company: string;
-  company_url: string;
+  job_titles: string[];
+  company_names: string[];
+  company_urls: string[];
   description: string;
   location: string;
 }
