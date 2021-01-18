@@ -1,54 +1,70 @@
 // Copyright Contributors to the Amundsen project.
 // SPDX-License-Identifier: Apache-2.0
 
-import * as React from 'react';
+import * as React from 'react'; 
+import { useState, useEffect } from 'react';
 
 // TODO: Use css-modules instead of 'import'
 import './styles.scss';
 import InfluencersBox from './InfluencersBox';
 import { dummydata } from './dummydata'
 
-//<{}, { [key: string]: string }> THIS WAS GOOGLED, NOT SURE WHAT IT DOES
-class TestProfilePage extends React.Component<{}, { [key: string]: string }> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      id: '8f65b345-fb66-4a2c-a52c-1cfaca2a9d56',
-      profile_name: 'John Doe',
-      company_name: '',
-      title: '' 
-    }
-  }
+type Job = {
+  title: string,
+  company_name: string,
+  company_url: string
+}
 
-  componentDidMount() {
+type PersonDetails = {
+  id: string,
+  name: string,
+  profile_url: string,
+  headline: string,
+  jobs: Job[],
+  description: string,
+  location: string
+}
+
+type ProfileState = {
+  person: PersonDetails
+}
+
+const initialPerson: PersonDetails = {
+  id: '',
+  name: '',
+  profile_url: '',
+  headline: '',
+  jobs: [],
+  description: '',
+  location: ''
+}
+
+function TestProfilePage({ match }): JSX.Element {
+  const person_id = match.params.person_id
+  const [profile, setProfile] = useState({ person: initialPerson } as ProfileState)
+
+
+  useEffect(() => {
     fetch("http://localhost:5000/api/profile/v0/person_details", 
     {
       method: "POST", 
-      body:'{"id": "8f65b345-fb66-4a2c-a52c-1cfaca2a9d56"}',
+      body: JSON.stringify({ id: person_id }),
       headers: { 'Content-Type': 'application/json' }})
-      .then(response => {
-        return response.json();
-      })
-      .then(profile => {
-        this.setState({ profile_name: profile.Name });
-        this.setState({ company_name: profile.Job1.Company});
-        this.setState({ title: profile.Job1.Title});
-      });
-  }
+      .then(response => {return response.json()})
+      .then(person => { setProfile({ person }) })
+  }, [])
 
-
-  render() {
-  return (
+    return    (
       <div>
         <div>
-          <h1>Profile: { this.state.profile_name }</h1>
-          <p>{ this.state.title } at { this.state.company_name }</p>
+          <h1>Profile: { profile.person.name }</h1>
         </div>
         <div>
           <InfluencersBox influencers={dummydata}/>
         </div>  
       </div>
-  )}
+    )
 }
+
 
 export default TestProfilePage;

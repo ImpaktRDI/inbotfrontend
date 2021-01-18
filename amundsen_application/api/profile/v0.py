@@ -32,7 +32,7 @@ profile_blueprint = Blueprint('profile', __name__, url_prefix='/api/profile/v0')
 def profile_person_details() -> Response:
     """
      Receives the id of a person in json format {"id":"XXXXXX"} and finds corresponding data from database
-     :return: Profile info as a json {"Job1":{"Title":"XXXXX", "Company":"YYYYY"}, "Job2":{"Title":"XXXXX", "Company":"YYYYY"}, ...,"Name":"Full Name"}
+     :return: Profile info as a json 
     """
     if request.method == "POST":
         result = request.json
@@ -44,34 +44,45 @@ def profile_person_details() -> Response:
 
 def get_profile_by_id(id):
     """
-    Gets an id and finds corresponding Person and their occupations and LinkedinCompanies
-    :return: returns person and their occupations and LinkedinCompany as json
+    Gets an id and finds corresponding Person and their data from database
+    :return: returns person and their data as json
     """
-    graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="test")
+    graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="neo4j")
     session = graphdb.session()
-    #The query shows now all Companies person ever worked. Can be reduced to current by adding WHERE end_date = NaN ?
-    result = session.run('MATCH (n:Person { id: $person_id })-[:OCCUPATION]-(m:Job)-[:ROLE]-(x:LinkedinCompany) RETURN n,m,x', person_id=id)
-    record = result.values()
+    result = session.run("""
+        MATCH (person:Person)
+        WHERE person.id = $person_id
+        OPTIONAL MATCH (person)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
+        WHERE job.end_date IS NULL
+        RETURN DISTINCT person.id AS id,
+        person.full_name AS name,
+        person.linkedin_url AS profile_url,
+        person.headline AS headline,
+        COLLECT(job.title) AS job_titles,
+        COLLECT(company.name) AS company_names,
+        COLLECT(company.linkedin_url) AS company_urls,
+        person.description AS description,
+        person.location AS location""",
+        person_id=id)
+    record = result.single()
     profile_data = jsonify(refine_data(record))
     return profile_data
 
 def refine_data(record):
     """
-    Gets a record of a Person profile and refines it into a simplified dictionary.
-    Collecting only 'full_name', 'company_name' and 'job_title' (for now)
-    TODO Refine data already in the neo4j query
-    :return: refined data {Name, Job1, Job2,...}
+    refines given database data into dictionary
+    :return: dictionary
     """
-    refined_dict = {}
-    profile_name = record[0][0].get("full_name")
-    refined_dict["Name"] = profile_name
-    for i in range(len(record)):
-        job_title = record[i][1].get("title")
-        company_name = record[i][2].get("name")
-        temp_dict = {}
-        temp_dict["Title"] = job_title
-        temp_dict["Company"] = company_name
-        job = "Job" + str(i+1)
-        refined_dict[job] = temp_dict
-    return refined_dict
-
+    return {    
+        "id": record["id"],
+        "name": record["name"],
+        "profile_url": record["profile_url"],
+        "headline": record["headline"],
+        "description": record["description"],
+        "location": record["location"],
+        "jobs": [{
+            "title": record["job_titles"][i],
+            "company_name": record["company_names"][i],
+            "company_url": record["company_urls"][i]
+        } for i in range(len(record["job_titles"]))]
+    }
