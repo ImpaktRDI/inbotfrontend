@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 
 // TODO: Use css-modules instead of 'import'
 import './styles.scss';
+
+import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
 import { dummydata } from './dummydata'
 
@@ -42,8 +44,9 @@ const initialPerson: PersonDetails = {
 function TestProfilePage({ match }): JSX.Element {
   const person_id = match.params.person_id
   const [profile, setProfile] = useState({ person: initialPerson } as ProfileState)
+  const [page, setPage] = useState(<div>Loading profile...</div>)
 
-
+  //fetch current profile from backend by person_id (given by address)
   useEffect(() => {
     fetch("http://localhost:5000/api/profile/v0/person_details", 
     {
@@ -52,19 +55,18 @@ function TestProfilePage({ match }): JSX.Element {
       headers: { 'Content-Type': 'application/json' }})
       .then(response => {return response.json()})
       .then(person => { setProfile({ person }) })
-  }, [])
+  }, [person_id])
 
-    return    (
-      <div>
-        <div>
-          <h1>Profile: { profile.person.name }</h1>
-        </div>
-        <div>
-          <InfluencersBox influencers={dummydata}/>
-        </div>  
-      </div>
-    )
+  //updates Page for current profile
+  useEffect(() => {
+    setPage(
+    <div>
+      <ProfileBox person={ profile.person } />
+      <InfluencersBox influencers={ dummydata } />
+    </div>)
+  }, [profile])
+
+  return page
 }
-
 
 export default TestProfilePage;

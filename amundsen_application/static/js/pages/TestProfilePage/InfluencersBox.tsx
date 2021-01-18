@@ -8,9 +8,9 @@ const InfluencersBox = ({ influencers }) => {
           return (
             <Influencer
             key={i}
-            id={influencers[i].id}
-            name={influencers[i].name}
-            occupation={influencers[i].occupation}
+            id={user.id}
+            name={user.name}
+            occupation={user.occupation}
             />
           );
           })
