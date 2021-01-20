@@ -1,17 +1,38 @@
 export const dummydata = [
-    {
-        id:1,
-        name:"John Doe",
-        occupation: "Engineer"
-    },
-    {
-        id:2,
-        name: "Jane Doe",
-        occupation: "CEO"
-    },
-    {
-        id:3,
-        name: "Julius Doe",
-        occupation: "Junior Developer"
-    }
-  ]
+{'id': '6d319f75-9434-4924-8190-11b1649fd5eb',
+'influence_score': 20,
+'name': 'somename1',
+'profile_url': 'The best',
+'headline': 'Url.com',
+'jobs': [{'title': 'asdasd',
+  'company_name': 'asfasd',
+  'company_url': 'hsdfgdf'},
+ {'title': 'kjökljö', 'company_name': 'öjböb', 'company_url': 'öjggb'}]},
+
+{'id': '6d319f75-9434-4924-8190-11b1649fd5eb',
+'influence_score': 10,
+'name': 'somename2',
+'profile_url': 'The best',
+'headline': 'Url.com',
+'jobs': []},
+
+{'id': '6d319f75-9434-4924-8190-11b1649fd5eb',
+'influence_score': 10,
+'name': 'somename3',
+'profile_url': 'The best',
+'headline': 'Url.com',
+'jobs': []},
+
+{'id': '6d319f75-9434-4924-8190-11b1649fd5eb',
+'influence_score': 10,
+'name': 'somename4',
+'profile_url': 'The best',
+'headline': 'Url.com',
+'jobs': []},
+
+{'id': '6d319f75-9434-4924-8190-11b1649fd5eb',
+'influence_score': 10,
+'name': 'somename5',
+'profile_url': 'The best',
+'headline': 'Url.com',
+'jobs': []}]

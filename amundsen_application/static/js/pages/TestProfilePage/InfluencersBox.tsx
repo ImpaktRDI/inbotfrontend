@@ -4,13 +4,15 @@ import Influencer from './Influencer';
 const InfluencersBox = ({ influencers }) => {
     return (
       <div style={{ border: '5px solid black' }}>
-        {influencers.map((user, i) => {
+        {influencers.map((influencer, i) => {
           return (
             <Influencer
             key={i}
-            id={user.id}
-            name={user.name}
-            occupation={user.occupation}
+            influence_score={influencer.influence_score}
+            id={influencer.id}
+            name={influencer.name}
+            profile_url={influencer.profile_url}
+            headline={influencer.headline}
             />
           );
           })

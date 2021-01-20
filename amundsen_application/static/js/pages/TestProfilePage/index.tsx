@@ -9,7 +9,7 @@ import './styles.scss';
 
 import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
-import { dummydata } from './dummydata'
+import { dummydata } from './dummydata';
 
 type Job = {
   title: string,
@@ -31,6 +31,19 @@ type ProfileState = {
   person: PersonDetails
 }
 
+type InfluencerDetails = {
+  id: string,
+  influence_score: number,
+  name: string,
+  profile_url: string,
+  headline: string,
+  jobs: Job[]
+}
+
+type InfluencerState = {
+  influencer: InfluencerDetails[]
+}
+
 const initialPerson: PersonDetails = {
   id: '',
   name: '',
@@ -44,9 +57,10 @@ const initialPerson: PersonDetails = {
 function TestProfilePage({ match }): JSX.Element {
   const person_id = match.params.person_id
   const [profile, setProfile] = useState({ person: initialPerson } as ProfileState)
-  const [page, setPage] = useState(<div>Loading profile...</div>)
+  const [personBox, setPersonBox] = useState(<div>Loading profile...</div>)
+  const [influencerBox, setInfluencerBox] = useState(<div>Loading...</div>)
 
-  //fetch current profile from backend by person_id (given by address)
+  //fetch current profile from backend by person_id (given by address parameter 'match.params.person_id')
   useEffect(() => {
     fetch("http://localhost:5000/api/profile/v0/person_details", 
     {
@@ -59,14 +73,29 @@ function TestProfilePage({ match }): JSX.Element {
 
   //updates Page for current profile
   useEffect(() => {
-    setPage(
-    <div>
-      <ProfileBox person={ profile.person } />
-      <InfluencersBox influencers={ dummydata } />
-    </div>)
+      setPersonBox(<ProfileBox person={ profile.person } />)
   }, [profile])
 
-  return page
+  //updates Page for current profile
+  useEffect(() => {
+    fetch("http://localhost:5000/api/profile/v0/influencerlist", 
+  {
+    method: "POST", 
+    body: JSON.stringify({ id: person_id }),
+    headers: { 'Content-Type': 'application/json' }})
+    .then(response => {return response.json()})
+    .then(influencers_list => { 
+      console.log(influencers_list.influencers);
+      setInfluencerBox(<InfluencersBox influencers={ influencers_list.influencers } />) })
+    
+  }, [person_id])
+
+  return (
+    <div>
+      <div>{ personBox }</div>
+      <div>{ influencerBox }</div>
+    </div>
+  )
 }
 
 export default TestProfilePage;
