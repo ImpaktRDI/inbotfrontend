@@ -126,7 +126,7 @@ def refine_influencer_data(influencers):
 def get_influencer_list(id):
     graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="neo4j")
     session = graphdb.session()
-    result1 = session.run("""
+    influenced_by_likes = session.run("""
         MATCH (person:Person{id: $person_id})
         OPTIONAL MATCH (person)-[:POSTED]->(:Post)<-[l:LIKED]-(liker:Person)
         WHERE NOT(liker.id=person.id) AND TOSTRING(liker.full_name) = liker.full_name
@@ -136,7 +136,7 @@ def get_influencer_list(id):
         ORDER BY liked_posts DESC
         LIMIT 20
         """, person_id=id)
-    result2 = session.run("""
+    influenced_by_comments = session.run("""
         MATCH (person:Person{id: $person_id})
         OPTIONAL MATCH (person)-[:POSTED]->(:Post)<-[c:COMMENTED_ON]-(commentor:Person)
         WHERE NOT(commentor.id=person.id) AND TOSTRING(commentor.full_name) = commentor.full_name
@@ -146,17 +146,53 @@ def get_influencer_list(id):
         ORDER BY commented_posts DESC
         LIMIT 20
         """, person_id=id)
-    likes = result1.values()
-    comments = result2.values()
-    comments_list = [comments_multiply(item) for item in comments] #add comment factor to comment influence
-    likes_list = [likes_multiply(item) for item in likes] #add likes factor to likes influence
-    combined_list = combine(comments_list,likes_list) #combine likes and comments influences
-    sort_results(combined_list) #sort list from highest influence number to lowest
-    #return max 5 influencers
-    if len(combined_list) < 5:
-        return jsonify({"influencers":(refine_influencer_data(combined_list[0:len(combined_list)]))})
+    influencing_with_likes = session.run("""
+        MATCH (person:Person{id: $person_id})
+        OPTIONAL MATCH (person)-[l:LIKED]->(:Post)<-[:POSTED]-(liker:Person)
+        WHERE NOT(liker.id=person.id) AND TOSTRING(liker.full_name) = liker.full_name
+        WITH DISTINCT liker, COUNT(l) as liked_posts
+        OPTIONAL MATCH (liker)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
+        RETURN DISTINCT liker.id AS id, liked_posts, liker.full_name AS name, liker.headline AS headline, liker.linkedin_url AS profile_url, COLLECT(job.title) AS job_title, COLLECT(company.name) AS company_name, COLLECT(company.linkedin_url) AS company_url
+        ORDER BY liked_posts DESC
+        LIMIT 20
+        """, person_id=id)
+    influencing_with_comments = session.run("""
+        MATCH (person:Person{id: $person_id})
+        OPTIONAL MATCH (person)-[c:COMMENTED_ON]->(:Post)<-[:POSTED]-(commentor:Person)
+        WHERE NOT(commentor.id=person.id) AND TOSTRING(commentor.full_name) = commentor.full_name
+        WITH DISTINCT commentor, COUNT(c) as commented_posts
+        OPTIONAL MATCH (commentor)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
+        RETURN DISTINCT commentor.id AS id, commented_posts, commentor.full_name AS name, commentor.headline AS headline, commentor.linkedin_url AS profile_url, COLLECT(job.title) AS job_title, COLLECT(company.name) AS company_name, COLLECT(company.linkedin_url) AS company_url
+        ORDER BY commented_posts DESC
+        LIMIT 20
+        """, person_id=id)
+
+    #Influenced by data (people who have liked or commented on person's posts)
+    liked_by = influenced_by_likes.values()
+    commented_by = influenced_by_comments.values()
+    commented_by_list = [comments_multiply(item) for item in commented_by] #add comment factor to comment influence
+    liked_by_list = [likes_multiply(item) for item in liked_by] #add likes factor to likes influence
+    influenced_by_combined = combine(commented_by_list,liked_by_list) #combine likes and comments influences
+    sort_results(influenced_by_combined) #sort list from highest influence number to lowest
+    if len(influenced_by_combined) < 5:
+        influenced_by = refine_influencer_data(influenced_by_combined[0:len(influenced_by_combined)])
     else:
-        return jsonify({"influencers":(refine_influencer_data(combined_list[0:5]))})
+        influenced_by = refine_influencer_data(influenced_by_combined[0:5])
+        
+    #Influencing to data (people who's posts person has liked or commented)
+    liked_to = influencing_with_likes.values()
+    commented_to = influencing_with_comments.values()
+    commented_to_list = [comments_multiply(item) for item in commented_to] #add comment factor to comment influence
+    liked_to_list = [likes_multiply(item) for item in liked_to] #add likes factor to likes influence
+    influencing_to_combined = combine(commented_to_list,liked_to_list) #combine likes and comments influences
+    sort_results(influencing_to_combined) #sort list from highest influence number to lowest
+    if len(influencing_to_combined) < 5:
+        influencing_to = refine_influencer_data(influencing_to_combined[0:len(influencing_to_combined)])
+    else:
+        influencing_to = refine_influencer_data(influencing_to_combined[0:5])
+    
+    #return max 5 influencers
+    return jsonify({"influenced_by":influenced_by, "influencing_to":influencing_to})
 
 #Functions for influencer list 
 def likes_multiply(a):

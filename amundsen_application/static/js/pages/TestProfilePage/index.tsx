@@ -58,7 +58,8 @@ function TestProfilePage({ match }): JSX.Element {
   const person_id = match.params.person_id
   const [profile, setProfile] = useState({ person: initialPerson } as ProfileState)
   const [personBox, setPersonBox] = useState(<div>Loading profile...</div>)
-  const [influencerBox, setInfluencerBox] = useState(<div>Loading...</div>)
+  const [influencedByBox, setInfluencedByBox] = useState(<div>Loading...</div>)
+  const [influencingToBox, setInfluencingToBox] = useState(<div>Loading...</div>)
 
   //fetch current profile from backend by person_id (given by address parameter 'match.params.person_id')
   useEffect(() => {
@@ -85,15 +86,16 @@ function TestProfilePage({ match }): JSX.Element {
     headers: { 'Content-Type': 'application/json' }})
     .then(response => {return response.json()})
     .then(influencers_list => { 
-      console.log(influencers_list.influencers);
-      setInfluencerBox(<InfluencersBox influencers={ influencers_list.influencers } />) })
+      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } />);
+      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } />) })
     
   }, [person_id])
 
   return (
     <div>
       <div>{ personBox }</div>
-      <div>{ influencerBox }</div>
+      <div><h1>Influenced By:</h1>{ influencedByBox }</div>
+      <div><h1>Influencing To:</h1>{ influencingToBox }</div>
     </div>
   )
 }
