@@ -49,7 +49,6 @@ def influencer_list() -> Response:
     if request.method == "POST":
         result = request.json
         influencer_list_json = get_influencer_list(result['id'])
-        print(influencer_list_json)
         return influencer_list_json
     else:
         #TODO change the error handling to route back to /Home
@@ -104,7 +103,6 @@ def refine_profile_data(record):
 
 def refine_influencer_data(influencers):
     influencer_list = []
-    print(influencers)
     for i in range(len(influencers)):
         if len(influencers[i][5])== 0:
             jobs = []
