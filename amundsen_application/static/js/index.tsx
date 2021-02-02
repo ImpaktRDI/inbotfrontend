@@ -23,7 +23,7 @@ import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
 import TableDetail from './pages/TableDetailPage';
 import TestProfilePage from './pages/TestProfilePage';
-import Login from './pages/Login';
+import LoginPage from './pages/LoginPage';
 
 import Preloader from './components/common/Preloader';
 import Footer from './components/Footer';
@@ -60,7 +60,7 @@ ReactDOM.render(
             <Route path="/user/:userId" component={ProfilePage} />
             <Route path="/404" component={NotFoundPage} />
             <Route path="/profile/:person_id" component={TestProfilePage} />
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/" component={HomePage} />
 
           </Switch>
