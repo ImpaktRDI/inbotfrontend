@@ -5,7 +5,7 @@ const JobsBox = ({ joblist }) => {
   if (joblist.length === 0) { return <div><p>"Current job not available"</p></div> }
   else {
     return (
-      <div style={{ border: '5px solid black' }}>
+      <div className="container_j">
         {joblist.map((job, i) => {
           return (
             <Job

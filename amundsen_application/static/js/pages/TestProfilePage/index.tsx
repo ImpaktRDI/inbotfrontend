@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 
 // TODO: Use css-modules instead of 'import'
 import './styles.scss';
+import './Boxstyle.scss';
 
 import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
@@ -86,16 +87,17 @@ function TestProfilePage({ match }): JSX.Element {
     headers: { 'Content-Type': 'application/json' }})
     .then(response => {return response.json()})
     .then(influencers_list => { 
-      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } />);
-      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } />) })
+      console.log(influencers_list);
+      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } target={ "Influenced by:"} />);
+      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } target={ "Influencing to:"} />) })
     
   }, [person_id])
 
   return (
-    <div>
-      <div>{ personBox }</div>
-      <div><h1>Influenced By:</h1>{ influencedByBox }</div>
-      <div><h1>Influencing To:</h1>{ influencingToBox }</div>
+    <div className="page_j">
+      { personBox }
+      { influencedByBox }
+      { influencingToBox }
     </div>
   )
 }
