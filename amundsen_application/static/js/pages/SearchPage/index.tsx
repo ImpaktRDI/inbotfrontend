@@ -15,6 +15,8 @@ import ShimmeringResourceLoader from 'components/common/ShimmeringResourceLoader
 import { GlobalState } from 'ducks/rootReducer';
 import { submitSearchResource, urlDidUpdate } from 'ducks/search/reducer';
 import {
+  PostCommentSearchResults,
+  PersonSearchResults,
   DashboardSearchResults,
   SearchResults,
   SubmitSearchResourceRequest,
@@ -38,6 +40,8 @@ import {
   SEARCH_ERROR_MESSAGE_PREFIX,
   SEARCH_ERROR_MESSAGE_SUFFIX,
   SEARCH_SOURCE_NAME,
+  POST_COMMENT_RESOURCE_TITLE,
+  PERSON_RESOURCE_TITLE,
   DASHBOARD_RESOURCE_TITLE,
   TABLE_RESOURCE_TITLE,
   USER_RESOURCE_TITLE,
@@ -52,6 +56,8 @@ export interface StateFromProps {
   tables: TableSearchResults;
   dashboards: DashboardSearchResults;
   users: UserSearchResults;
+  post_comments: PostCommentSearchResults;
+  people: PersonSearchResults;
 }
 
 export interface DispatchFromProps {
@@ -77,6 +83,9 @@ export class SearchPage extends React.Component<SearchPageProps> {
   }
 
   renderSearchResults = () => {
+    console.log("renderSearchResults")
+    console.log(this.props.resource)
+    console.log(this.props.post_comments)
     switch (this.props.resource) {
       case ResourceType.table:
         return this.getTabContent(this.props.tables, ResourceType.table);
@@ -87,6 +96,10 @@ export class SearchPage extends React.Component<SearchPageProps> {
           this.props.dashboards,
           ResourceType.dashboard
         );
+      case ResourceType.post_comment:
+        return this.getTabContent(this.props.post_comments, ResourceType.post_comment);
+      case ResourceType.person:
+        return this.getTabContent(this.props.people, ResourceType.person);
     }
     return null;
   };
@@ -99,6 +112,10 @@ export class SearchPage extends React.Component<SearchPageProps> {
         return TABLE_RESOURCE_TITLE;
       case ResourceType.user:
         return USER_RESOURCE_TITLE;
+      case ResourceType.post_comment:
+        return POST_COMMENT_RESOURCE_TITLE;
+      case ResourceType.person:
+        return PERSON_RESOURCE_TITLE;
       default:
         return '';
     }
@@ -109,6 +126,9 @@ export class SearchPage extends React.Component<SearchPageProps> {
     const { page_index, total_results } = results;
     const startIndex = RESULTS_PER_PAGE * page_index + 1;
     const tabLabel = this.generateTabLabel(tab);
+
+    console.log("getTabContent")
+    console.log(results)
 
     // No search input
     if (searchTerm.length === 0 && !hasFilters) {
@@ -203,6 +223,8 @@ export const mapStateToProps = (state: GlobalState) => {
     tables: state.search.tables,
     users: state.search.users,
     dashboards: state.search.dashboards,
+    post_comments: state.search.post_comments,
+    people: state.search.people,
   };
 };
 

@@ -25,6 +25,10 @@ export const getPageIndex = (
       return state.users?.page_index || 0;
     case ResourceType.dashboard:
       return state.dashboards?.page_index || 0;
+    case ResourceType.post_comment:
+      return state.post_comments?.page_index || 0;
+    case ResourceType.person:
+      return state.people?.page_index || 0;
   }
   return 0;
 };
@@ -38,6 +42,12 @@ export const autoSelectResource = (state: Partial<SearchReducerState>) => {
   }
   if (state.dashboards && state.dashboards.total_results > 0) {
     return ResourceType.dashboard;
+  }
+  if (state.post_comments && state.post_comments.total_results > 0) {
+    return ResourceType.post_comment;
+  }
+  if (state.people && state.people.total_results > 0) {
+    return ResourceType.person;
   }
   return DEFAULT_RESOURCE_TYPE;
 };

@@ -16,7 +16,7 @@ from amundsen_application.log.action_log import action_logging
 from amundsen_application.api.utils.metadata_utils import marshall_dashboard_partial
 from amundsen_application.api.utils.request_utils import get_query_param, request_search
 from amundsen_application.api.utils.search_utils import generate_query_json, has_filters, \
-    map_table_result, transform_filters
+    map_table_result, transform_filters, map_post_comment_result, map_person_result
 from amundsen_application.models.user import load_user, dump_user
 
 LOGGER = logging.getLogger(__name__)
@@ -30,6 +30,8 @@ SEARCH_DASHBOARD_FILTER_ENDPOINT = '/search_dashboard_filter'
 SEARCH_TABLE_ENDPOINT = '/search'
 SEARCH_TABLE_FILTER_ENDPOINT = '/search_table'
 SEARCH_USER_ENDPOINT = '/search_user'
+SEARCH_POST_COMMENT_ENDPOINT = '/search_post_comment'
+SEARCH_PERSON_ENDPOINT = '/search_person'
 
 
 @search_blueprint.route('/table', methods=['POST'])
@@ -256,6 +258,154 @@ def _search_dashboard(*, search_term: str, page_index: int, filters: Dict, searc
             results = response.json().get('results')
             dashboards['results'] = [marshall_dashboard_partial(result) for result in results]
             dashboards['total_results'] = response.json().get('total_results')
+        else:
+            message = 'Encountered error: Search request failed'
+            results_dict['msg'] = message
+            logging.error(message)
+
+        results_dict['status_code'] = status_code
+        return results_dict
+    except Exception as e:
+        message = 'Encountered exception: ' + str(e)
+        results_dict['msg'] = message
+        logging.exception(message)
+        return results_dict
+
+
+@search_blueprint.route('/post_comment', methods=['POST'])
+def search_post_comment() -> Response:
+    """
+    Parse the request arguments and call the helper method to execute a post_comment search
+    :return: a Response created with the results from the helper method
+    """
+    try:
+        request_json = request.get_json()
+
+        search_term = get_query_param(request_json, 'term', '"term" parameter expected in request data')
+        page_index = get_query_param(request_json, 'pageIndex', '"pageIndex" parameter expected in request data')
+
+        search_type = request_json.get('searchType')
+
+        transformed_filters = transform_filters(filters=request_json.get('filters', {}), resource='post_comment')
+
+        results_dict = _search_post_comment(filters=transformed_filters,
+                                            search_term=search_term,
+                                            page_index=page_index,
+                                            search_type=search_type)
+        return make_response(jsonify(results_dict), results_dict.get('status_code', HTTPStatus.INTERNAL_SERVER_ERROR))
+    except Exception as e:
+        message = 'Encountered exception: ' + str(e)
+        logging.exception(message)
+        return make_response(jsonify(results_dict), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@action_logging
+def _search_post_comment(*, search_term: str, page_index: int, filters: Dict, search_type: str) -> Dict[str, Any]:
+    """
+    Call the search service endpoint and return matching results
+    Search service logic defined here:
+    https://github.com/lyft/amundsensearchlibrary/blob/master/search_service/api/post_comment.py
+
+    :return: a json output containing search results array as 'results'
+    """
+    # Default results
+    post_comments = {
+        'page_index': int(page_index),
+        'results': [],
+        'total_results': 0,
+    }
+
+    results_dict = {
+        'search_term': search_term,
+        'msg': '',
+        'post_comments': post_comments,
+    }
+
+    try:
+        url_base = app.config['SEARCHSERVICE_BASE'] + SEARCH_POST_COMMENT_ENDPOINT
+        url = f'{url_base}?query_term={search_term}&page_index={page_index}'
+        response = request_search(url=url)
+
+        status_code = response.status_code
+        if status_code == HTTPStatus.OK:
+            results_dict['msg'] = 'Success'
+            results = response.json().get('results')
+            post_comments['results'] = [map_post_comment_result(result) for result in results]
+            post_comments['total_results'] = response.json().get('total_results')
+        else:
+            message = 'Encountered error: Search request failed'
+            results_dict['msg'] = message
+            logging.error(message)
+
+        results_dict['status_code'] = status_code
+        return results_dict
+    except Exception as e:
+        message = 'Encountered exception: ' + str(e)
+        results_dict['msg'] = message
+        logging.exception(message)
+        return results_dict
+
+
+@search_blueprint.route('/person', methods=['POST'])
+def search_person() -> Response:
+    """
+    Parse the request arguments and call the helper method to execute a person search
+    :return: a Response created with the results from the helper method
+    """
+    try:
+        request_json = request.get_json()
+
+        search_term = get_query_param(request_json, 'term', '"term" parameter expected in request data')
+        page_index = get_query_param(request_json, 'pageIndex', '"pageIndex" parameter expected in request data')
+
+        search_type = request_json.get('searchType')
+
+        transformed_filters = transform_filters(filters=request_json.get('filters', {}), resource='person')
+
+        results_dict = _search_person(filters=transformed_filters,
+                                      search_term=search_term,
+                                      page_index=page_index,
+                                      search_type=search_type)
+        return make_response(jsonify(results_dict), results_dict.get('status_code', HTTPStatus.INTERNAL_SERVER_ERROR))
+    except Exception as e:
+        message = 'Encountered exception: ' + str(e)
+        logging.exception(message)
+        return make_response(jsonify(results_dict), HTTPStatus.INTERNAL_SERVER_ERROR)
+
+
+@action_logging
+def _search_person(*, search_term: str, page_index: int, filters: Dict, search_type: str) -> Dict[str, Any]:
+    """
+    Call the search service endpoint and return matching results
+    Search service logic defined here:
+    https://github.com/lyft/amundsensearchlibrary/blob/master/search_service/api/person.py
+
+    :return: a json output containing search results array as 'results'
+    """
+    # Default results
+    people = {
+        'page_index': int(page_index),
+        'results': [],
+        'total_results': 0,
+    }
+
+    results_dict = {
+        'search_term': search_term,
+        'msg': '',
+        'people': people,
+    }
+
+    try:
+        url_base = app.config['SEARCHSERVICE_BASE'] + SEARCH_PERSON_ENDPOINT
+        url = f'{url_base}?query_term={search_term}&page_index={page_index}'
+        response = request_search(url=url)
+
+        status_code = response.status_code
+        if status_code == HTTPStatus.OK:
+            results_dict['msg'] = 'Success'
+            results = response.json().get('results')
+            people['results'] = [map_person_result(result) for result in results]
+            people['total_results'] = response.json().get('total_results')
         else:
             message = 'Encountered error: Search request failed'
             results_dict['msg'] = message

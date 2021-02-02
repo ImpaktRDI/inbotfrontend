@@ -113,6 +113,8 @@ export function* updateSearchStateWorker(
   action: UpdateSearchStateRequest
 ): SagaIterator {
   if (action.payload !== undefined) {
+    console.log("updateSearchStateWorker")
+    console.log(action.payload)
     const { filters, resource, updateUrl, submitSearch } = action.payload;
     const state = yield select(getSearchState);
     if (filters && submitSearch) {
@@ -160,6 +162,8 @@ export function* urlDidUpdateWorker(action: UrlDidUpdateRequest): SagaIterator {
     );
   } else if (resource) {
     if (resource !== state.resource) {
+      console.log("updateSearchStateWorker")
+      console.log(`updating to ${resource}`)
       yield put(updateSearchState({ resource }));
     }
 
@@ -219,6 +223,8 @@ export function* loadPreviousSearchWatcher(): SagaIterator {
 export function* searchResourceWorker(
   action: SearchResourceRequest
 ): SagaIterator {
+  console.log("searchResourceWorker")
+  console.log(action.payload)
   const { pageIndex, resource, term, searchType } = action.payload;
   const state = yield select(getSearchState);
   try {
@@ -250,9 +256,11 @@ export function* searchAllWorker(action: SearchAllRequest): SagaIterator {
   const tableIndex = resource === ResourceType.table ? pageIndex : 0;
   const userIndex = resource === ResourceType.user ? pageIndex : 0;
   const dashboardIndex = resource === ResourceType.dashboard ? pageIndex : 0;
+  const postCommentIndex = resource === ResourceType.post_comment ? pageIndex : 0;
+  const personIndex = resource === ResourceType.person ? pageIndex : 0;
 
   try {
-    const [tableResponse, userResponse, dashboardResponse] = yield all([
+    const [tableResponse, userResponse, dashboardResponse, postCommentResponse, personResponse] = yield all([
       call(
         API.searchResource,
         tableIndex,
@@ -277,13 +285,33 @@ export function* searchAllWorker(action: SearchAllRequest): SagaIterator {
         state.filters[ResourceType.dashboard],
         searchType
       ),
+      call(
+        API.searchResource,
+        postCommentIndex,
+        ResourceType.post_comment,
+        term,
+        state.filters[ResourceType.post_comment],
+        searchType
+      ),
+      call(
+        API.searchResource,
+        personIndex,
+        ResourceType.person,
+        term,
+        state.filters[ResourceType.person],
+        searchType
+      ),
     ]);
+    console.log("searchAllWorker")
+    console.log(postCommentResponse)
     const searchAllResponse = {
       resource,
       search_term: term,
       tables: tableResponse.tables || initialState.tables,
       users: userResponse.users || initialState.users,
       dashboards: dashboardResponse.dashboards || initialState.dashboards,
+      post_comments: postCommentResponse.post_comments || initialState.post_comments,
+      people: personResponse.people || initialState.people,
       isLoading: false,
     };
     if (resource === undefined) {
@@ -306,9 +334,11 @@ export function* searchAllWatcher(): SagaIterator {
 //  TODO: Consider moving into nested directory similar to how filter logic.
 
 export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
+  console.log("inlineSearchWorker")
+  console.log(action.payload)
   const { term } = action.payload;
   try {
-    const [dashboardResponse, tableResponse, userResponse] = yield all([
+    const [dashboardResponse, tableResponse, userResponse, postCommentResponse, personResponse] = yield all([
       call(
         API.searchResource,
         0,
@@ -333,15 +363,37 @@ export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
         {},
         SearchType.INLINE_SEARCH
       ),
+      call(
+        API.searchResource,
+        0,
+        ResourceType.post_comment,
+        term,
+        {},
+        SearchType.INLINE_SEARCH
+      ),
+      call(
+        API.searchResource,
+        0,
+        ResourceType.person,
+        term,
+        {},
+        SearchType.INLINE_SEARCH
+      ),
     ]);
     const inlineSearchResponse = {
       dashboards:
         dashboardResponse.dashboards || initialInlineResultsState.dashboards,
       tables: tableResponse.tables || initialInlineResultsState.tables,
       users: userResponse.users || initialInlineResultsState.users,
+      post_comments: postCommentResponse.post_comments || initialInlineResultsState.post_comments,
+      people: personResponse.people || initialInlineResultsState.people,
     };
+    console.log("inlineSearchWorker")
+    console.log(postCommentResponse)
     yield put(getInlineResultsSuccess(inlineSearchResponse));
   } catch (e) {
+    console.log(e)
+    console.log('error in inlineSearchWorker')
     yield put(getInlineResultsFailure());
   }
 }
@@ -357,6 +409,7 @@ export function* inlineSearchWatcherDebounce(): SagaIterator {
 }
 
 export function* selectInlineResultWorker(action): SagaIterator {
+  console.log("selectInlineResultWorker")
   const state = yield select();
   const { searchTerm, resourceType, updateUrl } = action.payload;
   if (state.search.inlineResults.isLoading) {
@@ -379,6 +432,8 @@ export function* selectInlineResultWorker(action): SagaIterator {
       dashboards: state.search.inlineResults.dashboards,
       tables: state.search.inlineResults.tables,
       users: state.search.inlineResults.users,
+      post_comments: state.search.inlineResults.post_comments,
+      people: state.search.inlineResults.people,
     };
     yield put(updateFromInlineResult(data));
   }

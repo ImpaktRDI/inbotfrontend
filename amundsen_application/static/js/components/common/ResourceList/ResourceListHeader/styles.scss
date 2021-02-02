@@ -22,13 +22,9 @@
     }
   }
 
-  .source {
-    flex: 2;
-  }
-
   .badges {
     display: flex;
-    flex: 3;
+    flex: 5;
     flex-wrap: wrap;
     margin-left: $spacer-3;
 

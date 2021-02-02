@@ -5,6 +5,8 @@ import { ResourceType, SearchType } from 'interfaces';
 
 import {
   DashboardSearchResults,
+  PersonSearchResults,
+  PostCommentSearchResults,
   TableSearchResults,
   UserSearchResults,
 } from '../types';
@@ -20,12 +22,14 @@ export interface SearchAPI {
   dashboards?: DashboardSearchResults;
   tables?: TableSearchResults;
   users?: UserSearchResults;
+  post_comments?: PostCommentSearchResults;
+  people?: PersonSearchResults;
 }
 
 export const searchResourceHelper = (response: AxiosResponse<SearchAPI>) => {
   const { data } = response;
   const ret = { searchTerm: data.search_term };
-  ['dashboards', 'tables', 'users'].forEach((key) => {
+  ['dashboards', 'tables', 'users', 'post_comments', 'people'].forEach((key) => {
     if (data[key]) {
       ret[key] = data[key];
     }
@@ -50,7 +54,7 @@ export function searchResource(
   }
 
   /* Note: This logic must exist until query string endpoints are created for all resources */
-  if (resource === ResourceType.table || resource === ResourceType.dashboard) {
+  if (resource === ResourceType.person) {
     return axios
       .post(`${BASE_URL}/${resource}`, {
         filters,

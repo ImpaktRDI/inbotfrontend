@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 
-import { indexDashboardsEnabled, indexUsersEnabled } from 'config/config-utils';
+import { indexDashboardsEnabled, indexPeopleEnabled, indexPostCommentsEnabled, indexUsersEnabled } from 'config/config-utils';
 
 import { ResourceType } from 'interfaces';
 
@@ -19,12 +19,10 @@ export interface SearchItemListProps {
 class SearchItemList extends React.Component<SearchItemListProps, {}> {
   getListItemText = (resourceType: ResourceType): string => {
     switch (resourceType) {
-      case ResourceType.dashboard:
-        return CONSTANTS.DASHBOARD_ITEM_TEXT;
-      case ResourceType.table:
-        return CONSTANTS.DATASETS_ITEM_TEXT;
-      case ResourceType.user:
-        return CONSTANTS.PEOPLE_ITEM_TEXT;
+      case ResourceType.post_comment:
+        return CONSTANTS.POST_COMMENT_ITEM_TEXT;
+      case ResourceType.person:
+        return CONSTANTS.PERSON_ITEM_TEXT;
       default:
         return '';
     }
@@ -34,26 +32,20 @@ class SearchItemList extends React.Component<SearchItemListProps, {}> {
     const { onItemSelect, searchTerm } = this.props;
     return (
       <ul className="list-group">
-        <SearchItem
-          listItemText={this.getListItemText(ResourceType.table)}
-          onItemSelect={onItemSelect}
-          searchTerm={searchTerm}
-          resourceType={ResourceType.table}
-        />
-        {indexDashboardsEnabled() && (
+        {indexPeopleEnabled() && (
           <SearchItem
-            listItemText={this.getListItemText(ResourceType.dashboard)}
+            listItemText={this.getListItemText(ResourceType.person)}
             onItemSelect={onItemSelect}
             searchTerm={searchTerm}
-            resourceType={ResourceType.dashboard}
+            resourceType={ResourceType.person}
           />
         )}
-        {indexUsersEnabled() && (
+        {indexPostCommentsEnabled() && (
           <SearchItem
-            listItemText={this.getListItemText(ResourceType.user)}
+            listItemText={this.getListItemText(ResourceType.post_comment)}
             onItemSelect={onItemSelect}
             searchTerm={searchTerm}
-            resourceType={ResourceType.user}
+            resourceType={ResourceType.post_comment}
           />
         )}
       </ul>

@@ -14,6 +14,8 @@ export interface AppConfig {
   google: GoogleAnalyticsConfig;
   indexDashboards: IndexDashboardsConfig;
   indexUsers: IndexUsersConfig;
+  indexPostComments: IndexPostCommentsConfig;
+  indexPeople: IndexPeopleConfig;
   userIdLabel?: string /* Temporary configuration due to lacking string customization/translation support */;
   issueTracking: IssueTrackingConfig;
   logoPath: string | null;
@@ -198,6 +200,8 @@ interface ResourceConfig {
   [ResourceType.dashboard]: BaseResourceConfig;
   [ResourceType.table]: TableResourceConfig;
   [ResourceType.user]: BaseResourceConfig;
+  [ResourceType.post_comment]: BaseResourceConfig;
+  [ResourceType.person]: BaseResourceConfig;
 }
 
 /**
@@ -286,6 +290,14 @@ interface IndexDashboardsConfig {
  * enabled - Enables/disables this feature in the frontend only
  */
 interface IndexUsersConfig {
+  enabled: boolean;
+}
+
+interface IndexPostCommentsConfig {
+  enabled: boolean;
+}
+
+interface IndexPeopleConfig {
   enabled: boolean;
 }
 

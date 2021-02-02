@@ -22,6 +22,12 @@ const configDefault: AppConfig = {
     key: 'default-key',
     sampleRate: 100,
   },
+  indexPeople: {
+    enabled: true,
+  },
+  indexPostComments: {
+    enabled: true,
+  },
   indexDashboards: {
     enabled: false,
   },
@@ -183,6 +189,12 @@ const configDefault: AppConfig = {
       },
     },
     [ResourceType.user]: {
+      displayName: 'People',
+    },
+    [ResourceType.post_comment]: {
+      displayName: 'Post comments',
+    },
+    [ResourceType.person]: {
       displayName: 'People',
     },
   },

@@ -100,7 +100,7 @@ const globalState: GlobalState = {
   },
   search: {
     search_term: 'testName',
-    resource: ResourceType.table,
+    resource: ResourceType.person,
     isLoading: false,
     dashboards: {
       page_index: 0,
@@ -128,6 +128,11 @@ const globalState: GlobalState = {
       results: [],
       total_results: 0,
     },
+    post_comments: {
+      page_index: 0,
+      results: [],
+      total_results: 0,
+    },
     inlineResults: {
       isLoading: false,
       dashboards: {
@@ -141,6 +146,11 @@ const globalState: GlobalState = {
         total_results: 0,
       },
       users: {
+        page_index: 0,
+        results: [],
+        total_results: 0,
+      },
+      post_comments: {
         page_index: 0,
         results: [],
         total_results: 0,
