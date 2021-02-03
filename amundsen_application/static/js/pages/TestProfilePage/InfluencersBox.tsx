@@ -2,7 +2,6 @@ import * as React from 'react'
 import Influencer from './Influencer';
 
 const InfluencersBox = ({ influencers, target }) => {
-  console.log(influencers)
     if (influencers.length == 0)
       return (
       <div className="container_j">

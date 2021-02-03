@@ -1,19 +1,15 @@
 import * as React from 'react'
-import JobsBox from './JobsBox'
 
 const ProfileBox = ({ person }) => {
+  const jobInfo = () => {
+    if (person.jobs.length == 0) {return person.headline}
+    else return person.jobs[0][0] + " - " + person.jobs[0][0]
+    };
+  
   return (
     <div className="container_j">
-        <div>
-            <h1>{ person.name }</h1>
-            <p>Headline: { person.headline }</p>
-            <p>Location: { person.location }</p>
-            <button className="button1_j"><a href={ person.profile_url }>LinkedIn profile</a></button>
-        </div>
-        <div className="header_j">
-          <h2>Current job(s):</h2>
-          <JobsBox joblist={ person.jobs } />
-        </div>
+      <h1>{ person.name }</h1>
+      <p>{ jobInfo }</p>
     </div>
   )}
 

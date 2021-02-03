@@ -11,6 +11,9 @@ import './Boxstyle.scss';
 import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
 
+import SearchPanel from '../SearchPage/SearchPanel/index';
+import ResourceSelector from '../SearchPage/ResourceSelector/index';
+
 type Job = {
   title: string,
   company_name: string,
@@ -94,9 +97,20 @@ function TestProfilePage({ match }): JSX.Element {
 
   return (
     <div className="page_j">
-      { personBox }
-      { influencedByBox }
-      { influencingToBox }
+      <div className="page_row">
+        <div className="searchPanel">
+          <SearchPanel>
+            <ResourceSelector />
+          </SearchPanel>
+        </div>
+        <div className="page_column">
+          { personBox }
+          <div className="page_row">
+            { influencedByBox }
+            { influencingToBox }
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

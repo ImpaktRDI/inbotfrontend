@@ -1,14 +1,13 @@
-import { profile } from 'console';
-import { url } from 'inspector';
 import * as React from 'react'
 
 const Influencer = ({influence_score, id, name, profile_url, headline}) => {
     return (
-      <div className="box_j">
-        <h2>{name}</h2>
-        <p>Influence Score: {influence_score}</p>
-        <p>Headline: {headline}</p>
-        <button className="button1_j"><a href={ profile_url }>LinkedIn profile</a></button>
+      <div className="box_influencer">
+        <a href={ profile_url }>
+          <h2>{name}</h2>
+          <p>Influence Score: {influence_score}</p>
+          <p>Headline: {headline}</p>
+        </a>
       </div>
     )
   }
