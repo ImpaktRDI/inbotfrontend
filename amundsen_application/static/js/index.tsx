@@ -23,6 +23,7 @@ import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
 import TableDetail from './pages/TableDetailPage';
 import TestProfilePage from './pages/TestProfilePage';
+import LoginPage from './pages/LoginPage';
 
 import Preloader from './components/common/Preloader';
 import Footer from './components/Footer';
