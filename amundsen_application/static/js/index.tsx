@@ -60,7 +60,6 @@ ReactDOM.render(
             <Route path="/user/:userId" component={ProfilePage} />
             <Route path="/404" component={NotFoundPage} />
             <Route path="/profile/:person_id" component={TestProfilePage} />
-            <Route path="/login" component={LoginPage} />
             <Route path="/" component={HomePage} />
 
           </Switch>
