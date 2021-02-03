@@ -10,7 +10,6 @@ import './Boxstyle.scss';
 
 import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
-import { dummydata } from './dummydata';
 
 type Job = {
   title: string,
