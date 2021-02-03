@@ -176,6 +176,7 @@ def get_influencer_list(id):
     sort_results(influenced_by_combined) #sort list from highest influence number to lowest
     if len(influenced_by_combined) < 5:
         influenced_by = refine_influencer_data(influenced_by_combined[0:len(influenced_by_combined)])
+        influenced_by.pop() #Removes null data
     else:
         influenced_by = refine_influencer_data(influenced_by_combined[0:5])
         
@@ -188,6 +189,7 @@ def get_influencer_list(id):
     sort_results(influencing_to_combined) #sort list from highest influence number to lowest
     if len(influencing_to_combined) < 5:
         influencing_to = refine_influencer_data(influencing_to_combined[0:len(influencing_to_combined)])
+        influencing_to.pop() #Removes null data (Query problem ?)
     else:
         influencing_to = refine_influencer_data(influencing_to_combined[0:5])
     
@@ -196,12 +198,12 @@ def get_influencer_list(id):
 
 #Functions for influencer list 
 def likes_multiply(a):
-    likes_factor = 0.2
+    likes_factor = 0.1
     a[1] *= likes_factor
     return a
 
 def comments_multiply(a):
-    comments_factor = 0.5
+    comments_factor = 0.8
     a[1] *= comments_factor
     return a
 
