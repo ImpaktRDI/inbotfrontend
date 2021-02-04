@@ -90,8 +90,8 @@ function TestProfilePage({ match }): JSX.Element {
     .then(response => {return response.json()})
     .then(influencers_list => { 
       console.log(influencers_list);
-      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } target={ "Influenced by:"} />);
-      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } target={ "Influencing to:"} />) })
+      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } target={ "Influences:"} />);
+      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } target={ "Influenced by:"} />)})
     
   }, [person_id])
 
@@ -106,8 +106,8 @@ function TestProfilePage({ match }): JSX.Element {
         <div className="page_column">
           { personBox }
           <div className="page_row">
-            { influencedByBox }
             { influencingToBox }
+            { influencedByBox }
           </div>
         </div>
       </div>

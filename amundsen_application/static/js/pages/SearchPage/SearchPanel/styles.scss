@@ -4,16 +4,16 @@
 @import 'variables';
 
 .search-control-panel {
-  border-right: $search-panel-border-width solid $stroke;
+  /* border-right: $search-panel-border-width solid $stroke; */
   display: flex;
   flex: 0 0 $search-panel-width;
   flex-direction: column;
   overflow-y: auto;
-  /* background: rgb(3,0,48,0.05); */
+  background: rgba(3,0,48,0.05);
 
   .section {
     padding: 32px 24px 32px 32px;
-    width: $search-panel-width - $search-panel-border-width;
+    width: $search-panel-width; /* $search-panel-widt - $search-panel-border-width */
 
     &:not(:first-child) {
       border-top: 2px solid $stroke;
