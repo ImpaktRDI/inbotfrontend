@@ -6,7 +6,7 @@ const InfluencersBox = ({ influencers, target }) => {
       return (
       <div className="container_column">
           <h3>{ target }</h3>
-          <p>None available</p>
+          <p>None available yet</p>
       </div>
       )
     else

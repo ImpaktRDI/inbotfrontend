@@ -96,19 +96,17 @@ function TestProfilePage({ match }): JSX.Element {
   }, [person_id])
 
   return (
-    <div className="page_j">
-      <div className="page_row">
-        <div className="searchPanel">
-          <SearchPanel>
-            <ResourceSelector />
-          </SearchPanel>
-        </div>
-        <div className="page_column">
-          { personBox }
-          <div className="page_row">
-            { influencingToBox }
-            { influencedByBox }
-          </div>
+    <div className="page_row">
+      <div className="searchPanel">
+        <SearchPanel>
+          <ResourceSelector />
+        </SearchPanel>
+      </div>
+      <div className="page_column">
+        { personBox }
+        <div className="page_row">
+          { influencingToBox }
+          { influencedByBox }
         </div>
       </div>
     </div>

@@ -1,17 +1,25 @@
 import * as React from 'react'
 
+import linkedIn from './linkedin.svg'
+
 const ProfileBox = ({ person }) => {
     if (person.jobs.length == 0) {
       return (
-        <div className="container_column">
-          <h1>{ person.name }</h1>
+        <div className="container_profile">
+          <div className="profile_header_row">
+            <h1>{ person.name }</h1>
+            <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
+          </div>
           <p>{ person.headline }</p>
         </div>
         )}
     else {
       return (
-        <div className="container_column">
-          <h1>{ person.name }</h1>
+        <div className="container_profile">
+          <div className="profile_header_row">
+            <h1>{ person.name }</h1>
+            <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
+          </div>
           <p>{ person.jobs[0].title } - { person.jobs[0].company_name }</p>
         </div>
   )}}
