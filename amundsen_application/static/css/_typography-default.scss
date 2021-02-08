@@ -245,14 +245,15 @@ h6 {
 h1,
 h2,
 h3 {
-  color: $text-primary;
+  color: rgba(3,0,48,0.8);
   font-family: $font-family-header;
 }
 
 h1 {
+  font-weight: $font-weight-header-bold;
+  font-style: normal;
   font-size: 36px;
-  font-weight: $font-weight-header-regular;
-  line-height: 34px;
+  line-height: 44px;
 }
 
 h2 {
@@ -262,13 +263,14 @@ h2 {
 }
 
 h3 {
-  font-size: 20px;
   font-weight: $font-weight-header-bold;
-  line-height: 34px;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 body {
-  color: $text-primary;
+  color: rgba(3,0,48,0.8);
   font-family: $font-family-body;
   font-size: 14px;
   font-weight: $font-weight-body-regular;

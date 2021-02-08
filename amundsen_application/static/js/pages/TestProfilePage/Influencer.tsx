@@ -13,7 +13,7 @@ const Influencer = ({influence_score, id, name, profile_url, headline}) => {
       <div className="progressbarbox">
         <a href={ profile_url }><img src={ linkedIn } alt="linkedin"></img></a>
         <ProgressBar percent={influence_score} />
-        <strong>{influence_score_normalized.toFixed(1)} %</strong>        
+        <strong>{influence_score_normalized.toFixed(0)} %</strong>        
       </div>
     </div>
   )

@@ -5,14 +5,14 @@ const InfluencersBox = ({ influencers, target }) => {
     if (influencers.length == 0)
       return (
       <div className="container_column">
-          <h3>{ target }</h3>
+          <h3 className="influence_header">{ target }</h3>
           <p>None available yet</p>
       </div>
       )
     else
       return (
         <div className="container_column">
-          <h3>{ target }</h3>
+          <h3 className="influence_header">{ target }</h3>
           {influencers.map((influencer, i) => {
             return (
               <Influencer

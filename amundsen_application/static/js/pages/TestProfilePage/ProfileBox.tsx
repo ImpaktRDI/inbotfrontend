@@ -10,7 +10,7 @@ const ProfileBox = ({ person }) => {
             <h1>{ person.name }</h1>
             <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
           </div>
-          <p>{ person.headline }</p>
+          <p className="profile_headline">{ person.headline }</p>
         </div>
         )}
     else {
@@ -20,7 +20,7 @@ const ProfileBox = ({ person }) => {
             <h1>{ person.name }</h1>
             <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
           </div>
-          <p>{ person.jobs[0].title } - { person.jobs[0].company_name }</p>
+          <p className="profile_headline">{ person.jobs[0].title } - { person.jobs[0].company_name }</p>
         </div>
   )}}
 
