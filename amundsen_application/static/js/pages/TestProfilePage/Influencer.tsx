@@ -1,7 +1,9 @@
 import * as React from 'react'
 import ProgressBar from './ProgressBar'
 
-import linkedIn from './linkedin.svg'
+import linkedIn from '../../../images/icons/linkedin.svg'
+
+
 
 const Influencer = ({influence_score, id, name, profile_url, headline}) => {
   const profile_link = "/profile/" + id;

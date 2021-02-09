@@ -1,9 +1,9 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import people from './people.svg';
-import companies from './companies.svg';
-import jobtitles from './jobtitles.svg';
-import industries from './industries.svg';
+import people from '../../../../images/icons/people.svg';
+import companies from '../../../../images/icons/companies.svg';
+import jobtitles from '../../../../images/icons/jobtitles.svg';
+import industries from '../../../../images/icons/industries.svg';
 
 import './styles.scss';
 

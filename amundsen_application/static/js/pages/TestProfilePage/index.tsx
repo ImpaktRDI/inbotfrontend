@@ -12,7 +12,6 @@ import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
 
 import SearchPanel from '../SearchPage/SearchPanel/index';
-import ResourceSelector from '../SearchPage/ResourceSelector/index';
 import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
 
 type Job = {

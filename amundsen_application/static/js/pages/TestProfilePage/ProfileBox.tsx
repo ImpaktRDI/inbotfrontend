@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import linkedIn from './linkedin.svg'
+import linkedIn from '../../../images/icons/linkedin.svg'
 
 const ProfileBox = ({ person }) => {
     if (person.jobs.length == 0) {
