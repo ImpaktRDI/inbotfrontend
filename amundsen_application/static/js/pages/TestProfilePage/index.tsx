@@ -13,6 +13,7 @@ import InfluencersBox from './InfluencersBox';
 
 import SearchPanel from '../SearchPage/SearchPanel/index';
 import ResourceSelector from '../SearchPage/ResourceSelector/index';
+import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
 
 type Job = {
   title: string,
@@ -99,7 +100,7 @@ function TestProfilePage({ match }): JSX.Element {
     <div className="page_row">
       <div className="searchPanel">
         <SearchPanel>
-          <ResourceSelector />
+          <SearchTypeSelector />
         </SearchPanel>
       </div>
       <div className="page_column">

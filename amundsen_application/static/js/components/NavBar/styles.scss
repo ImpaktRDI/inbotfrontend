@@ -13,10 +13,9 @@ $avatar-container-size: 40px;
   display: flex;
   flex-direction: row;
   height: $nav-bar-height;
-  padding: 0 32px 1px;
 
   .nav-bar-left {
-    flex-basis: 234px;
+    flex-basis: 240px;
 
     span.title-3 {
       color: $white;
@@ -66,10 +65,16 @@ $avatar-container-size: 40px;
     }
   }
 
-  .nav-bar-left,
+  .nav-bar-left {
+    background: #e9e7ee;
+    padding: 14px;
+    padding-left: 32px;
+    padding-right: 78px;
+  }
   .nav-bar-right {
     height: 100%;
     padding-top: 12px;
+    padding-right: 32px;
 
     a {
       text-decoration: none;

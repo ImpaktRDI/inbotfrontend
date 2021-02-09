@@ -1,0 +1,28 @@
+.progress-div_low {
+    background-color: rgb(233, 233, 233);
+    border-radius: .5rem;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 10px;
+    border: 1px solid rgba(184, 184, 184, 0.8)
+}
+.progress-div_high {
+    background-color: rgb(233, 233, 233);
+    border-radius: .5rem;
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 10px;
+    border: 1px solid rgba(189,110,202,0.8)
+}
+    
+.progress_low {
+    background-color: rgba(184,184,184,0.8);
+    height: 10px;
+    border-radius: 1rem;
+}
+
+.progress_high {
+    background-color: rgba(189,110,202,0.8);
+    height: 10px;
+    border-radius: 1rem;
+}
