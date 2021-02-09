@@ -1,6 +1,7 @@
 # Copyright Contributors to the Amundsen project.
 # SPDX-License-Identifier: Apache-2.0
 
+import os
 from typing import Dict, Optional
 from flask import Flask, session
 from amundsen_application.config import LocalConfig
@@ -39,3 +40,9 @@ def get_auth_user(app: Flask) -> User:
 class OidcConfig(LocalConfig):
     AUTH_USER_METHOD = get_auth_user
     REQUEST_HEADERS_METHOD = get_access_headers
+
+    MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
+    MYSQL_PORT = int(os.environ.get('MYSQL_PORT', '3306'))
+    MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE', 'brain')
+    MYSQL_USER = os.environ.get('MYSQL_USER')
+    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
