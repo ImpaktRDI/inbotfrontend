@@ -6,10 +6,13 @@ import { useState, useEffect } from 'react';
 
 // TODO: Use css-modules instead of 'import'
 import './styles.scss';
+import './Boxstyle.scss';
 
 import ProfileBox from './ProfileBox'
 import InfluencersBox from './InfluencersBox';
-import { dummydata } from './dummydata';
+
+import SearchPanel from '../SearchPage/SearchPanel/index';
+import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
 
 type Job = {
   title: string,
@@ -86,16 +89,26 @@ function TestProfilePage({ match }): JSX.Element {
     headers: { 'Content-Type': 'application/json' }})
     .then(response => {return response.json()})
     .then(influencers_list => { 
-      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } />);
-      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } />) })
+      console.log(influencers_list);
+      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } target={ "Influences:"} />);
+      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } target={ "Influenced by:"} />)})
     
   }, [person_id])
 
   return (
-    <div>
-      <div>{ personBox }</div>
-      <div><h1>Influenced By:</h1>{ influencedByBox }</div>
-      <div><h1>Influencing To:</h1>{ influencingToBox }</div>
+    <div className="page_row">
+      <div className="searchPanel">
+        <SearchPanel>
+          <SearchTypeSelector />
+        </SearchPanel>
+      </div>
+      <div className="page_column">
+        { personBox }
+        <div className="page_row">
+          { influencingToBox }
+          { influencedByBox }
+        </div>
+      </div>
     </div>
   )
 }
