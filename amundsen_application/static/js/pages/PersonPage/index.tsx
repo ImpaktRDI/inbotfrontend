@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import './styles.scss';
 import './Boxstyle.scss';
 
-import ProfileBox from './ProfileBox'
+import PersonBox from './PersonBox'
 import InfluencersBox from './InfluencersBox';
 
 import SearchPanel from '../SearchPage/SearchPanel/index';
@@ -30,7 +30,7 @@ type PersonDetails = {
   location: string
 }
 
-type ProfileState = {
+type PersonState = {
   person: PersonDetails
 }
 
@@ -57,32 +57,32 @@ const initialPerson: PersonDetails = {
   location: ''
 }
 
-function TestProfilePage({ match }): JSX.Element {
+function PersonPage({ match }): JSX.Element {
   const person_id = match.params.person_id
-  const [profile, setProfile] = useState({ person: initialPerson } as ProfileState)
-  const [personBox, setPersonBox] = useState(<div>Loading profile...</div>)
+  const [person, setPerson] = useState({ person: initialPerson } as PersonState)
+  const [personBox, setPersonBox] = useState(<div>Loading person data...</div>)
   const [influencedByBox, setInfluencedByBox] = useState(<div>Loading...</div>)
   const [influencingToBox, setInfluencingToBox] = useState(<div>Loading...</div>)
 
-  //fetch current profile from backend by person_id (given by address parameter 'match.params.person_id')
+  //fetch current person from backend by person_id (given by address parameter 'match.params.person_id')
   useEffect(() => {
-    fetch("http://localhost:5000/api/profile/v0/person_details", 
+    fetch("http://localhost:5000/api/person/v0/person_details", 
     {
       method: "POST", 
       body: JSON.stringify({ id: person_id }),
       headers: { 'Content-Type': 'application/json' }})
       .then(response => {return response.json()})
-      .then(person => { setProfile({ person }) })
+      .then(person => { setPerson({ person }) })
   }, [person_id])
 
-  //updates Page for current profile
+  //updates Page for current person
   useEffect(() => {
-      setPersonBox(<ProfileBox person={ profile.person } />)
-  }, [profile])
+      setPersonBox(<PersonBox person={ person.person } />)
+  }, [person])
 
-  //updates Page for current profile
+  //updates Page for current person
   useEffect(() => {
-    fetch("http://localhost:5000/api/profile/v0/influencerlist", 
+    fetch("http://localhost:5000/api/person/v0/influencerlist", 
   {
     method: "POST", 
     body: JSON.stringify({ id: person_id }),
@@ -113,4 +113,4 @@ function TestProfilePage({ match }): JSX.Element {
   )
 }
 
-export default TestProfilePage;
+export default PersonPage;

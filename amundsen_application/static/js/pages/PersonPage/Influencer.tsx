@@ -6,11 +6,11 @@ import linkedIn from '../../../images/icons/linkedin.svg'
 const INFLUENCE_SCORE_NORMALIZATION_VALUE = 10; /* Adjust this value to modify influence score. ***NOT ACTUALLY NORMALIZED*** */
 
 const Influencer = ({influence_score, id, name, profile_url, headline}) => {
-  const profile_link = "/profile/" + id;
+  const person_link = "/person/" + id;
   const influence_score_normalized = (influence_score/INFLUENCE_SCORE_NORMALIZATION_VALUE) * 100;
   return (
     <div className="box_influencer">
-      <a href={ profile_link }><h3>{name}</h3></a>
+      <a href={ person_link }><h3>{name}</h3></a>
       <p>{headline}</p>
       <div className="progressbarbox">
         <a href={ profile_url }><img src={ linkedIn } alt="linkedin"></img></a>

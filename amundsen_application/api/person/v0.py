@@ -25,24 +25,24 @@ LOGGER = logging.getLogger(__name__)
 
 REQUEST_SESSION_TIMEOUT_SEC = 3
 
-profile_blueprint = Blueprint('profile', __name__, url_prefix='/api/profile/v0')
+person_blueprint = Blueprint('person', __name__, url_prefix='/api/person/v0')
 
 
-@profile_blueprint.route('/person_details', methods=['POST'])
-def profile_person_details() -> Response:
+@person_blueprint.route('/person_details', methods=['POST'])
+def person_details() -> Response:
     """
      Receives the id of a person in json format {"id":"XXXXXX"} and finds corresponding data from database
-     :return: Profile info as a json 
+     :return: Person info as a json 
     """
     if request.method == "POST":
         result = request.json
-        profile_json = get_profile_by_id(result['id'])
-        return profile_json
+        person_json = get_person_by_id(result['id'])
+        return person_json
     else:
         #TODO change the error handling to route back to /Home
         return "ERROR"
 
-@profile_blueprint.route('/influencerlist', methods=['POST'])
+@person_blueprint.route('/influencerlist', methods=['POST'])
 def influencer_list() -> Response:
     """
     """
@@ -56,7 +56,7 @@ def influencer_list() -> Response:
 
 
 
-def get_profile_by_id(id):
+def get_person_by_id(id):
     """
     Gets an id and finds corresponding Person and their data from database
     :return: returns person and their data as json
@@ -79,10 +79,10 @@ def get_profile_by_id(id):
         person.location AS location""",
         person_id=id)
     record = result.single()
-    profile_data = jsonify(refine_profile_data(record))
-    return profile_data
+    person_data = jsonify(refine_person_data(record))
+    return person_data
 
-def refine_profile_data(record):
+def refine_person_data(record):
     """
     refines given database data into dictionary
     :return: dictionary

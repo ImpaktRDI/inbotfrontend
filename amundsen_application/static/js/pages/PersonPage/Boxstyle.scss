@@ -38,7 +38,7 @@
   flex-wrap: wrap;
   flex-direction: row;
 }
-.container_profile { 
+.container_person { 
 width: 640px;
 margin: 5px;
 margin-left: 20px;
@@ -48,7 +48,7 @@ flex-wrap: wrap;
 flex-direction: column;
 }
 
-.profile_header_row {
+.person_header_row {
   margin: 10px;
   margin-left: 0px;
   display: flex;
@@ -57,7 +57,7 @@ flex-direction: column;
   align-items: center;
 }
 
-.profile_header_row h1{
+.person_header_row h1{
   margin-right: 14px;
 }
 
@@ -128,7 +128,7 @@ flex-direction: column;
   margin-left:20px;
 }
 
-.profile_headline {
+.person_headline {
   margin-top: 0px;
   margin-bottom: 30px;
 }

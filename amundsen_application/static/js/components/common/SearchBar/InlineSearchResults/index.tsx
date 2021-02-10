@@ -157,7 +157,7 @@ export class InlineSearchResults extends React.Component<
       case ResourceType.person:
         const person = result as PersonResource;
 
-        return `/profile/${person.id}`
+        return `/person/${person.id}`
       default:
         return '';
     }
