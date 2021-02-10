@@ -29,7 +29,7 @@ person_blueprint = Blueprint('person', __name__, url_prefix='/api/person/v0')
 
 
 @person_blueprint.route('/person_details', methods=['POST'])
-def person_person_details() -> Response:
+def person_details() -> Response:
     """
      Receives the id of a person in json format {"id":"XXXXXX"} and finds corresponding data from database
      :return: Person info as a json 

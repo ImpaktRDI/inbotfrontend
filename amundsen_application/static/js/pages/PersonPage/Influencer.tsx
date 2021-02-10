@@ -1,5 +1,3 @@
-import { profile } from 'console';
-import { url } from 'inspector';
 import * as React from 'react'
 
 const Influencer = ({influence_score, id, name, profile_url, headline}) => {
