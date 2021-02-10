@@ -1,10 +1,12 @@
 # Copyright Contributors to the Amundsen project.
 # SPDX-License-Identifier: Apache-2.0
 
+import os
 from typing import Dict, Optional
-from flask import Flask
+from flask import Flask, session
 from amundsen_application.config import LocalConfig
 from amundsen_application.models.user import load_user, User
+from inbotauth.azure import get_token_from_cache
 
 
 def get_access_headers(app: Flask) -> Optional[Dict]:
@@ -16,9 +18,9 @@ def get_access_headers(app: Flask) -> Optional[Dict]:
     as Authorization header.
     """
     try:
-        access_token = app.oidc.get_access_token()
+        access_token = get_token_from_cache()['secret']
         return {'Authorization': 'Bearer {}'.format(access_token)}
-    except Exception:
+    except Exception as e:
         return None
 
 
@@ -31,11 +33,16 @@ def get_auth_user(app: Flask) -> User:
     :param app: The instance of the current app.
     :return: A class UserInfo (Note, there isn't a UserInfo class, so we use Any)
     """
-    from flask import g
-    user_info = load_user(g.oidc_id_token)
+    user_info = load_user(session["auth_user"])
     return user_info
 
 
 class OidcConfig(LocalConfig):
     AUTH_USER_METHOD = get_auth_user
     REQUEST_HEADERS_METHOD = get_access_headers
+
+    MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
+    MYSQL_PORT = int(os.environ.get('MYSQL_PORT', '3306'))
+    MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE', 'brain')
+    MYSQL_USER = os.environ.get('MYSQL_USER')
+    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
