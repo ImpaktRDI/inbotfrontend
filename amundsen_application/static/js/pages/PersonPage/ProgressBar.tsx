@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import "./ProgressBar.scss"
 
+const PROGRESSBAR_MAX_VALUE = 100; /* If influence is over max value, then use max value for progressbar */
+const PROGRESSBAR_LIMIT_VALUE = 30; /* Limit where color changes from grey to pink */
 
 const ProgressBar =  ({percent}) => {
     const width = 150;
@@ -9,9 +11,9 @@ const ProgressBar =  ({percent}) => {
     var barstyle = "progress-div_high"
     var progress_style = "progress_high"
     
-    if (percent < 10) {
-        progress = (percent/10) * width;
-        if ((percent/10) < 0.3) {
+    if (percent < PROGRESSBAR_MAX_VALUE) {
+        progress = (percent/100) * width;
+        if (percent < PROGRESSBAR_LIMIT_VALUE) {
             barstyle = "progress-div_low"
             progress_style = "progress_low"
         }

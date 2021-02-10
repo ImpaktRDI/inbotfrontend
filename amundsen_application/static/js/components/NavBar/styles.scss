@@ -3,8 +3,8 @@
 
 @import 'variables';
 
-$shimmer-loader-circle-size: 32px;
-$avatar-container-size: 40px;
+$shimmer-loader-circle-size: 50px;
+$avatar-container-size: 50px;
 
 .nav-bar {
   align-items: center;
@@ -34,10 +34,10 @@ $avatar-container-size: 40px;
       line-height: $navbar-item-line-height;
       padding: 0 $spacer-1;
 
-      &.border-bottom-white:hover,
+/*       &.border-bottom-white:hover,
       &.border-bottom-white.active {
         border-bottom: 4px solid $white;
-      }
+      } */
     }
 
     .nav-bar-avatar {
@@ -45,7 +45,8 @@ $avatar-container-size: 40px;
       border-radius: 50%;
       border-style: none;
       height: $avatar-container-size;
-      margin-top: -4px;
+      margin: 15px;
+      margin-top: 3px;
       padding: 0;
       width: $avatar-container-size;
 
@@ -67,9 +68,9 @@ $avatar-container-size: 40px;
 
   .nav-bar-left {
     background: #e9e7ee;
-    padding: 14px;
+    padding: 30px;
     padding-left: 32px;
-    padding-right: 78px;
+    padding-right: 95px;
   }
   .nav-bar-right {
     height: 100%;
@@ -84,7 +85,7 @@ $avatar-container-size: 40px;
   }
 
   .nav-bar-right > *:not(:last-child) {
-    margin-right: 12px;
+    margin-right: 0px;
   }
 
   .nav-search-bar {
@@ -93,7 +94,7 @@ $avatar-container-size: 40px;
 
     .search-bar {
       max-width: 560px;
-      margin-left: 40px;
+      margin-left: 20px;
     }
   }
 

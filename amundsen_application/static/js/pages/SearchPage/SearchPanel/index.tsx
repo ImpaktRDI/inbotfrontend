@@ -12,7 +12,6 @@ type SearchPanelProps = {
 const SearchPanel: React.FC = ({ children }: SearchPanelProps) => {
   return (
     <aside className="search-control-panel">
-      <a href="/"><h3>&#8592; Back to search</h3></a>
       {React.Children.map(children, (child, index) => {
         return (
           <div key={`search-panel-child:${index}`} className="section">
