@@ -47,3 +47,24 @@
   font-weight: $font-weight-body-bold;
   src: url('../fonts/OpenSans-Bold.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: $font-weight-body-regular;
+  src: url('../fonts/Inter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: $font-weight-body-semi-bold;
+  src: url('../fonts/Inter-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: $font-weight-body-bold;
+  src: url('../fonts/Inter-Bold.ttf') format('truetype');
+}

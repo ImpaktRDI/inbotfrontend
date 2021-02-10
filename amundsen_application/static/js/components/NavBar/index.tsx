@@ -96,7 +96,7 @@ export class NavBar extends React.Component<NavBarProps> {
                     id="logo-icon"
                     className="logo-icon"
                     src={InbotNoIcon}
-                    height={32}
+                    height={20}
                     alt=""
                   />
               </Link>

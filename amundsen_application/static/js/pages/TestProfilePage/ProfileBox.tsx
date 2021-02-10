@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import linkedIn from '../../../images/icons/linkedin.svg'
+import linkedIn_big from '../../../images/icons/linkedin_big.svg'
 
 const ProfileBox = ({ person }) => {
     if (person.jobs.length == 0) {
@@ -8,7 +8,7 @@ const ProfileBox = ({ person }) => {
         <div className="container_profile">
           <div className="profile_header_row">
             <h1>{ person.name }</h1>
-            <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
+            <a href={ person.profile_url }><img src={linkedIn_big} alt="linkedin"></img></a>
           </div>
           <p className="profile_headline">{ person.headline }</p>
         </div>
@@ -18,7 +18,7 @@ const ProfileBox = ({ person }) => {
         <div className="container_profile">
           <div className="profile_header_row">
             <h1>{ person.name }</h1>
-            <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
+            <a href={ person.profile_url }><img src={linkedIn_big} alt="linkedin"></img></a>
           </div>
           <p className="profile_headline">{ person.jobs[0].title } - { person.jobs[0].company_name }</p>
         </div>

@@ -13,8 +13,8 @@
       width: 24px;
 
       &.small {
-        left: 8px;
-        top: 6px;
+        left: 20px;
+        top: 12px;
       }
 
       &.large {
@@ -26,15 +26,15 @@
     .clear-button {
       height: 24px;
       position: absolute;
-      right: 8px;
-      top: 2px;
+      right: 10px;
+      top: 9px;
       width: 24px;
     }
 
     .search-bar-input {
       border-color: $stroke;
-      border-radius: 4px;
-      box-shadow: 0 3px 12px 0 rgba(17, 17, 31, 0.04);
+      border-radius: 10px;
+      box-shadow: 0 4px 4px 0 rgba(189, 110, 202, 0.2);
       width: 100%;
 
       &.large {
@@ -44,8 +44,8 @@
 
       &.small {
         border: none;
-        height: 36px;
-        padding: 6px 6px 6px 36px;
+        height: 50px;
+        padding: 6px 6px 6px 62px;
       }
 
       &:focus {
