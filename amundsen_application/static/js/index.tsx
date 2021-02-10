@@ -22,7 +22,8 @@ import NotFoundPage from './pages/NotFoundPage';
 import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
 import TableDetail from './pages/TableDetailPage';
-import PersonPage from './pages/PersonPage';
+import TestProfilePage from './pages/TestProfilePage';
+import LoginPage from './pages/LoginPage';
 
 import Preloader from './components/common/Preloader';
 import Footer from './components/Footer';
@@ -58,7 +59,7 @@ ReactDOM.render(
             />
             <Route path="/user/:userId" component={ProfilePage} />
             <Route path="/404" component={NotFoundPage} />
-            <Route path="/person/:person_id" component={PersonPage} />
+            <Route path="/profile/:person_id" component={TestProfilePage} />
             <Route path="/" component={HomePage} />
 
           </Switch>
