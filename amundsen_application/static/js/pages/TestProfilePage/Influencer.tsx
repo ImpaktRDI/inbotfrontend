@@ -1,16 +1,24 @@
-import { profile } from 'console';
-import { url } from 'inspector';
 import * as React from 'react'
+import ProgressBar from './ProgressBar'
+
+import linkedIn from '../../../images/icons/linkedin.svg'
+
+
 
 const Influencer = ({influence_score, id, name, profile_url, headline}) => {
-    return (
-      <div className="box_j">
-        <h2>{name}</h2>
-        <p>Influence Score: {influence_score}</p>
-        <p>Headline: {headline}</p>
-        <button className="button1_j"><a href={ profile_url }>LinkedIn profile</a></button>
+  const profile_link = "/profile/" + id;
+  const influence_score_normalized = (influence_score/10) * 100;
+  return (
+    <div className="box_influencer">
+      <a href={ profile_link }><h3>{name}</h3></a>
+      <p>{headline}</p>
+      <div className="progressbarbox">
+        <a href={ profile_url }><img src={ linkedIn } alt="linkedin"></img></a>
+        <ProgressBar percent={influence_score} />
+        <strong>{influence_score_normalized.toFixed(0)} %</strong>        
       </div>
-    )
+    </div>
+  )
   }
 
 export default Influencer;

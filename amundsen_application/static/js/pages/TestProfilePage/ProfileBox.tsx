@@ -1,20 +1,27 @@
 import * as React from 'react'
-import JobsBox from './JobsBox'
+
+import linkedIn from '../../../images/icons/linkedin.svg'
 
 const ProfileBox = ({ person }) => {
-  return (
-    <div className="container_j">
-        <div>
+    if (person.jobs.length == 0) {
+      return (
+        <div className="container_profile">
+          <div className="profile_header_row">
             <h1>{ person.name }</h1>
-            <p>Headline: { person.headline }</p>
-            <p>Location: { person.location }</p>
-            <button className="button1_j"><a href={ person.profile_url }>LinkedIn profile</a></button>
+            <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
+          </div>
+          <p className="profile_headline">{ person.headline }</p>
         </div>
-        <div className="header_j">
-          <h2>Current job(s):</h2>
-          <JobsBox joblist={ person.jobs } />
+        )}
+    else {
+      return (
+        <div className="container_profile">
+          <div className="profile_header_row">
+            <h1>{ person.name }</h1>
+            <a href={ person.profile_url }><img src={linkedIn} alt="linkedin"></img></a>
+          </div>
+          <p className="profile_headline">{ person.jobs[0].title } - { person.jobs[0].company_name }</p>
         </div>
-    </div>
-  )}
+  )}}
 
 export default ProfileBox;
