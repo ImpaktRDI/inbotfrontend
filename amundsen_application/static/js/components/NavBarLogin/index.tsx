@@ -14,8 +14,8 @@ function NavBarLogin(): JSX.Element {
     return (
       <nav className="container-fluid">
         <div className="row">
-          <div className="nav-bar">
-            <div id="nav-bar-left" className="nav-bar-left">
+          <div className="nav-bar-login">
+            <div id="nav-bar-left" className="nav-bar-login-left">
               <Link to="/">
                 <img
                     id="logo-icon"

@@ -48,6 +48,8 @@ ReactDOM.render(
       <Router history={BrowserHistory}>
         <div id="main">
           <Preloader />
+
+          {/* NavBar component */}
           <Switch>
             <Route path="/announcements" component={NavBar} />
             <Route path="/browse" component={NavBar} />
@@ -63,7 +65,8 @@ ReactDOM.render(
             <Route path="/" component={NavBarLogin} />
             <Route path="/login" component={NavBarLogin} />
           </Switch>
-          
+
+          {/* Page component */}
           <Switch>
             <Route path="/announcements" component={AnnouncementPage} />
             <Route path="/browse" component={BrowsePage} />
@@ -79,6 +82,8 @@ ReactDOM.render(
             <Route path="/" component={HomePage} />
             <Route path="/login" component={LoginPage} />
           </Switch>
+
+          {/* Footer component */}
           <Footer />
         </div>
       </Router>

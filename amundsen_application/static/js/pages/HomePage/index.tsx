@@ -12,9 +12,7 @@ import './styles.scss';
 import { resetSearchState } from 'ducks/search/reducer';
 import { UpdateSearchStateReset } from 'ducks/search/types';
 
-import MyBookmarks from 'components/common/Bookmark/MyBookmarks';
 import Breadcrumb from 'components/common/Breadcrumb';
-import PopularTables from 'components/common/PopularTables';
 import SearchBar from 'components/common/SearchBar';
 import TagsListContainer from 'components/common/Tags';
 import Announcements from 'components/common/Announcements';
@@ -54,15 +52,6 @@ export class HomePage extends React.Component<HomePageProps> {
                 path="/search"
                 text={SEARCH_BREADCRUMB_TEXT}
               />
-            </div>
-            <div className="home-element-container">
-              <TagsListContainer shortTagsList />
-            </div>
-            <div className="home-element-container">
-              <MyBookmarks />
-            </div>
-            <div className="home-element-container">
-              <PopularTables />
             </div>
           </div>
           {announcementsEnabled() && (

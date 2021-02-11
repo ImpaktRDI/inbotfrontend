@@ -3,7 +3,7 @@
 
 @import 'variables';
 
-.nav-bar {
+.nav-bar-login {
   align-items: center;
   /*background: $inbot-black */
   background: #f6f3f9;
@@ -11,7 +11,7 @@
   flex-direction: row;
   height: $nav-bar-height;
 
-  .nav-bar-left {
+  .nav-bar-login-left {
     background: #f6f3f9;
     flex-basis: 240px;
     padding: 30px;
