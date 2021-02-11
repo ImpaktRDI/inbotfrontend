@@ -21,6 +21,8 @@ import { announcementsEnabled } from 'config/config-utils';
 
 import { SEARCH_BREADCRUMB_TEXT, HOMEPAGE_TITLE } from './constants';
 
+import frontpage_rafiki from "../../../images/frontpage-rafiki.svg"
+
 export interface DispatchFromProps {
   searchReset: () => UpdateSearchStateReset;
 }
@@ -54,6 +56,12 @@ export class HomePage extends React.Component<HomePageProps> {
               />
             </div>
           </div>
+          <h1 className="frontpage-header">Welcome to <span className="inbot-brain">Inbot Brain</span>,<br></br> an intelligent graph for data-centric organizations.</h1>
+          <img 
+            className="frontpage-img" 
+            src={frontpage_rafiki} 
+            alt="mental-healts-brain">
+          </img>
           {announcementsEnabled() && (
             <div className="col-xs-12 col-md-offset-1 col-md-3">
               <Announcements />
