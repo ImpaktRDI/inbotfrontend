@@ -125,7 +125,6 @@ export class NavBar extends React.Component<NavBarProps> {
                   {avatar}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="profile-menu">
-
                   <MenuItem
                     componentClass={Link}
                     id="sign-out"

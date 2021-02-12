@@ -22,6 +22,8 @@ import { announcementsEnabled } from 'config/config-utils';
 import { SEARCH_BREADCRUMB_TEXT, HOMEPAGE_TITLE } from './constants';
 
 import frontpage_rafiki from "../../../images/frontpage-rafiki.svg"
+import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
+import SearchPanel from '../SearchPage/SearchPanel/index';
 
 export interface DispatchFromProps {
   searchReset: () => UpdateSearchStateReset;
@@ -39,36 +41,42 @@ export class HomePage extends React.Component<HomePageProps> {
     do we want the title to change based on which
     implementation is being used? probably not */
     return (
-      <main className="container home-page">
-        <div className="row">
-          <div
-            className={`col-xs-12 ${
-              announcementsEnabled() ? 'col-md-8' : 'col-md-offset-1 col-md-10'
-            }`}
-          >
-            <h1 className="sr-only">{HOMEPAGE_TITLE}</h1>
-            <SearchBar />
-            <div className="filter-breadcrumb pull-right">
-              <Breadcrumb
-                direction="right"
-                path="/search"
-                text={SEARCH_BREADCRUMB_TEXT}
-              />
-            </div>
+        <div className="page_row_front">
+          <div className="searchPanel_front">
+            <SearchPanel>
+              <SearchTypeSelector />
+            </SearchPanel>
           </div>
-          <h1 className="frontpage-header">Welcome to <span className="inbot-brain">Inbot Brain</span>,<br></br> an intelligent graph for data-centric organizations.</h1>
-          <img 
-            className="frontpage-img" 
-            src={frontpage_rafiki} 
-            alt="mental-healts-brain">
-          </img>
-          {announcementsEnabled() && (
-            <div className="col-xs-12 col-md-offset-1 col-md-3">
-              <Announcements />
+          <div className="page_column_front">
+
+            <h1 className="frontpage-header">Welcome to <span className="inbot-brain">Inbot Brain</span>,<br></br> an intelligent graph for data-centric organizations.</h1>
+            
+            <div
+              className={`col-xs-12 ${
+                announcementsEnabled() ? 'col-md-8' : 'col-md-offset-1 col-md-10'
+              }`}
+            >
+
+              <SearchBar />
+              
             </div>
-          )}
+            
+            <div>
+              <img 
+                className="frontpage-img" 
+                src={frontpage_rafiki} 
+                alt="mental-healts-brain">
+              </img>
+            </div>
+
+            {announcementsEnabled() && (
+              <div className="col-xs-12 col-md-offset-1 col-md-3">
+                <Announcements />
+              </div>
+            )}
+
+          </div>
         </div>
-      </main>
     );
   }
 }

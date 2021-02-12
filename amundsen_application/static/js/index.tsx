@@ -50,21 +50,7 @@ ReactDOM.render(
           <Preloader />
 
           {/* NavBar component */}
-          <Switch>
-            <Route path="/announcements" component={NavBar} />
-            <Route path="/browse" component={NavBar} />
-            <Route path="/dashboard/:uri" component={NavBar} />
-            <Route path="/search" component={NavBar} />
-            <Route
-              path="/table_detail/:cluster/:database/:schema/:table"
-              component={NavBar}
-            />
-            <Route path="/user/:userId" component={NavBar} />
-            <Route path="/404" component={NavBar} />
-            <Route path="/person/:person_id" component={NavBar} />
-            <Route path="/" component={NavBarLogin} />
-            <Route path="/login" component={NavBarLogin} />
-          </Switch>
+          <Route component={NavBar} />
 
           {/* Page component */}
           <Switch>
