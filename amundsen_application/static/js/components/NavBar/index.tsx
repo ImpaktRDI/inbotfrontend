@@ -25,9 +25,12 @@ import SearchBar from 'components/common/SearchBar';
 
 import './styles.scss';
 
+import exit_icon from '../../../images/icons/exit-icon.svg';
+
 import InbotNoIcon from '../../../images/inbot-transparent-white.svg';
 
 const PROFILE_LINK_TEXT = 'My Profile';
+const LOGOUT_LINK_TEXT = 'Sign out';
 
 // Props
 interface StateFromProps {
@@ -79,12 +82,18 @@ export class NavBar extends React.Component<NavBarProps> {
 
   render() {
     const { loggedInUser } = this.props;
+    const signoutLink = `/`;
     const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
     let avatar = <div className="shimmering-circle is-shimmer-animated" />;
 
     if (loggedInUser.display_name) {
       avatar = <Avatar name={loggedInUser.display_name} size={32} round />;
     }
+
+    /* Reminder what how it was done */
+    /* {feedbackEnabled() && <Feedback />}
+    {loggedInUser && indexUsersEnabled() && ( */
+
 
     return (
       <nav className="container-fluid">
@@ -101,37 +110,44 @@ export class NavBar extends React.Component<NavBarProps> {
                   />
               </Link>
             </div>
+
             {this.renderSearchBar()}
+
             <div id="nav-bar-right" className="ml-auto nav-bar-right">
+
               {this.generateNavLinks(getNavLinks())}
-              {feedbackEnabled() && <Feedback />}
-              {loggedInUser && indexUsersEnabled() && (
-                <Dropdown id="user-dropdown" pullRight>
-                  <Dropdown.Toggle
-                    noCaret
-                    className="nav-bar-avatar avatar-dropdown"
+
+              <Dropdown id="user-dropdown" pullRight>
+                <Dropdown.Toggle
+                  noCaret
+                  className="nav-bar-avatar avatar-dropdown"
+                >
+                  {avatar}
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="profile-menu">
+
+                  <MenuItem
+                    componentClass={Link}
+                    id="sign-out"
+                    to={signoutLink}
+                    href={signoutLink}
                   >
-                    {avatar}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu className="profile-menu">
-                    <div className="profile-menu-header">
-                      <div className="title-2">{loggedInUser.display_name}</div>
-                      <div>{loggedInUser.email}</div>
-                    </div>
-                    <MenuItem
-                      componentClass={Link}
-                      id="nav-bar-avatar-link"
-                      to={userLink}
-                      href={userLink}
-                    >
-                      {PROFILE_LINK_TEXT}
-                    </MenuItem>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-              {loggedInUser && !indexUsersEnabled() && (
-                <div className="nav-bar-avatar">{avatar}</div>
-              )}
+                    <img src={exit_icon} alt=""></img>
+                    {LOGOUT_LINK_TEXT}
+                  </MenuItem>
+
+                  <MenuItem
+                    componentClass={Link}
+                    id="nav-bar-avatar-link"
+                    to={userLink}
+                    href={userLink}
+                  >
+                    {PROFILE_LINK_TEXT}
+                  </MenuItem>
+
+                </Dropdown.Menu>
+              </Dropdown>
+            
             </div>
           </div>
         </div>
