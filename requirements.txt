@@ -1,5 +1,5 @@
 inbot-common==0.5.9
-amundsen-frontend==3.0.0
+amundsen-frontend==3.1.0
 aniso8601==8.0.0
 asana==0.10.3
 attrs==20.3.0
