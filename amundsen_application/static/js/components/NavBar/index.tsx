@@ -80,6 +80,37 @@ export class NavBar extends React.Component<NavBarProps> {
     return null;
   };
 
+  renderLeftIconBar = () => {
+    if (this.props.location.pathname !== '/') {
+      return (
+        <div id="nav-bar-left" className="nav-bar-left">
+          <Link to="/">
+            <img
+                id="logo-icon"
+                className="logo-icon"
+                src={InbotNoIcon}
+                height={20}
+                alt=""
+              />
+          </Link>
+        </div>
+      );
+    }
+    return (
+      <div id="nav-bar-home-left" className="nav-bar-home-left">
+        <Link to="/">
+          <img
+              id="logo-icon"
+              className="logo-icon"
+              src={InbotNoIcon}
+              height={20}
+              alt=""
+            />
+        </Link>
+      </div>
+    );
+  };
+
   render() {
     const { loggedInUser } = this.props;
     const signoutLink = `/`;
@@ -99,17 +130,7 @@ export class NavBar extends React.Component<NavBarProps> {
       <nav className="container-fluid">
         <div className="row">
           <div className="nav-bar">
-            <div id="nav-bar-left" className="nav-bar-left">
-              <Link to="/">
-                <img
-                    id="logo-icon"
-                    className="logo-icon"
-                    src={InbotNoIcon}
-                    height={20}
-                    alt=""
-                  />
-              </Link>
-            </div>
+            {this.renderLeftIconBar()}
 
             {this.renderSearchBar()}
 

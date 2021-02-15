@@ -42,11 +42,6 @@ export class HomePage extends React.Component<HomePageProps> {
     implementation is being used? probably not */
     return (
         <div className="page_row_front">
-          <div className="searchPanel_front">
-            <SearchPanel>
-              <SearchTypeSelector />
-            </SearchPanel>
-          </div>
           <div className="page_column_front">
 
             <h1 className="frontpage-header">Welcome to <span className="inbot-brain">Inbot Brain</span>,<br></br> an intelligent graph for data-centric organizations.</h1>

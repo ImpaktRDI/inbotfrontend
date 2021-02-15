@@ -23,12 +23,10 @@ import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
 import TableDetail from './pages/TableDetailPage';
 import PersonPage from './pages/PersonPage';
-import LoginPage from './pages/LoginPage'
 
 import Preloader from './components/common/Preloader';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
-import NavBarLogin from './components/NavBarLogin';
 
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
@@ -66,11 +64,10 @@ ReactDOM.render(
             <Route path="/404" component={NotFoundPage} />
             <Route path="/person/:person_id" component={PersonPage} />
             <Route path="/" component={HomePage} />
-            <Route path="/login" component={LoginPage} />
           </Switch>
 
           {/* Footer component */}
-          <Footer />
+          {/*  <Footer /> */}
         </div>
       </Router>
     </Provider>

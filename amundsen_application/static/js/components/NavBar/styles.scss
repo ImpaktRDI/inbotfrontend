@@ -14,6 +14,14 @@ $avatar-container-size: 50px;
   flex-direction: row;
   height: $nav-bar-height;
 
+  .nav-bar-home-left {
+    background: #f6f3f9;
+    flex-basis: 240px;
+    padding: 30px;
+    padding-left: 32px;
+    padding-right: 95px;
+  }
+  
   .nav-bar-left {
     flex-basis: 240px;
 
@@ -143,3 +151,4 @@ $avatar-container-size: 50px;
     border-radius: $shimmer-loader-circle-size;
   }
 }
+
