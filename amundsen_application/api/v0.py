@@ -13,7 +13,7 @@ from amundsen_application.proxy.mysql_proxy import MySQLProxy
 from amundsen_application.api.metadata.v0 import USER_ENDPOINT
 from amundsen_application.api.utils.request_utils import request_metadata
 from amundsen_application.models.user import load_user, dump_user
-from amundsen_common.models.user import User
+from inbot_common.models.user import User
 
 
 LOGGER = logging.getLogger(__name__)

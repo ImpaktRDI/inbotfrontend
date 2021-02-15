@@ -1,4 +1,4 @@
-amundsen-common==0.5.9
+inbot-common==0.5.9
 amundsen-frontend==3.0.0
 aniso8601==8.0.0
 asana==0.10.3
@@ -22,7 +22,7 @@ flaskoidc==0.1.1
 httplib2==0.18.1
 idna==2.10
 importlib-metadata==2.0.0
-inbotauth==0.0.11
+inbot-auth==1.0.4
 iniconfig==1.1.1
 itsdangerous==1.1.0
 Jinja2==2.11.2

@@ -3,7 +3,7 @@
 
 from typing import Dict, Optional
 
-from amundsen_common.models.user import UserSchema, User
+from inbot_common.models.user import UserSchema, User
 from flask import current_app as app
 from marshmallow import ValidationError
 

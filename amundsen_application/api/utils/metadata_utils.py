@@ -5,9 +5,9 @@ import logging
 
 from typing import Any, Dict, List
 
-from amundsen_common.models.dashboard import DashboardSummary, DashboardSummarySchema
-from amundsen_common.models.popular_table import PopularTable, PopularTableSchema
-from amundsen_common.models.table import Table, TableSchema
+from inbot_common.models.dashboard import DashboardSummary, DashboardSummarySchema
+from inbot_common.models.popular_table import PopularTable, PopularTableSchema
+from inbot_common.models.table import Table, TableSchema
 from amundsen_application.models.user import load_user, dump_user
 from amundsen_application.config import MatchRuleObject
 from flask import current_app as app
