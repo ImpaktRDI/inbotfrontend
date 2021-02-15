@@ -29,6 +29,7 @@ import { Resource, ResourceType, SearchType } from 'interfaces';
 import SearchPanel from './SearchPanel';
 import SearchFilter from './SearchFilter';
 import ResourceSelector from './ResourceSelector';
+import SearchTypeSelector from './SearchTypeSelector';
 // TODO: Use css-modules instead of 'import'
 import './styles.scss';
 
@@ -47,6 +48,7 @@ import {
   USER_RESOURCE_TITLE,
   SEARCHPAGE_TITLE,
 } from './constants';
+
 
 export interface StateFromProps {
   hasFilters: boolean;
@@ -193,6 +195,7 @@ export class SearchPage extends React.Component<SearchPageProps> {
     const innerContent = (
       <div className="search-page">
         <SearchPanel>
+          <SearchTypeSelector />
           <ResourceSelector />
           <SearchFilter />
         </SearchPanel>

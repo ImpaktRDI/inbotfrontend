@@ -97,11 +97,10 @@ function PersonPage({ match }): JSX.Element {
 
   return (
     <div className="page_row">
-      <div className="searchPanel">
-        <SearchPanel>
-          <SearchTypeSelector />
-        </SearchPanel>
-      </div>
+      <SearchPanel>
+        <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
+        <SearchTypeSelector />
+      </SearchPanel>
       <div className="page_column">
         { personBox }
         <div className="page_row">
