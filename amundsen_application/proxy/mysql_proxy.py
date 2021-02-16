@@ -39,14 +39,6 @@ class MySQLProxy:
                                            **kwargs)
         self._cursor = self._connection.cursor()
 
-    def is_healthy(self) -> None:
-        # throws if cluster unhealthy or can't connect.  An alternative would be to use one of
-        # the HTTP status endpoints, which might be more specific, but don't implicitly test
-        # our configuration.
-        with self._connection.session() as session:
-            session.read_transaction(self._execute_cypher_query,
-                                     statement='CALL dbms.cluster.overview()', param_dict={})
-
     def insert_or_update_ms_user(self, *, user: User) -> None:
         """
         :param user: User object
