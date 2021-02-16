@@ -133,6 +133,11 @@ const globalState: GlobalState = {
       results: [],
       total_results: 0,
     },
+    people: {
+      page_index: 0,
+      results: [],
+      total_results: 0,
+    },
     inlineResults: {
       isLoading: false,
       dashboards: {
@@ -151,6 +156,11 @@ const globalState: GlobalState = {
         total_results: 0,
       },
       post_comments: {
+        page_index: 0,
+        results: [],
+        total_results: 0,
+      },
+      people: {
         page_index: 0,
         results: [],
         total_results: 0,
