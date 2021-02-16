@@ -25,7 +25,7 @@
     <%= htmlWebpackPlugin.tags.headTags %>
   </head>
   <body class="{{ env }}">
-    <div class="inbot-logo">
+    <div class="inbot-logo-login">
       <img 
         src="{{ url_for('static', filename='images/inbot-transparent-white.svg') }}"
         height="20px"
@@ -33,17 +33,17 @@
       </img>
     </div>
     <div class="login-container-div">
-        <h1 class="frontpage-header">Welcome to <span class="inbot-brain">Inbot Brain</span>,<br> an intelligent graph for data-centric organizations.</h1>
+        <h1 class="login-header">Welcome to <span class="inbot-brain">Inbot Brain</span>,<br> an intelligent graph for data-centric organizations.</h1>
         
         <div>
           <img 
-            class="frontpage-img" 
+            class="login-img" 
             src="{{ url_for('static', filename='images/frontpage-rafiki.svg') }}"
             alt="mental-healts-brain">
           </img>
         </div>
 
-        <div class="button-container-div">
+        <div class="login-button-container-div">
             <a href="/mslogin">
                 <img src="{{ url_for('static', filename='images/ms-login-white.svg') }}" alt="Sign in with Microsoft"></img>
             </a>
