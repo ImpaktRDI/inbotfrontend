@@ -3,6 +3,23 @@
 
 @import 'variables';
 
+.page_column_front {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  width: 100%;
+}
+.page_row_front {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  width: 100%;
+}
+.searchPanel_front {
+  display: flex;
+  background: #e9e7ee;
+}
+
 .home-page {
   .home-element-container {
     margin-top: $spacer-4 * 2;
@@ -25,4 +42,16 @@
       margin-top: 32px;
     }
   }
+}
+.frontpage-header {
+  text-align: center;
+  margin: 30px;
+}
+
+.inbot-brain {
+  color:#e73158;
+}
+.frontpage-img {
+    margin-right: 30px;
+    float: right;
 }

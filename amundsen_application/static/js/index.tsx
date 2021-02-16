@@ -46,7 +46,11 @@ ReactDOM.render(
       <Router history={BrowserHistory}>
         <div id="main">
           <Preloader />
+
+          {/* NavBar component */}
           <Route component={NavBar} />
+
+          {/* Page component */}
           <Switch>
             <Route path="/announcements" component={AnnouncementPage} />
             <Route path="/browse" component={BrowsePage} />
@@ -60,9 +64,10 @@ ReactDOM.render(
             <Route path="/404" component={NotFoundPage} />
             <Route path="/person/:person_id" component={PersonPage} />
             <Route path="/" component={HomePage} />
-
           </Switch>
-          <Footer />
+
+          {/* Footer component */}
+          {/*  <Footer /> */}
         </div>
       </Router>
     </Provider>

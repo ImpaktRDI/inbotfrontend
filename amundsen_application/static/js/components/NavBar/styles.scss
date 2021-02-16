@@ -14,6 +14,14 @@ $avatar-container-size: 50px;
   flex-direction: row;
   height: $nav-bar-height;
 
+  .nav-bar-home-left {
+    background: #f6f3f9;
+    flex-basis: 240px;
+    padding: 30px;
+    padding-left: 32px;
+    padding-right: 95px;
+  }
+  
   .nav-bar-left {
     flex-basis: 240px;
 
@@ -106,19 +114,34 @@ $avatar-container-size: 50px;
 
   .profile-menu {
     $profile-menu-width: 200px;
-
+    background: #FFFFFF;
+    box-shadow: 0px 4px 4px rgba(189, 110, 202, 0.2);
+    border-radius: 10px;
     width: $profile-menu-width;
 
     .profile-menu-header {
       padding: $spacer-2 $spacer-2 0;
     }
 
+    .arrow-up {
+      width: 0; 
+      height: 0; 
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid black;
+    }
     li {
       a {
         color: $text-primary;
-        padding: $spacer-2;
+        padding: 0px;
+        padding-left: 20px;
         width: 100%;
+        font-size: 18px;
+        font-weight: bold;
       }
+    }
+    img {
+      margin-right: 16px;
     }
   }
 
@@ -128,3 +151,4 @@ $avatar-container-size: 50px;
     border-radius: $shimmer-loader-circle-size;
   }
 }
+

@@ -4,6 +4,33 @@
 .login-container-div {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 25%;
     transform: translate(-50%, -50%);
+    width: 80%;
+}
+.login-header {
+    text-align: center;
+    margin: 30px;
+  }
+  
+.inbot-brain {
+color:#e73158;
+
+}
+.login-img {
+    margin-right: 30px;
+    float: right;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+}
+.inbot-logo-login {
+    height: 80px;
+    padding-left: 32px;
+    padding-top: 20px;
+}
+
+.login-button-container-div a {
+    position: absolute;
+    left: 40%;
 }
