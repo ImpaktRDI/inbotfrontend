@@ -1,1 +1,3 @@
 .git
+amundsen_application/static/node_modules
+amundsen_application/static/dist
