@@ -61,4 +61,5 @@ class MySQLProxy:
     def get_user_by_email(self, *, email: str) -> User:
         with self._connection.cursor() as cursor:
             cursor.execute(get_user_by_email_query, email)
-            return load_user(cursor.fetchone())
+            user_data = cursor.fetchone()
+            return load_user(user_data) if user_data else None
