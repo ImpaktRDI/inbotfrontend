@@ -24,6 +24,6 @@
       "stories/*": ["stories/*"]
     }
   },
-  "exclude": ["node_modules", "**/__tests__"],
+  "exclude": ["node_modules", "**/__tests__", "**/*.spec.*"],
   "include": ["*.ts", "*.js", ".eslintrc.js", "js/"]
 }
