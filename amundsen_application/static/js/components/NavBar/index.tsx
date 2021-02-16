@@ -118,7 +118,7 @@ export class NavBar extends React.Component<NavBarProps> {
     let avatar = <Avatar name="TestUser" color="#030030" textSizeRatio={2} size={50} round />;
 
     if (loggedInUser.display_name) {
-      avatar = <Avatar name={loggedInUser.display_name} size={32} round />;
+      avatar = <Avatar name={loggedInUser.display_name} textSizeRatio={2} size={50} round />;
     }
 
     /* Reminder what how it was done */
