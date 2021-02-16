@@ -55,7 +55,7 @@ def update_mysql_user(client: MySQLProxy, mysql_user: User, session_user: User):
     updated_mysql_user = update_mysql_user_obj(mysql_user, session_user)
     if mysql_user != updated_mysql_user:
         client.insert_or_update_ms_user(user=updated_mysql_user)
-    return update_mysql_user
+    return updated_mysql_user
 
 def update_mysql_user_obj(mysql_user: User, session_user: User):
     new_user_dict = dump_user(mysql_user)
