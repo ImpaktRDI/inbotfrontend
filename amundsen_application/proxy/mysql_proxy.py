@@ -19,7 +19,8 @@ class MySQLProxy:
                  user: str,
                  password: str,
                  port: int = 3306,
-                 database: str = 'brain') -> None:
+                 database: str = 'brain',
+                 **kwargs) -> None:
         """
         There's currently no request timeout from client side where server
         side can be enforced via "dbms.transaction.timeout"
@@ -35,7 +36,8 @@ class MySQLProxy:
                                            user=user,
                                            password=password,
                                            database=database,
-                                           cursorclass=pymysql.cursors.DictCursor)
+                                           cursorclass=pymysql.cursors.DictCursor,
+                                           **kwargs)
         self._cursor = self._connection.cursor()
 
     def is_healthy(self) -> None:
@@ -59,4 +61,5 @@ class MySQLProxy:
     def get_user_by_email(self, *, email: str) -> User:
         with self._connection.cursor() as cursor:
             cursor.execute(get_user_by_email_query, email)
-            return load_user(cursor.fetchone())
+            user_data = cursor.fetchone()
+            return load_user(user_data) if user_data else None

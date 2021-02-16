@@ -34,9 +34,11 @@ def current_user() -> Response:
                             port=app.config['MYSQL_PORT'],
                             database=app.config['MYSQL_DATABASE'],
                             user=app.config['MYSQL_USER'],
-                            password=app.config['MYSQL_PASSWORD'])
+                            password=app.config['MYSQL_PASSWORD'],
+                            ssl_ca=app.config['MYSQL_SSL_CA'])
 
         mysql_user = client.get_user_by_email(email=session_user.email)
+        mysql_user = mysql_user or load_user({"email": session_user.email})
         new_mysql_user = update_mysql_user(client, mysql_user, session_user)
 
         payload = {
@@ -54,7 +56,7 @@ def update_mysql_user(client: MySQLProxy, mysql_user: User, session_user: User):
     updated_mysql_user = update_mysql_user_obj(mysql_user, session_user)
     if mysql_user != updated_mysql_user:
         client.insert_or_update_ms_user(user=updated_mysql_user)
-    return update_mysql_user
+    return updated_mysql_user
 
 def update_mysql_user_obj(mysql_user: User, session_user: User):
     new_user_dict = dump_user(mysql_user)

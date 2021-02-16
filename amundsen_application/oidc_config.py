@@ -41,8 +41,9 @@ class OidcConfig(LocalConfig):
     AUTH_USER_METHOD = get_auth_user
     REQUEST_HEADERS_METHOD = get_access_headers
 
+    MYSQL_USER = os.environ.get('MYSQL_USER')
+    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
     MYSQL_HOST = os.environ.get('MYSQL_HOST', 'localhost')
     MYSQL_PORT = int(os.environ.get('MYSQL_PORT', '3306'))
     MYSQL_DATABASE = os.environ.get('MYSQL_DATABASE', 'brain')
-    MYSQL_USER = os.environ.get('MYSQL_USER')
-    MYSQL_PASSWORD = os.environ.get('MYSQL_PASSWORD')
+    MYSQL_SSL_CA = os.environ.get('MYSQL_SSL_CA', None)
