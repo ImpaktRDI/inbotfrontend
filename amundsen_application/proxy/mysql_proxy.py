@@ -5,8 +5,7 @@ import pymysql
 
 from inbot_common.models.user import User
 from amundsen_application.models.user import load_user
-from amundsen_application.proxy.queries import (insert_or_update_ms_user_query,
-                                                get_user_by_email_query)
+from amundsen_application.queries.sql import insert_or_update_ms_user_query, get_user_by_email_query
 
 
 class MySQLProxy:
