@@ -34,7 +34,8 @@ def current_user() -> Response:
                             port=app.config['MYSQL_PORT'],
                             database=app.config['MYSQL_DATABASE'],
                             user=app.config['MYSQL_USER'],
-                            password=app.config['MYSQL_PASSWORD'])
+                            password=app.config['MYSQL_PASSWORD'],
+                            ssl_ca=app.config['MYSQL_SSL_CA'])
 
         mysql_user = client.get_user_by_email(email=session_user.email)
         new_mysql_user = update_mysql_user(client, mysql_user, session_user)
