@@ -2,11 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-import textwrap
-import time
-from random import randint
-from typing import (Any, Dict, List, Optional, Tuple, Union,  # noqa: F401
-                    no_type_check)
 import neo4j
 from neo4j import GraphDatabase  # noqa: F401
 from neo4j.exceptions import ServiceUnavailable

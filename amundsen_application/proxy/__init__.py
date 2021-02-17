@@ -2,10 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from threading import Lock
-
 from flask import current_app as app
-
-from werkzeug.utils import import_string
 from .neo4j_proxy import Neo4jProxy
 
 _neo4j_client = None

@@ -2,30 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-import json
-
-from http import HTTPStatus
-
-from typing import Any, Dict  # noqa: F401
-
-from flask import Response, jsonify, make_response, request
-from flask import current_app as app
+from flask import Response, jsonify, request
 from flask.blueprints import Blueprint
-
-from amundsen_application.log.action_log import action_logging
-from amundsen_application.api.utils.metadata_utils import marshall_dashboard_partial
-from amundsen_application.api.utils.request_utils import get_query_param, request_search
-from amundsen_application.api.utils.search_utils import generate_query_json, has_filters, \
-    map_table_result, transform_filters, map_post_comment_result, map_person_result
-from amundsen_application.models.user import load_user, dump_user
 from amundsen_application.proxy import get_neo4j_client
 
-from neo4j import GraphDatabase
-
 LOGGER = logging.getLogger(__name__)
-
-REQUEST_SESSION_TIMEOUT_SEC = 3
-
 person_blueprint = Blueprint('person', __name__, url_prefix='/api/person/v0')
 
 
