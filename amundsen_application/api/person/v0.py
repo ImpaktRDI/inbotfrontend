@@ -18,6 +18,7 @@ from amundsen_application.api.utils.request_utils import get_query_param, reques
 from amundsen_application.api.utils.search_utils import generate_query_json, has_filters, \
     map_table_result, transform_filters, map_post_comment_result, map_person_result
 from amundsen_application.models.user import load_user, dump_user
+from amundsen_application.proxy import get_neo4j_client
 
 from neo4j import GraphDatabase
 
@@ -47,37 +48,20 @@ def person_details() -> Response:
 def influencer_list() -> Response:
     if request.method == "POST":
         result = request.json
-        influencer_list_json = get_influencer_list(result['id'])
-        return influencer_list_json
+        return get_influence_scores(result['id'])
     else:
         # TODO change the error handling to route back to /Home
         return "ERROR"
 
 
-def get_person_by_id(id):
+def get_person_by_id(person_id):
     """
     Gets an id and finds corresponding Person and their data from database
     :return: returns person and their data as json
     """
-    graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="neo4j")
-    session = graphdb.session()
-    result = session.run("""
-        MATCH (person:Person)
-        WHERE person.id = $person_id
-        OPTIONAL MATCH (person)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
-        WHERE job.end_date IS NULL
-        RETURN DISTINCT person.id AS id,
-        person.full_name AS name,
-        person.linkedin_url AS profile_url,
-        person.headline AS headline,
-        COLLECT(job.title) AS job_titles,
-        COLLECT(company.name) AS company_names,
-        COLLECT(company.linkedin_url) AS company_urls,
-        person.description AS description,
-        person.location AS location""", person_id=id)
-    record = result.single()
-    person_data = jsonify(refine_person_data(record))
-    return person_data
+    client = get_neo4j_client()
+    person_record = client.get_person_by_id(person_id)
+    return jsonify(refine_person_data(person_record))
 
 
 def refine_person_data(record):
@@ -103,13 +87,11 @@ def refine_person_data(record):
 def refine_influencer_data(influencers):
     influencer_list = []
     for i in range(len(influencers)):
-        if len(influencers[i][5]) == 0:
-            jobs = []
-        else:
-            jobs = [{'title': influencers[i][5][j],
-                     'company_name': influencers[i][6][j],
-                     'company_url': influencers[i][7][j]
-                     } for j in range(len(influencers[i][5]))]
+        jobs = [{
+            'title': influencers[i][5][j],
+            'company_name': influencers[i][6][j],
+            'company_url': influencers[i][7][j]
+        } for j in range(len(influencers[i][5]))]
         influencer_list.append({
             "id": influencers[i][0],
             "influence_score": influencers[i][1],
@@ -122,88 +104,30 @@ def refine_influencer_data(influencers):
     return influencer_list
 
 
-def get_influencer_list(id):
-    graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="neo4j")
-    session = graphdb.session()
-    influenced_by_likes = session.run("""
-        MATCH (person:Person{ id: $person_id })
-        OPTIONAL MATCH (person)-[:POSTED]->(:Post)<-[l:LIKED]-(liker:Person)
-        WHERE NOT(liker.id=person.id) AND TOSTRING(liker.full_name) = liker.full_name
-        WITH DISTINCT liker, COUNT(l) as liked_posts
-        OPTIONAL MATCH (liker)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
-        RETURN DISTINCT liker.id AS id, liked_posts, liker.full_name AS name, liker.headline AS headline,
-                        liker.linkedin_url AS profile_url, COLLECT(job.title) AS job_title,
-                        COLLECT(company.name) AS company_name, COLLECT(company.linkedin_url) AS company_url
-        ORDER BY liked_posts DESC
-        LIMIT 20
-        """, person_id=id)
-    influenced_by_comments = session.run("""
-        MATCH (person:Person{ id: $person_id })
-        OPTIONAL MATCH (person)-[:POSTED]->(:Post)<-[c:COMMENTED_ON]-(commentor:Person)
-        WHERE NOT(commentor.id=person.id) AND TOSTRING(commentor.full_name) = commentor.full_name
-        WITH DISTINCT commentor, COUNT(c) as commented_posts
-        OPTIONAL MATCH (commentor)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
-        RETURN DISTINCT commentor.id AS id, commented_posts, commentor.full_name AS name,
-                        commentor.headline AS headline, commentor.linkedin_url AS profile_url,
-                        COLLECT(job.title) AS job_title, COLLECT(company.name) AS company_name,
-                        COLLECT(company.linkedin_url) AS company_url
-        ORDER BY commented_posts DESC
-        LIMIT 20
-        """, person_id=id)
-    influencing_with_likes = session.run("""
-        MATCH (person:Person{ id: $person_id })
-        OPTIONAL MATCH (person)-[l:LIKED]->(:Post)<-[:POSTED]-(liker:Person)
-        WHERE NOT(liker.id=person.id) AND TOSTRING(liker.full_name) = liker.full_name
-        WITH DISTINCT liker, COUNT(l) as liked_posts
-        OPTIONAL MATCH (liker)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
-        RETURN DISTINCT liker.id AS id, liked_posts, liker.full_name AS name, liker.headline AS headline,
-                        liker.linkedin_url AS profile_url, COLLECT(job.title) AS job_title,
-                        COLLECT(company.name) AS company_name, COLLECT(company.linkedin_url) AS company_url
-        ORDER BY liked_posts DESC
-        LIMIT 20
-        """, person_id=id)
-    influencing_with_comments = session.run("""
-        MATCH (person:Person{ id: $person_id })
-        OPTIONAL MATCH (person)-[c:COMMENTED_ON]->(:Post)<-[:POSTED]-(commentor:Person)
-        WHERE NOT(commentor.id=person.id) AND TOSTRING(commentor.full_name) = commentor.full_name
-        WITH DISTINCT commentor, COUNT(c) as commented_posts
-        OPTIONAL MATCH (commentor)-[:OCCUPATION]->(job:Job)<-[:ROLE]-(company:LinkedinCompany)
-        RETURN DISTINCT commentor.id AS id, commented_posts, commentor.full_name AS name,
-                        commentor.headline AS headline, commentor.linkedin_url AS profile_url,
-                        COLLECT(job.title) AS job_title, COLLECT(company.name) AS company_name,
-                        COLLECT(company.linkedin_url) AS company_url
-        ORDER BY commented_posts DESC
-        LIMIT 20
-        """, person_id=id)
+def get_influence(likes, comments):
+    weighted_comments = [comments_multiply(item) for item in comments]  # add comment factor to comment influence
+    weighted_likes = [likes_multiply(item) for item in likes]  # add likes factor to likes influence
+    combined_influence = combine(weighted_comments, weighted_likes)  # combine likes and comments influences
+    combined_influence_sorted = sort_results(combined_influence)  # sort list from highest influence number to lowest
+    combined_influence_sorted.pop()  # Removes null data
+    return refine_influencer_data(combined_influence_sorted[:5])
 
-    # Influenced by data (people who have liked or commented on person's posts)
-    liked_by = influenced_by_likes.values()
-    commented_by = influenced_by_comments.values()
-    commented_by_list = [comments_multiply(item) for item in commented_by]  # add comment factor to comment influence
-    liked_by_list = [likes_multiply(item) for item in liked_by]  # add likes factor to likes influence
-    influenced_by_combined = combine(commented_by_list, liked_by_list)  # combine likes and comments influences
-    sort_results(influenced_by_combined)  # sort list from highest influence number to lowest
-    if len(influenced_by_combined) < 5:
-        influenced_by = refine_influencer_data(influenced_by_combined[0:len(influenced_by_combined)])
-        influenced_by.pop()  # Removes null data
-    else:
-        influenced_by = refine_influencer_data(influenced_by_combined[0:5])
 
-    # Influencing to data (people who's posts person has liked or commented)
-    liked_to = influencing_with_likes.values()
-    commented_to = influencing_with_comments.values()
-    commented_to_list = [comments_multiply(item) for item in commented_to]  # add comment factor to comment influence
-    liked_to_list = [likes_multiply(item) for item in liked_to]  # add likes factor to likes influence
-    influencing_to_combined = combine(commented_to_list, liked_to_list)  # combine likes and comments influences
-    sort_results(influencing_to_combined)  # sort list from highest influence number to lowest
-    if len(influencing_to_combined) < 5:
-        influencing_to = refine_influencer_data(influencing_to_combined[0:len(influencing_to_combined)])
-        influencing_to.pop()  # Removes null data (Query problem ?)
-    else:
-        influencing_to = refine_influencer_data(influencing_to_combined[0:5])
+def get_influence_scores(person_id):
+    client = get_neo4j_client()
+
+    # 'Influences' data (people who's posts person has liked or commented)
+    likers = client.get_person_likers(person_id)
+    commentors = client.get_person_commentors(person_id)
+    influences = get_influence(likers, commentors)
+
+    # 'Influencer' data (people who have liked or commented on person's posts)
+    likees = client.get_person_likees(person_id)
+    commentees = client.get_person_commentees(person_id)
+    influencers = get_influence(likees, commentees)
 
     # return max 5 influencers
-    return jsonify({"influenced_by": influenced_by, "influencing_to": influencing_to})
+    return jsonify({"influenced_by": influencers, "influencing_to": influences})
 
 
 # Functions for influencer list
