@@ -25,52 +25,48 @@ def company_details() -> Response:
     """
     if request.method == "POST":
         result = request.json
-        company_json = get_company_by_id(result['id'])
-        return company_json
+        company_data_json = get_company_data_by_id(result['id'])
+        return company_data_json
     else:
         return "ERROR"  # TODO change the error handling to route back to /Home
 
 
-""" @people_blueprint.route('/peoplelist', methods=['POST'])
-def people_list() -> Response:
-"""
-"""
-if request.method == "POST":
-    result = request.json
-    people_list_json = get_people_list(result['id'])
-    return people_list_json
-else:
-    #TODO change the error handling to route back to /Home
-    return "ERROR" """
-
-
-def get_company_by_id(id):
+def get_company_data_by_id(id):
     """
     Gets an id and finds corresponding Person and their data from database
     :return: returns person and their data as json
     """
     graphdb = GraphDatabase.driver(uri='neo4j://localhost:7687', auth=("neo4j", "test"), database="neo4j")
-    session = graphdb.session()
-    result = session.run(
+    # company session
+    session_company = graphdb.session()
+    result_company = session_company.run(
         """
         MATCH (company:LinkedinCompany)
         WHERE company.id = $company_id
         RETURN company""",
         company_id=id)
-    record = result.single()
-    print(record)
-    company_data = jsonify(refine_company_data(record[0]))
-    print(company_data)
-    return company_data
+    record_company = result_company.single()
+    # people session
+    session_people = graphdb.session()
+    result_people = session_people.run(
+        """
+        MATCH (company:LinkedinCompany
+        {id:"8822c698-6319-4176-8aed-782db0d197b3"})-[:ROLE]->(job:Job)<-[:OCCUPATION]-(person:Person)
+        RETURN person,job"""
+    )
+    record_people = result_people.values()
+    return jsonify({"company": refine_company_data(record_company[0]), "people": refine_people_data(record_people)})
 
 
 def refine_company_data(record):
-    """
-    refines given database data into dictionary
-    :return: dictionary
-    """
     return {
         "id": record["id"],
         "name": record["name"],
-        "linkedin_url": record["linkedin_url"],
+        "linkedin_url": record["linkedin_url"]
     }
+
+
+def refine_people_data(record):
+    return([{"name": record[i][0]["full_name"],
+             "id": record[i][0]["id"],
+             "title": record[i][1]["title"]} for i in range(len(record))])

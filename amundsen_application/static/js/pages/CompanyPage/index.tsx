@@ -7,44 +7,33 @@ import PeopleBox from './PeopleBox'
 import SearchPanel from '../SearchPage/SearchPanel/index';
 import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
 
-type Job = {
-    title: string,
-    company_name: string,
-    company_url: string
-  }
+type Person = {
+  id: string,
+  name: string,
+  title: string
+}
+
+type Company = {
+  id: string,
+  name: string,
+  linkedin_url: string    
+}
 
 type CompanyDetails = {
-    id: string,
-    name: string,
-    linkedin_url: string
-  }
-  
-  type CompanyState = {
-    company: CompanyDetails
-  }
-  
-  type PeopleDetails = {
-    id: string,
-    influence_score: number,
-    name: string,
-    profile_url: string,
-    headline: string,
-    jobs: Job[]
-  }
-  
-  type PeopleState = {
-    person: PeopleDetails[]
-  }
-  
-  const initialCompany: CompanyDetails = {
-    id: '',
-    name: '',
-    linkedin_url: ''
-  }
+  company: Company,
+  people: Person[]
+}
+
+const initialCompany: CompanyDetails = {
+  company: {id: '',
+            name: '',
+            linkedin_url: ''},
+  people: []
+}
 
 function CompanyPage({ match }): JSX.Element {
   const company_id = match.params.company_id
-  const [company, setCompany] = useState({ company: initialCompany } as CompanyState)
+  const [company, setCompany] = useState(initialCompany)
   const [companyBox, setCompanyBox] = useState(<div>Loading company data...</div>)
   const [peopleBox, setPeopleBox] = useState(<div>Loading...</div>)
 
@@ -56,12 +45,13 @@ function CompanyPage({ match }): JSX.Element {
       body: JSON.stringify({ id: company_id }),
       headers: { 'Content-Type': 'application/json' }})
       .then(response => {return response.json()})
-      .then(company => { setCompany({ company }) })
+      .then(company_data => { setCompany(company_data as CompanyDetails) })
   }, [company_id])
 
     //updates Page for current company
   useEffect(() => {
       setCompanyBox(<CompanyBox company={ company.company } />)
+      setPeopleBox(<PeopleBox people={ company.people} />)
   }, [company])
 
 

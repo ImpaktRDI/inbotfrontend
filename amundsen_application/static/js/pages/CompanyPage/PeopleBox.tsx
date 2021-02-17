@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-const PeopleBox = () => {
-    return (<div><p>PeopleBox</p></div>)
+const PeopleBox = ({ people }) => {
+    return (<div><p>{ people[0].name }</p></div>)
 }
 
 export default PeopleBox;
