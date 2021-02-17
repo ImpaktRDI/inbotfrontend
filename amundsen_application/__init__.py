@@ -19,6 +19,7 @@ from amundsen_application.api.metadata.v0 import metadata_blueprint
 from amundsen_application.api.preview.v0 import preview_blueprint
 from amundsen_application.api.search.v0 import search_blueprint
 from amundsen_application.api.person.v0 import person_blueprint
+from amundsen_application.api.company.v0 import company_blueprint
 from amundsen_application.api.preview.dashboard.v0 import dashboard_preview_blueprint
 from amundsen_application.api.issue.issue import IssueAPI, IssuesAPI
 
@@ -76,6 +77,7 @@ def create_app(config_module_class: str, template_folder: str = None) -> Flask:
     app.register_blueprint(preview_blueprint)
     app.register_blueprint(search_blueprint)
     app.register_blueprint(person_blueprint)
+    app.register_blueprint(company_blueprint)
     app.register_blueprint(api_bp)
     app.register_blueprint(dashboard_preview_blueprint)
     init_routes(app)
