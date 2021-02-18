@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 
-import CompanyBox from './CompanyBox'
-import PeopleBox from './PeopleBox'
+import './Boxstyle.scss';
+
+import CompanyBox from './CompanyBox';
+import PeopleBox from './PeopleBox';
 
 import SearchPanel from '../SearchPage/SearchPanel/index';
 import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
@@ -58,16 +60,14 @@ function CompanyPage({ match }): JSX.Element {
 
   return (
       <div className="page_row">
-          <SearchPanel>
-              <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
-              <SearchTypeSelector />
-          </SearchPanel>
-          <div className="page_column">
-              { companyBox }
-              <div className="page_row">
-                  { peopleBox }
-              </div>
-          </div>
+        <SearchPanel>
+          <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
+          <SearchTypeSelector />
+        </SearchPanel>
+        <div className="page_column">
+          { companyBox }
+          { peopleBox }
+        </div>
       </div>
   )
 }

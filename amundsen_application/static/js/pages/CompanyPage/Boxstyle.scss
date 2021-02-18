@@ -1,0 +1,160 @@
+.page_column {
+  display: flex;
+  justify-content: left;
+  flex-direction: column;
+  width: 100%;
+  margin-left: 20px
+}
+.page_row {
+  display: flex;
+  justify-content: left;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 40px;
+}
+.searchPanel {
+  display: flex;
+}
+
+.container_j {
+  margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.container_column {
+  margin: 5px;
+  margin-left: 0px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.container_row {
+  margin: 5px;
+  margin-left: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.container_person { 
+width: 640px;
+margin: 5px;
+margin-left: 20px;
+margin-right: 50px;
+display: flex;
+flex-wrap: wrap;
+flex-direction: column;
+}
+
+.person_header_row {
+  margin: 10px;
+  margin-left: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+}
+
+.person_header_row h1{
+  margin-right: 14px;
+}
+
+.progressbarbox {
+  margin: 10px;
+  margin-left: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+}
+
+.barbox_row {
+  margin: 10px;
+  margin-left: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: center;
+}
+
+.header_j {
+  display: flex;
+}
+
+.button1_j {
+  background-color: #030030;
+  margin: 2px;
+  width: 80%;
+}
+
+.button1_j a {
+  color:white;
+}
+
+.box_influencer {
+  background: white;
+  display: flex;
+  width: 320px;
+  flex-direction: column;
+  margin: 20px;
+  margin-left: 0px;
+  color: #030030;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px 0px rgba(189, 110, 202, 0.2);
+  transition: margin 0.5s, box-shadow 0.5s;
+
+  a h3 {
+    margin-left:0px;
+  }
+
+  a h3:hover {
+    color:blue;
+    text-decoration: underline;
+    text-decoration-color: blue;
+  }
+}
+
+.box_influencer:hover {
+  text-decoration: none;
+  margin-top: 14px;
+  margin-bottom: 26px;
+  box-shadow: 0px 8px 8px 0px rgba(189, 110, 202, 0.6);
+  } 
+
+.influence_header {
+  margin-left:20px;
+}
+
+.person_headline {
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
+
+.not-available {
+  margin-left:20px
+}
+
+@media (max-width: 768px)
+{
+  .page_j {
+    width: 100%;
+  }
+
+  .box_j {
+    width: 40%;
+  }
+}
+
+@media (max-width: 400px)
+{
+  .page_j {
+    width: 100%;
+  }
+  
+  .box_j {
+    width: 80%;
+  }
+}
