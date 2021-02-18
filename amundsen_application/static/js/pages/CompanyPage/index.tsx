@@ -28,7 +28,9 @@ const initialCompany: CompanyDetails = {
   company: {id: '',
             name: '',
             linkedin_url: ''},
-  people: []
+  people: [{id:'',
+            name:'',
+            title:''}]
 }
 
 function CompanyPage({ match }): JSX.Element {
@@ -53,8 +55,6 @@ function CompanyPage({ match }): JSX.Element {
       setCompanyBox(<CompanyBox company={ company.company } />)
       setPeopleBox(<PeopleBox people={ company.people} />)
   }, [company])
-
-
 
   return (
       <div className="page_row">

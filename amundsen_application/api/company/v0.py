@@ -69,4 +69,5 @@ def refine_company_data(record):
 def refine_people_data(record):
     return([{"name": record[i][0]["full_name"],
              "id": record[i][0]["id"],
+             "linkedin_url": record[i][0]["linkedin_url"],
              "title": record[i][1]["title"]} for i in range(len(record))])
