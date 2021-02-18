@@ -11,7 +11,7 @@ const PeopleBox = ({ people }) => {
                 key={i}
                 id={person.id}
                 name={person.name}
-                linkedin_url={person.profile_url}
+                linkedin_url={person.linkedin_url}
                 title={person.title}
                 />
             );

@@ -50,10 +50,9 @@ def get_company_data_by_id(id):
     session_people = graphdb.session()
     result_people = session_people.run(
         """
-        MATCH (company:LinkedinCompany
-        {id:"8822c698-6319-4176-8aed-782db0d197b3"})-[:ROLE]->(job:Job)<-[:OCCUPATION]-(person:Person)
-        RETURN person,job"""
-    )
+        MATCH (company:LinkedinCompany {id:$company_id})-[:ROLE]->(job:Job)<-[:OCCUPATION]-(person:Person)
+        RETURN person,job""",
+        company_id=id)
     record_people = result_people.values()
     return jsonify({"company": refine_company_data(record_company[0]), "people": refine_people_data(record_people)})
 
