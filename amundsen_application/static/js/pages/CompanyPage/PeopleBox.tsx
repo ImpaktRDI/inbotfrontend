@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Person from './Person'
+import PersonCard from './PersonCard'
 
 
 const PeopleBox = ({ people }) => {
@@ -7,7 +7,7 @@ const PeopleBox = ({ people }) => {
         <div className="container_column">
             {people.map((person, i) => {
             return (
-                <Person
+                <PersonCard
                 key={i}
                 id={person.id}
                 name={person.name}
