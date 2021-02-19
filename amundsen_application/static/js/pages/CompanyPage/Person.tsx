@@ -12,7 +12,11 @@ const Person = ({ id, name, title, linkedin_url }) => {
                 <a href={ linkedin_url }><img src={ linkedIn } alt="linkedin"></img></a>
             </div>
         </div>
-        <p>{title}</p>
+        <p className="title-text">{title}</p>
+        <div className="tag-box">
+            <div className="tag"><strong className="tag-text">TestTag1</strong></div>
+            <div className="tag"><strong className="tag-text">TestTag2</strong></div>
+        </div>
     </div>)
 }
 
