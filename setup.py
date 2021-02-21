@@ -52,7 +52,7 @@ setup(
     dependency_links=[],
     install_requires=requirements,
     extras_require={
-        'oidc': ['inbot-auth==1.0.4']
+        'oidc': ['inbot-auth==1.0.7']
     },
     python_requires=">=3.6",
     entry_points="""
