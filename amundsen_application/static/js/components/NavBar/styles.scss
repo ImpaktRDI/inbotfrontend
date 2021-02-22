@@ -119,6 +119,20 @@ $avatar-container-size: 50px;
     border-radius: 10px;
     width: $profile-menu-width;
 
+    .logged-in-info {
+      padding: 20px 20px 10px 20px;
+      word-wrap: break-word;
+
+      .logged-in-info-name {
+        font-weight: 700;
+      }
+
+      .logged-in-info-email {
+        font-size: 10px;
+        color: gray;
+      }
+    }
+
     .profile-menu-header {
       padding: $spacer-2 $spacer-2 0;
     }

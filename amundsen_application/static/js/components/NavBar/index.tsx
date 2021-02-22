@@ -111,7 +111,17 @@ export class NavBar extends React.Component<NavBarProps> {
     );
   };
 
-  renderDropdown = (avatar: Avatar, signoutLink: string, userLink: string) => {
+  renderDropdown = (loggedInUser: LoggedInUser) => {
+    const signoutLink = '/logout';
+    const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
+    let avatar: Avatar;
+
+    if (loggedInUser.display_name) {
+      avatar = <Avatar name={loggedInUser.display_name} textSizeRatio={2} size={50} round />;
+    } else {
+      avatar = <Avatar name="TestUser" color="#030030" textSizeRatio={2} size={50} round />;
+    }
+
     return (
       <Dropdown id="user-dropdown" pullRight>
         <Dropdown.Toggle
@@ -121,6 +131,18 @@ export class NavBar extends React.Component<NavBarProps> {
           {avatar}
         </Dropdown.Toggle>
         <Dropdown.Menu className="profile-menu">
+          <div className="logged-in-info">
+            <div className="logged-in-info-name">{loggedInUser.full_name}</div>
+            <div className="logged-in-info-email">{loggedInUser.email}</div>
+          </div>
+          {/* <MenuItem
+            componentClass={Link}
+            id="nav-bar-avatar-link"
+            to={userLink}
+            href={userLink}
+          >
+            {PROFILE_LINK_TEXT}
+          </MenuItem> */}
           <MenuItem
             componentClass={Link}
             id="sign-out"
@@ -131,15 +153,6 @@ export class NavBar extends React.Component<NavBarProps> {
             {SIGNOUT_LINK_TEXT}
           </MenuItem>
 
-          <MenuItem
-            componentClass={Link}
-            id="nav-bar-avatar-link"
-            to={userLink}
-            href={userLink}
-          >
-            {PROFILE_LINK_TEXT}
-          </MenuItem>
-
         </Dropdown.Menu>
       </Dropdown>
     )
@@ -147,18 +160,6 @@ export class NavBar extends React.Component<NavBarProps> {
 
   render() {
     const { loggedInUser } = this.props;
-    const signoutLink = '/logout';
-    const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
-    let avatar = <Avatar name="TestUser" color="#030030" textSizeRatio={2} size={50} round />;
-
-    if (loggedInUser.display_name) {
-      avatar = <Avatar name={loggedInUser.display_name} textSizeRatio={2} size={50} round />;
-    }
-
-    /* Reminder what how it was done */
-    /* {feedbackEnabled() && <Feedback />}
-    {loggedInUser && indexUsersEnabled() && ( */
-
 
     return (
       <nav className="container-fluid">
@@ -168,7 +169,7 @@ export class NavBar extends React.Component<NavBarProps> {
             {this.renderSearchBar()}
             <div id="nav-bar-right" className="ml-auto nav-bar-right">
               {this.generateNavLinks(getNavLinks())}
-              {this.renderDropdown(avatar, signoutLink, userLink)}
+              {this.renderDropdown(loggedInUser)}
             </div>
           </div>
         </div>
