@@ -30,7 +30,7 @@ import exit_icon from '../../../images/icons/exit-icon.svg';
 import InbotNoIcon from '../../../images/inbot-transparent-white.svg';
 
 const PROFILE_LINK_TEXT = 'My Profile';
-const LOGOUT_LINK_TEXT = 'Sign out';
+const SIGNOUT_LINK_TEXT = 'Sign out';
 
 // Props
 interface StateFromProps {
@@ -111,9 +111,43 @@ export class NavBar extends React.Component<NavBarProps> {
     );
   };
 
+  renderDropdown = (avatar: Avatar, signoutLink: string, userLink: string) => {
+    return (
+      <Dropdown id="user-dropdown" pullRight>
+        <Dropdown.Toggle
+          noCaret
+          className="nav-bar-avatar avatar-dropdown"
+        >
+          {avatar}
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="profile-menu">
+          <MenuItem
+            componentClass={Link}
+            id="sign-out"
+            to={signoutLink}
+            href={signoutLink}
+          >
+            <img src={exit_icon} alt=""></img>
+            {SIGNOUT_LINK_TEXT}
+          </MenuItem>
+
+          <MenuItem
+            componentClass={Link}
+            id="nav-bar-avatar-link"
+            to={userLink}
+            href={userLink}
+          >
+            {PROFILE_LINK_TEXT}
+          </MenuItem>
+
+        </Dropdown.Menu>
+      </Dropdown>
+    )
+  }
+
   render() {
     const { loggedInUser } = this.props;
-    const signoutLink = `/`;
+    const signoutLink = '/logout';
     const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
     let avatar = <Avatar name="TestUser" color="#030030" textSizeRatio={2} size={50} round />;
 
@@ -131,43 +165,10 @@ export class NavBar extends React.Component<NavBarProps> {
         <div className="row">
           <div className="nav-bar">
             {this.renderLeftIconBar()}
-
             {this.renderSearchBar()}
-
             <div id="nav-bar-right" className="ml-auto nav-bar-right">
-
               {this.generateNavLinks(getNavLinks())}
-
-              <Dropdown id="user-dropdown" pullRight>
-                <Dropdown.Toggle
-                  noCaret
-                  className="nav-bar-avatar avatar-dropdown"
-                >
-                  {avatar}
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="profile-menu">
-                  <MenuItem
-                    componentClass={Link}
-                    id="sign-out"
-                    to={signoutLink}
-                    href={signoutLink}
-                  >
-                    <img src={exit_icon} alt=""></img>
-                    {LOGOUT_LINK_TEXT}
-                  </MenuItem>
-
-                  <MenuItem
-                    componentClass={Link}
-                    id="nav-bar-avatar-link"
-                    to={userLink}
-                    href={userLink}
-                  >
-                    {PROFILE_LINK_TEXT}
-                  </MenuItem>
-
-                </Dropdown.Menu>
-              </Dropdown>
-            
+              {this.renderDropdown(avatar, signoutLink, userLink)}
             </div>
           </div>
         </div>

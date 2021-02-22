@@ -50,6 +50,11 @@ ReactDOM.render(
           {/* NavBar component */}
           <Route component={NavBar} />
 
+          <Route path='/logout' component={() => {
+            window.location.href = `${window.location.origin}/logout`;
+            return null;
+          }}/>
+
           {/* Page component */}
           <Switch>
             <Route path="/announcements" component={AnnouncementPage} />
