@@ -389,8 +389,6 @@ export default function reducer(
       };
     case InlineSearch.SUCCESS:
       const inlineResults = (<InlineSearchResponse>action).payload;
-      console.log("inline success. results:")
-      console.log(inlineResults)
       if (inlineResults === undefined) {
         throw Error(
           'InlineSearchResponse.payload must be specified for SUCCESS type'

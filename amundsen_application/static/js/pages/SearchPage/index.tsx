@@ -85,9 +85,6 @@ export class SearchPage extends React.Component<SearchPageProps> {
   }
 
   renderSearchResults = () => {
-    console.log("renderSearchResults")
-    console.log(this.props.resource)
-    console.log(this.props.post_comments)
     switch (this.props.resource) {
       case ResourceType.table:
         return this.getTabContent(this.props.tables, ResourceType.table);
@@ -128,9 +125,6 @@ export class SearchPage extends React.Component<SearchPageProps> {
     const { page_index, total_results } = results;
     const startIndex = RESULTS_PER_PAGE * page_index + 1;
     const tabLabel = this.generateTabLabel(tab);
-
-    console.log("getTabContent")
-    console.log(results)
 
     // No search input
     if (searchTerm.length === 0 && !hasFilters) {

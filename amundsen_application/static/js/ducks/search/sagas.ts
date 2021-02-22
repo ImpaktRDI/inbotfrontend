@@ -66,7 +66,7 @@ export function* submitSearchWorker(action: SubmitSearchRequest): SagaIterator {
     searchAll(
       searchTerm ? SearchType.SUBMIT_TERM : SearchType.CLEAR_TERM,
       searchTerm,
-      ResourceType.table,
+      ResourceType.person,
       0,
       useFilters
     )
@@ -113,12 +113,10 @@ export function* updateSearchStateWorker(
   action: UpdateSearchStateRequest
 ): SagaIterator {
   if (action.payload !== undefined) {
-    console.log("updateSearchStateWorker")
-    console.log(action.payload)
     const { filters, resource, updateUrl, submitSearch } = action.payload;
     const state = yield select(getSearchState);
     if (filters && submitSearch) {
-      yield put(searchAll(SearchType.FILTER, '', ResourceType.table, 0, true));
+      yield put(searchAll(SearchType.FILTER, '', ResourceType.person, 0, true));
     } else if (updateUrl) {
       updateSearchUrl({
         resource: resource || state.resource,
@@ -162,8 +160,6 @@ export function* urlDidUpdateWorker(action: UrlDidUpdateRequest): SagaIterator {
     );
   } else if (resource) {
     if (resource !== state.resource) {
-      console.log("updateSearchStateWorker")
-      console.log(`updating to ${resource}`)
       yield put(updateSearchState({ resource }));
     }
 
@@ -223,8 +219,6 @@ export function* loadPreviousSearchWatcher(): SagaIterator {
 export function* searchResourceWorker(
   action: SearchResourceRequest
 ): SagaIterator {
-  console.log("searchResourceWorker")
-  console.log(action.payload)
   const { pageIndex, resource, term, searchType } = action.payload;
   const state = yield select(getSearchState);
   try {
@@ -302,8 +296,6 @@ export function* searchAllWorker(action: SearchAllRequest): SagaIterator {
         searchType
       ),
     ]);
-    console.log("searchAllWorker")
-    console.log(postCommentResponse)
     const searchAllResponse = {
       resource,
       search_term: term,
@@ -334,8 +326,6 @@ export function* searchAllWatcher(): SagaIterator {
 //  TODO: Consider moving into nested directory similar to how filter logic.
 
 export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
-  console.log("inlineSearchWorker")
-  console.log(action.payload)
   const { term } = action.payload;
   try {
     const [dashboardResponse, tableResponse, userResponse, postCommentResponse, personResponse] = yield all([
@@ -388,12 +378,8 @@ export function* inlineSearchWorker(action: InlineSearchRequest): SagaIterator {
       post_comments: postCommentResponse.post_comments || initialInlineResultsState.post_comments,
       people: personResponse.people || initialInlineResultsState.people,
     };
-    console.log("inlineSearchWorker")
-    console.log(postCommentResponse)
     yield put(getInlineResultsSuccess(inlineSearchResponse));
   } catch (e) {
-    console.log(e)
-    console.log('error in inlineSearchWorker')
     yield put(getInlineResultsFailure());
   }
 }
@@ -409,7 +395,6 @@ export function* inlineSearchWatcherDebounce(): SagaIterator {
 }
 
 export function* selectInlineResultWorker(action): SagaIterator {
-  console.log("selectInlineResultWorker")
   const state = yield select();
   const { searchTerm, resourceType, updateUrl } = action.payload;
   if (state.search.inlineResults.isLoading) {
