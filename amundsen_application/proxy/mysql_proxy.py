@@ -5,8 +5,7 @@ import pymysql
 
 from inbot_common.models.user import User
 from amundsen_application.models.user import load_user
-from amundsen_application.proxy.queries import (insert_or_update_ms_user_query,
-                                                get_user_by_email_query)
+from amundsen_application.queries.sql import insert_or_update_ms_user_query, get_user_by_email_query
 
 
 class MySQLProxy:
@@ -39,14 +38,6 @@ class MySQLProxy:
                                            cursorclass=pymysql.cursors.DictCursor,
                                            **kwargs)
         self._cursor = self._connection.cursor()
-
-    def is_healthy(self) -> None:
-        # throws if cluster unhealthy or can't connect.  An alternative would be to use one of
-        # the HTTP status endpoints, which might be more specific, but don't implicitly test
-        # our configuration.
-        with self._connection.session() as session:
-            session.read_transaction(self._execute_cypher_query,
-                                     statement='CALL dbms.cluster.overview()', param_dict={})
 
     def insert_or_update_ms_user(self, *, user: User) -> None:
         """

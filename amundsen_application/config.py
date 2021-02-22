@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import os
+import distutils.util
 from typing import Callable, Dict, List, Optional, Set  # noqa: F401
 from amundsen_application.models.user import User
 
@@ -124,6 +125,14 @@ class LocalConfig(Config):
 
     # If installing using the Docker bootstrap, this should be modified to the docker host ip.
     LOCAL_HOST = '0.0.0.0'
+
+    NEO4J_HOST = os.environ.get('NEO4J_HOST', 'localhost')
+    NEO4J_PORT = int(os.environ.get('NEO4J_PORT', 7687))
+    NEO4J_USER = os.environ.get('NEO4J_USER', 'neo4j')
+    NEO4J_PASSWORD = os.environ.get('NEO4J_PASSWORD', 'test')
+    NEO4J_SCHEME = os.environ.get('NEO4J_SCHEME', 'neo4j')
+    NEO4J_ENCRYPTED = bool(distutils.util.strtobool(os.environ.get('NEO4J_ENCRYPTED', 'False')))
+    NEO4J_VALIDATE_SSL = bool(distutils.util.strtobool(os.environ.get('NEO4J_VALIDATE_SSL', 'False')))
 
     FRONTEND_BASE = os.environ.get('FRONTEND_BASE',
                                    'http://{LOCAL_HOST}:{PORT}'.format(
