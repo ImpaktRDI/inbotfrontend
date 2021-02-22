@@ -1,6 +1,6 @@
 // Copyright Contributors to the Amundsen project.
 // SPDX-License-Identifier: Apache-2.0
-
+import axios, { AxiosResponse } from 'axios';
 import * as React from 'react'; 
 import { useState, useEffect } from 'react';
 
@@ -13,6 +13,8 @@ import InfluencersBox from './InfluencersBox';
 
 import SearchPanel from '../SearchPage/SearchPanel/index';
 import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
+
+const PERSON_BASE = '/api/person/v0'
 
 type Job = {
   title: string,
@@ -31,7 +33,13 @@ type PersonDetails = {
 }
 
 type PersonState = {
-  person: PersonDetails
+  person_details: PersonDetails
+  influence: InfluenceState
+}
+
+type InfluenceState = {
+  influences: InfluencerDetails[]
+  influencers: InfluencerDetails[]
 }
 
 type InfluencerDetails = {
@@ -43,11 +51,7 @@ type InfluencerDetails = {
   jobs: Job[]
 }
 
-type InfluencerState = {
-  influencer: InfluencerDetails[]
-}
-
-const initialPerson: PersonDetails = {
+const initialPersonDetails: PersonDetails = {
   id: '',
   name: '',
   profile_url: '',
@@ -57,43 +61,40 @@ const initialPerson: PersonDetails = {
   location: ''
 }
 
+const initialInfluence: InfluenceState = {
+  influences: [],
+  influencers: []
+}
+
 function PersonPage({ match }): JSX.Element {
   const person_id = match.params.person_id
-  const [person, setPerson] = useState({ person: initialPerson } as PersonState)
+  const [personState, setPersonState] = useState({ person_details: initialPersonDetails, influence: initialInfluence } as PersonState)
   const [personBox, setPersonBox] = useState(<div>Loading person data...</div>)
   const [influencedByBox, setInfluencedByBox] = useState(<div>Loading...</div>)
   const [influencingToBox, setInfluencingToBox] = useState(<div>Loading...</div>)
 
   //fetch current person from backend by person_id (given by address parameter 'match.params.person_id')
   useEffect(() => {
-    fetch("http://localhost:5000/api/person/v0/person_details", 
-    {
-      method: "POST", 
-      body: JSON.stringify({ id: person_id }),
-      headers: { 'Content-Type': 'application/json' }})
-      .then(response => {return response.json()})
-      .then(person => { setPerson({ person }) })
+    axios.post(
+      `${PERSON_BASE}/person`,
+      { id: person_id },
+      { headers: { 'Content-Type': 'application/json' }})
+    .then((response: AxiosResponse<PersonState>) => {
+      const { data } = response;
+      return data
+    })
+    .then((personState: PersonState) => {
+      console.log(personState)
+      setPersonState(personState)
+    })
   }, [person_id])
 
   //updates Page for current person
   useEffect(() => {
-      setPersonBox(<PersonBox person={ person.person } />)
-  }, [person])
-
-  //updates Page for current person
-  useEffect(() => {
-    fetch("http://localhost:5000/api/person/v0/influencerlist", 
-  {
-    method: "POST", 
-    body: JSON.stringify({ id: person_id }),
-    headers: { 'Content-Type': 'application/json' }})
-    .then(response => {return response.json()})
-    .then(influencers_list => { 
-      console.log(influencers_list);
-      setInfluencingToBox(<InfluencersBox influencers={ influencers_list.influencing_to } target={ "Influences:"} />);
-      setInfluencedByBox(<InfluencersBox influencers={ influencers_list.influenced_by } target={ "Influenced by:"} />)})
-    
-  }, [person_id])
+    setPersonBox(<PersonBox person={ personState.person_details } />)
+    setInfluencingToBox(<InfluencersBox influencers={ personState.influence.influences } target={ "Influences:"} />);
+    setInfluencedByBox(<InfluencersBox influencers={ personState.influence.influencers } target={ "Influenced by:"} />);
+  }, [personState])
 
   return (
     <div className="page_row">

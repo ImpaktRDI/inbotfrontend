@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-from flask import Response, jsonify, request
+from flask import Response, jsonify, request, make_response
 from flask.blueprints import Blueprint
 from amundsen_application.proxy import get_neo4j_client
 
@@ -10,26 +10,17 @@ LOGGER = logging.getLogger(__name__)
 person_blueprint = Blueprint('person', __name__, url_prefix='/api/person/v0')
 
 
-@person_blueprint.route('/person_details', methods=['POST'])
-def person_details() -> Response:
+@person_blueprint.route('/person', methods=['POST'])
+def person() -> Response:
     """
     Receives the id of a person in json format {"id":"XXXXXX"} and finds corresponding data from database
     :return: Person info as a json
     """
     if request.method == "POST":
         result = request.json
-        person_json = get_person_by_id(result['id'])
-        return person_json
-    else:
-        # TODO change the error handling to route back to /Home
-        return "ERROR"
-
-
-@person_blueprint.route('/influencerlist', methods=['POST'])
-def influencer_list() -> Response:
-    if request.method == "POST":
-        result = request.json
-        return get_influence_scores(result['id'])
+        person_details = get_person_by_id(result['id'])
+        influence = get_influence_scores(result['id'])
+        return make_response(jsonify(person_details=person_details, influence=influence), 200)
     else:
         # TODO change the error handling to route back to /Home
         return "ERROR"
@@ -42,7 +33,7 @@ def get_person_by_id(person_id):
     """
     client = get_neo4j_client()
     person_record = client.get_person_by_id(person_id)
-    return jsonify(refine_person_data(person_record))
+    return refine_person_data(person_record)
 
 
 def refine_person_data(record):
@@ -108,7 +99,10 @@ def get_influence_scores(person_id):
     influencers = get_influence(likees, commentees)
 
     # return max 5 influencers
-    return jsonify({"influenced_by": influencers, "influencing_to": influences})
+    return {
+        "influencers": influencers,
+        "influences": influences
+    }
 
 
 # Functions for influencer list
