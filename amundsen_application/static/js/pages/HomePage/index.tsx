@@ -53,7 +53,7 @@ export class HomePage extends React.Component<HomePageProps> {
             >
 
               <SearchBar />
-              
+
             </div>
             
             <div>

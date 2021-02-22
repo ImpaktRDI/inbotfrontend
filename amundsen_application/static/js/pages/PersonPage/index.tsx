@@ -84,7 +84,6 @@ function PersonPage({ match }): JSX.Element {
       return data
     })
     .then((personState: PersonState) => {
-      console.log(personState)
       setPersonState(personState)
     })
   }, [person_id])
