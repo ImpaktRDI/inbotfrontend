@@ -113,7 +113,7 @@ export class NavBar extends React.Component<NavBarProps> {
 
   renderDropdown = (loggedInUser: LoggedInUser) => {
     const signoutLink = '/logout';
-    const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
+    // const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
     let avatar: Avatar;
 
     if (loggedInUser.display_name) {
@@ -168,7 +168,8 @@ export class NavBar extends React.Component<NavBarProps> {
             {this.renderLeftIconBar()}
             {this.renderSearchBar()}
             <div id="nav-bar-right" className="ml-auto nav-bar-right">
-              {this.generateNavLinks(getNavLinks())}
+              {/* {this.generateNavLinks(getNavLinks())} */}
+              <div className="nav-bar-text">{loggedInUser.full_name}</div>
               {this.renderDropdown(loggedInUser)}
             </div>
           </div>
