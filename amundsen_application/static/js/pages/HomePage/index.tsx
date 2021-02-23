@@ -22,8 +22,6 @@ import { announcementsEnabled } from 'config/config-utils';
 import { SEARCH_BREADCRUMB_TEXT, HOMEPAGE_TITLE } from './constants';
 
 import frontpage_rafiki from "../../../images/frontpage-rafiki.svg"
-import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
-import SearchPanel from '../SearchPage/SearchPanel/index';
 
 export interface DispatchFromProps {
   searchReset: () => UpdateSearchStateReset;

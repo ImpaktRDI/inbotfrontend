@@ -11,8 +11,8 @@ import './Boxstyle.scss';
 import PersonBox from './PersonBox'
 import InfluencersBox from './InfluencersBox';
 
-import SearchPanel from '../SearchPage/SearchPanel/index';
-import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
+import SearchPanel from '../SearchPage/SearchPanel/';
+import ResourceSelector from '../SearchPage/ResourceSelector/';
 
 const PERSON_BASE = '/api/person/v0'
 
@@ -99,7 +99,7 @@ function PersonPage({ match }): JSX.Element {
     <div className="page_row">
       <SearchPanel>
         <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
-        <SearchTypeSelector />
+        <ResourceSelector />
       </SearchPanel>
       <div className="page_column">
         { personBox }

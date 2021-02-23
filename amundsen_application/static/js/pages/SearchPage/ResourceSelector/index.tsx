@@ -30,8 +30,6 @@ import { ResourceSelectorButton, ResourceOptionConfig } from './ResourceSelector
 import personSvg from '../../../../images/icons/people.svg';
 import companySvg from '../../../../images/icons/companies.svg';
 
-const RESOURCE_SELECTOR_TITLE = 'Resource';
-
 export interface StateFromProps {
   resource: ResourceType;
   post_comments: PostCommentSearchResults;
