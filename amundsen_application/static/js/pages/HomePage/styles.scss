@@ -20,6 +20,27 @@
   background: #e9e7ee;
 }
 
+.img-div-front-fullscreen {
+  display: block;
+}
+
+.img-div-front-mobile {
+  display: none;
+}
+
+.frontpage-header {
+  text-align: center;
+  margin: 30px;
+}
+
+.inbot-brain {
+  color:#e73158;
+}
+.frontpage-img {
+    margin-right: 30px;
+    float: right;
+}
+
 .home-page {
   .home-element-container {
     margin-top: $spacer-4 * 2;
@@ -43,15 +64,24 @@
     }
   }
 }
-.frontpage-header {
-  text-align: center;
-  margin: 30px;
-}
 
-.inbot-brain {
-  color:#e73158;
-}
-.frontpage-img {
-    margin-right: 30px;
-    float: right;
+@media (max-width: $screen-sm-max) {
+  .img-div-front-fullscreen {
+    display: none;
+  }
+  
+  .img-div-front-mobile {
+    display: block;
+  }
+
+  .frontpage-img {
+    display: block;
+    width: 320px;
+    margin-left: auto;
+    margin-right:auto;
+    float: none;
+  }
+  .page_column_front {
+    margin-bottom: 100px;
+  }
 }
