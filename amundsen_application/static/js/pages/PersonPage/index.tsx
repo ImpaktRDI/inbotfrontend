@@ -96,7 +96,7 @@ function PersonPage({ match }): JSX.Element {
   }, [personState])
 
   return (
-    <div className="page_row">
+    <div className="person-page">
       <SearchPanel>
         <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
         <ResourceSelector />
