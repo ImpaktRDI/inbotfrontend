@@ -150,5 +150,12 @@ $avatar-container-size: 50px;
     width: $shimmer-loader-circle-size;
     border-radius: $shimmer-loader-circle-size;
   }
+
+  @media (max-width: $screen-sm-max) {
+    .nav-bar-right {
+      display: none;
+    }
+  }
 }
+
 

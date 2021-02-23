@@ -44,6 +44,14 @@ export class HomePage extends React.Component<HomePageProps> {
         <div className="page_row_front">
           <div className="page_column_front">
 
+           <div className="img-div-front-mobile">
+              <img 
+                className="frontpage-img" 
+                src={frontpage_rafiki} 
+                alt="mental-healts-brain">
+              </img>
+            </div>
+
             <h1 className="frontpage-header">Welcome to <span className="inbot-brain">Inbot Brain</span>,<br></br> an intelligent graph for data-centric organizations.</h1>
             
             <div
@@ -56,7 +64,7 @@ export class HomePage extends React.Component<HomePageProps> {
               
             </div>
             
-            <div>
+            <div className="img-div-front-fullscreen">
               <img 
                 className="frontpage-img" 
                 src={frontpage_rafiki} 
