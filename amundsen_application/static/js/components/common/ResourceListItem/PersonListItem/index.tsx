@@ -18,7 +18,7 @@ class PersonListItem extends React.Component<PersonListItemProps, {}> {
     const { person, logging } = this.props;
 
     return (
-      `/person_detail/${person.name}` +
+      `/person/${person.id}` +
       `?index=${logging.index}&source=${logging.source}`
     );
   };
