@@ -1,0 +1,17 @@
+.resource-selector-button {
+    cursor: pointer;
+
+    .resource-selector-button-item {
+        display: inline-block;
+        padding-right: 8px;
+        vertical-align: middle;
+
+        .resource-selector-button-icon {
+            width: 20px;
+
+            img {
+                vertical-align: top;
+            }
+        }
+    }
+}

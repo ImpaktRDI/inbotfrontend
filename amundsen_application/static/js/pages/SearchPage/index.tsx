@@ -29,7 +29,6 @@ import { Resource, ResourceType, SearchType } from 'interfaces';
 import SearchPanel from './SearchPanel';
 import SearchFilter from './SearchFilter';
 import ResourceSelector from './ResourceSelector';
-import SearchTypeSelector from './SearchTypeSelector';
 // TODO: Use css-modules instead of 'import'
 import './styles.scss';
 
@@ -85,9 +84,6 @@ export class SearchPage extends React.Component<SearchPageProps> {
   }
 
   renderSearchResults = () => {
-    console.log("renderSearchResults")
-    console.log(this.props.resource)
-    console.log(this.props.post_comments)
     switch (this.props.resource) {
       case ResourceType.table:
         return this.getTabContent(this.props.tables, ResourceType.table);
@@ -129,9 +125,6 @@ export class SearchPage extends React.Component<SearchPageProps> {
     const startIndex = RESULTS_PER_PAGE * page_index + 1;
     const tabLabel = this.generateTabLabel(tab);
 
-    console.log("getTabContent")
-    console.log(results)
-
     // No search input
     if (searchTerm.length === 0 && !hasFilters) {
       return (
@@ -169,7 +162,6 @@ export class SearchPage extends React.Component<SearchPageProps> {
 
     return (
       <div className="search-list-container">
-        <ResourceListHeader />
         <PaginatedApiResourceList
           activePage={page_index}
           onPagination={this.props.setPageIndex}
@@ -195,9 +187,7 @@ export class SearchPage extends React.Component<SearchPageProps> {
     const innerContent = (
       <div className="search-page">
         <SearchPanel>
-          <SearchTypeSelector />
           <ResourceSelector />
-          <SearchFilter />
         </SearchPanel>
         <main className="search-results">
           <h1 className="sr-only">{SEARCHPAGE_TITLE}</h1>

@@ -7,7 +7,7 @@ const INFLUENCE_SCORE_NORMALIZATION_VALUE = 10; /* Adjust this value to modify i
 
 const Influencer = ({influence_score, id, name, profile_url, headline}) => {
   const person_link = "/person/" + id;
-  const influence_score_normalized = (influence_score/INFLUENCE_SCORE_NORMALIZATION_VALUE) * 100;
+  const influence_score_normalized = Math.min(100, (influence_score/INFLUENCE_SCORE_NORMALIZATION_VALUE) * 100);
   return (
     <div className="box_influencer">
       <a href={ person_link }><h3>{name}</h3></a>

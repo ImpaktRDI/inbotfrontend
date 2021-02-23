@@ -25,8 +25,10 @@ import {
   POST_COMMENT_RESOURCE_TITLE,
   PERSON_RESOURCE_TITLE,
 } from '../constants';
+import { ResourceSelectorButton, ResourceOptionConfig } from './ResourceSelectorButton'
 
-const RESOURCE_SELECTOR_TITLE = 'Resource';
+import personSvg from '../../../../images/icons/people.svg';
+import companySvg from '../../../../images/icons/companies.svg';
 
 export interface StateFromProps {
   resource: ResourceType;
@@ -40,21 +42,20 @@ export interface DispatchFromProps {
 
 export type ResourceSelectorProps = StateFromProps & DispatchFromProps;
 
-interface ResourceOptionConfig {
-  type: ResourceType;
-  label: string;
-  count: number;
-}
-
 export class ResourceSelector extends React.Component<ResourceSelectorProps> {
-  onChange = (event) => {
-    this.props.setResource(event.target.value);
+  onChange = (resourceType) => {
+    this.props.setResource(resourceType);
   };
 
   renderRadioOption = (option: ResourceOptionConfig, index: number) => {
     return (
       <div key={`resource-radio-item:${index}`} className="radio">
-        <label className="radio-label">
+        <ResourceSelectorButton
+          resource={ option }
+          checked={ this.props.resource === option.type }
+          onClick={ this.onChange }
+        />
+        {/* <label className="radio-label">
           <input
             type="radio"
             name="resource"
@@ -64,7 +65,7 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
           />
           <span className="subtitle-2">{option.label}</span>
           <span className="body-secondary-3 pull-right">{option.count}</span>
-        </label>
+        </label> */}
       </div>
     );
   };
@@ -77,6 +78,7 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
         type: ResourceType.person,
         label: PERSON_RESOURCE_TITLE,
         count: this.props.people.total_results,
+        imgSrc: personSvg
       });
     }
 
@@ -85,12 +87,12 @@ export class ResourceSelector extends React.Component<ResourceSelectorProps> {
         type: ResourceType.post_comment,
         label: POST_COMMENT_RESOURCE_TITLE,
         count: this.props.post_comments.total_results,
+        imgSrc: companySvg
       });
     }
 
     return (
       <>
-        <h2 className="title-2">{RESOURCE_SELECTOR_TITLE}</h2>
         {resourceOptions.map((option, index) =>
           this.renderRadioOption(option, index)
         )}

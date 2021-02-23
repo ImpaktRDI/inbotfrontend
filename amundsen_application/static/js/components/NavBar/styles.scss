@@ -48,6 +48,12 @@ $avatar-container-size: 50px;
       } */
     }
 
+    .nav-bar-text {
+      font-weight: bold;
+      line-height: 54px;
+      cursor: default
+    }
+
     .nav-bar-avatar {
       background-color: $nav-bar-color;
       border-radius: 50%;
@@ -118,6 +124,20 @@ $avatar-container-size: 50px;
     box-shadow: 0px 4px 4px rgba(189, 110, 202, 0.2);
     border-radius: 10px;
     width: $profile-menu-width;
+
+    .logged-in-info {
+      padding: 20px 20px 10px 20px;
+      word-wrap: break-word;
+
+      .logged-in-info-name {
+        font-weight: 700;
+      }
+
+      .logged-in-info-email {
+        font-size: 10px;
+        color: gray;
+      }
+    }
 
     .profile-menu-header {
       padding: $spacer-2 $spacer-2 0;

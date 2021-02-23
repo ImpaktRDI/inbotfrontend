@@ -10,7 +10,7 @@ export enum ResourceType {
   person = 'person'
 }
 
-export const DEFAULT_RESOURCE_TYPE = ResourceType.table;
+export const DEFAULT_RESOURCE_TYPE = ResourceType.person;
 
 export interface Resource {
   type: ResourceType;

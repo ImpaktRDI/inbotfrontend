@@ -11,8 +11,8 @@ import './Boxstyle.scss';
 import PersonBox from './PersonBox'
 import InfluencersBox from './InfluencersBox';
 
-import SearchPanel from '../SearchPage/SearchPanel/index';
-import SearchTypeSelector from '../SearchPage/SearchTypeSelector/index';
+import SearchPanel from '../SearchPage/SearchPanel/';
+import ResourceSelector from '../SearchPage/ResourceSelector/';
 
 const PERSON_BASE = '/api/person/v0'
 
@@ -84,7 +84,6 @@ function PersonPage({ match }): JSX.Element {
       return data
     })
     .then((personState: PersonState) => {
-      console.log(personState)
       setPersonState(personState)
     })
   }, [person_id])
@@ -97,10 +96,9 @@ function PersonPage({ match }): JSX.Element {
   }, [personState])
 
   return (
-    <div className="page_row">
+    <div className="person-page">
       <SearchPanel>
-        <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
-        <SearchTypeSelector />
+        <ResourceSelector />
       </SearchPanel>
       <div className="page_column">
         { personBox }

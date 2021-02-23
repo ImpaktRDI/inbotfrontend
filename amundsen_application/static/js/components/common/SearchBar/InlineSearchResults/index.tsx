@@ -248,8 +248,6 @@ export class InlineSearchResults extends React.Component<
     resourceType: ResourceType,
     result: Resource
   ): string => {
-    console.log("getSuggestedResultType")
-    console.log(resourceType)
     switch (resourceType) {
       case ResourceType.dashboard:
         const dashboard = result as DashboardResource;

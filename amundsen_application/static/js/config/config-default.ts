@@ -26,7 +26,7 @@ const configDefault: AppConfig = {
     enabled: true,
   },
   indexPostComments: {
-    enabled: true,
+    enabled: false,
   },
   indexDashboards: {
     enabled: false,
