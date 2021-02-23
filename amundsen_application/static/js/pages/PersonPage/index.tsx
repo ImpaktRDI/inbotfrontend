@@ -98,7 +98,6 @@ function PersonPage({ match }): JSX.Element {
   return (
     <div className="person-page">
       <SearchPanel>
-        <a href="/"><h3>&#8592; &nbsp;Back to search</h3></a>
         <ResourceSelector />
       </SearchPanel>
       <div className="page_column">
