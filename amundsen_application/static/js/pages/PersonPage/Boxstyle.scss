@@ -1,10 +1,10 @@
 .page_column {
-  display: flex;
-  justify-content: left;
-  flex-direction: column;
-  width: 100%;
-  margin-left: 20px
+  padding-left: 20px;
+  flex-grow: 1;
+  width: 0;
+  overflow-y: scroll
 }
+
 .page_row {
   display: flex;
   justify-content: left;
@@ -12,6 +12,7 @@
   width: 100%;
   margin-bottom: 40px;
 }
+
 .searchPanel {
   display: flex;
 }
@@ -38,14 +39,15 @@
   flex-wrap: wrap;
   flex-direction: row;
 }
+
 .container_person { 
-width: 640px;
-margin: 5px;
-margin-left: 20px;
-margin-right: 50px;
-display: flex;
-flex-wrap: wrap;
-flex-direction: column;
+  width: 640px;
+  margin: 5px;
+  margin-left: 20px;
+  margin-right: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .person_header_row {
@@ -122,7 +124,7 @@ flex-direction: column;
   margin-top: 14px;
   margin-bottom: 26px;
   box-shadow: 0px 8px 8px 0px rgba(189, 110, 202, 0.6);
-  } 
+} 
 
 .influence_header {
   margin-left:20px;
