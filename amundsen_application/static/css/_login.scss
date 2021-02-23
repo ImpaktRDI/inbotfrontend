@@ -3,10 +3,11 @@
 
 .login-container-div {
     position: absolute;
-    left: 50%;
+    left: 25%;
     top: 25%;
-    transform: translate(-50%, -50%);
-    width: 80%;
+    transform: translate(-25%, -25%);
+    width: 100%;
+    margin-top: 220px;
 }
 .login-header {
     text-align: center;
@@ -19,10 +20,9 @@ color:#e73158;
 }
 .login-img {
     margin-right: 30px;
-    float: right;
-    position: absolute;
-    top: 75%;
-    left: 50%;
+    display: block;
+    margin-left: 50%;
+    margin-right: 40%;
 }
 .inbot-logo-login {
     height: 80px;
@@ -30,7 +30,41 @@ color:#e73158;
     padding-top: 20px;
 }
 
-.login-button-container-div a {
-    position: absolute;
-    left: 40%;
+.login-button-container-div {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60px;
+    width: 320px;
+
+    a {
+        position: absolute;
+    }
+
 }
+
+.img-div-front-fullscreen {
+    display: block;
+  }
+  
+.img-div-front-mobile {
+    display: none;
+}
+
+@media (max-width: $screen-sm-max) {
+    .img-div-front-fullscreen {
+      display: none;
+    }
+    
+    .img-div-front-mobile {
+      display: block;
+    }
+  
+    .login-img {
+      display: block;
+      width: 320px;
+      margin-left: auto;
+      margin-right:auto;
+      float: none;
+    }
+  }
