@@ -102,7 +102,7 @@ function PersonPage({ match }): JSX.Element {
       </SearchPanel>
       <div className="page_column">
         { personBox }
-        <div className="page_row">
+        <div className="page_row influencers-mobile">
           { influencingToBox }
           { influencedByBox }
         </div>

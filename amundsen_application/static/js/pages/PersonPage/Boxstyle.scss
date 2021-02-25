@@ -139,8 +139,22 @@
   margin-left:20px
 }
 
-@media (max-width: 768px)
+.inluencer-min-width {
+  min-width: 320px;
+}
+
+@media (max-width: 768px) 
 {
+  .influencers-mobile {
+    flex-direction: column;
+  }
+
+  .container_person { 
+    width: 100%;
+  }
+  .box_influencer{
+    width: 100%;
+  }
   .page_j {
     width: 100%;
   }
@@ -152,6 +166,15 @@
 
 @media (max-width: 400px)
 {
+  .influencers-mobile {
+    flex-direction: column;
+  }
+  .container_person { 
+    width: 100%;
+  }
+  .box_influencer{
+    width: 100%;
+  }
   .page_j {
     width: 100%;
   }
