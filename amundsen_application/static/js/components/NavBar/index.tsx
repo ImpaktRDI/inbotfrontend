@@ -214,6 +214,7 @@ export class NavBar extends React.Component<NavBarProps> {
             </div>
           </div>
           <div className="nav-bar mobile-responsive">
+            {this.renderSearchBar()}
             <div id="nav-bar-right" className="ml-auto nav-bar-right">
               {this.renderBurgerDropdown(loggedInUser)}
             </div>

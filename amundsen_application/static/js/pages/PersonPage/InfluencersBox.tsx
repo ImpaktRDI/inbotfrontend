@@ -4,7 +4,7 @@ import Influencer from './Influencer';
 const InfluencersBox = ({ influencers, target }) => {
     if (influencers.length == 0)
       return (
-      <div className="container_column">
+      <div className="container_column inluencer-min-width">
           <h3 className="influence_header">{ target }</h3>
           <p className="not-available">None available yet</p>
       </div>
