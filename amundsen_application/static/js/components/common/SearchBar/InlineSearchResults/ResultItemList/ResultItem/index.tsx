@@ -4,6 +4,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import personSvg from '../../../../../../../images/icons/people.svg';
+
 export interface ResultItemProps {
   id: string;
   href: string;
@@ -31,7 +33,8 @@ const ResultItem: React.FC<ResultItemProps> = ({
         onClick={onItemSelect}
         to={href}
       >
-        <span className={`result-icon ${iconClass}`} />
+        {/* <span className={`result-icon ${iconClass}`} /> */}
+        <img src={personSvg} width="30px" style={{marginRight: 20}}></img>
 
         <div className="result-info my-auto">
           <div className="truncated">
