@@ -33,4 +33,11 @@
 
 .paginated-resource-list {
   margin-bottom: $spacer-4;
+  width: 70%;
+}
+
+@media (max-width: $screen-sm-max) {
+  .paginated-resource-list {
+    width: 100%;
+  }
 }
