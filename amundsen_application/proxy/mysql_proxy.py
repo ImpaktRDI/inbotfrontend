@@ -45,8 +45,8 @@ class MySQLProxy:
         :return:  A Table object
         """
         with self._connection.cursor() as cursor:
-            cursor.execute(insert_or_update_ms_user_query,
-                           (user.email, user.first_name, user.last_name, user.full_name))
+            cursor.execute(insert_or_update_ms_user_query, (
+                user.email, user.first_name, user.last_name, user.full_name, user.tenant_id))
         self._connection.commit()
 
     def get_user_by_email(self, *, email: str) -> User:
