@@ -40,7 +40,12 @@
     margin-right: 30px;
     float: right;
 }
-
+.search-mobile {
+  display:none;
+}
+.search-fullscreen {
+  display:flex;
+}
 .home-page {
   .home-element-container {
     margin-top: $spacer-4 * 2;
@@ -66,10 +71,13 @@
 }
 
 @media (max-width: $screen-sm-max) {
-  .img-div-front-fullscreen {
-    display: none;
-  }
   
+  .search-mobile {
+    display:flex;
+  }
+  .search-fullscreen {
+    display:none;
+  }
   .img-div-front-mobile {
     display: block;
   }
