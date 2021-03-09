@@ -167,7 +167,9 @@ export class NavBar extends React.Component<NavBarProps> {
         <Dropdown.Toggle
           noCaret
         >
+          <div className="burger-background">
             <img src={burger}></img>
+          </div>
         </Dropdown.Toggle>
         <Dropdown.Menu className="profile-menu">
           <div className="logged-in-info">

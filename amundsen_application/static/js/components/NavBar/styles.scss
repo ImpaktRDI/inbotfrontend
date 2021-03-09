@@ -35,7 +35,7 @@ $avatar-container-size: 50px;
     display: flex;
     margin-left: auto;
     height: 100%;
-    padding-top: 12px;
+    padding-top: 16px;
     padding-right: 32px;
 
     a {
@@ -50,6 +50,13 @@ $avatar-container-size: 50px;
       &.border-bottom-white.active {
         border-bottom: 4px solid $white;
       } */
+    }
+
+    .burger-background {
+      background: #f6f3f9;
+      padding: 6px 16px;
+      margin: -2px;
+      border: 1px solid #f6f3f9;
     }
   
     .nav-bar-right > *:not(:last-child) {
