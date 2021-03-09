@@ -26,24 +26,26 @@ class PersonListItem extends React.Component<PersonListItemProps, {}> {
     const { person } = this.props;
 
     return (
-      <li className="list-group-item clickable">
-        <Link
-          className="resource-list-item person-list-item"
-          to={this.getLink()}
-        >
-          <div className="resource-info">
-            <div className="resource-info-text my-auto">
-              <div className="resource-name title-2">
-                <div className="truncated">
-                  {`${person.name}`}
+      <li className="list-group-box">
+        <div className="list-group-box-item">
+          <Link
+            className="resource-list-item person-list-item"
+            to={this.getLink()}
+          >
+            <div className="resource-info">
+              <div className="resource-info-text my-auto">
+                <div className="resource-name title-2">
+                  <div className="truncated">
+                    {`${person.name}`}
+                  </div>
+                </div>
+                <div className="body-secondary-3 truncated">
+                  {person.headline && person.headline}
                 </div>
               </div>
-              <div className="body-secondary-3 truncated">
-                {person.headline && person.headline}
-              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </li>
     );
   }
