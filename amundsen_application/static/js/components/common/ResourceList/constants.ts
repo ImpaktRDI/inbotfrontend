@@ -1,4 +1,4 @@
-export const PAGINATION_PAGE_RANGE = 10;
+export const PAGINATION_PAGE_RANGE = 5;
 
 export const DEFAULT_EMPTY_TEXT = 'No resources to display';
 

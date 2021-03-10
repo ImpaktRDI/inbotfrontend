@@ -100,7 +100,7 @@
   display: flex;
   width: 320px;
   flex-direction: column;
-  margin: 20px;
+  margin: 8px;
   margin-left: 0px;
   color: #030030;
   padding: 20px;
@@ -121,8 +121,8 @@
 
 .box_influencer:hover {
   text-decoration: none;
-  margin-top: 14px;
-  margin-bottom: 26px;
+  margin-top: 12px;
+  margin-bottom: 14px;
   box-shadow: 0px 8px 8px 0px rgba(189, 110, 202, 0.6);
 } 
 
@@ -139,8 +139,22 @@
   margin-left:20px
 }
 
-@media (max-width: 768px)
+.inluencer-min-width {
+  min-width: 320px;
+}
+
+@media (max-width: 768px) 
 {
+  .influencers-mobile {
+    flex-direction: column;
+  }
+
+  .container_person { 
+    width: 100%;
+  }
+  .box_influencer{
+    width: 100%;
+  }
   .page_j {
     width: 100%;
   }
@@ -152,6 +166,15 @@
 
 @media (max-width: 400px)
 {
+  .influencers-mobile {
+    flex-direction: column;
+  }
+  .container_person { 
+    width: 100%;
+  }
+  .box_influencer{
+    width: 100%;
+  }
   .page_j {
     width: 100%;
   }

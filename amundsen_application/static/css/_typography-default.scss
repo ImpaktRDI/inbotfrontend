@@ -203,6 +203,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgba(3, 0, 48, 0.8);
 }
 
 // Text for Screen Readers only
@@ -299,7 +300,7 @@ body {
 }
 
 .title-3 {
-  color: $text-secondary;
+  color: $inbot-font-color;/* $text-secondary; */
   font-size: 14px;
   font-weight: $font-weight-body-bold;
   line-height: 1.42857;
@@ -339,7 +340,7 @@ body {
 }
 
 .body-secondary-3 {
-  color: $text-secondary;
+  color: $inbot-font-color;
   font-size: 14px;
   font-weight: $font-weight-body-regular;
 }

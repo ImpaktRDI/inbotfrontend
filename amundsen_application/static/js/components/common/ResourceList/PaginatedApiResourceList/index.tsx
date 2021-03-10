@@ -9,6 +9,11 @@ import * as Constants from '../constants';
 
 import '../styles.scss';
 
+import FirstArrow from '../../../../../images/icons/first-arrow.svg';
+import PrevArrow from '../../../../../images/icons/prev-arrow.svg';
+import NextArrow from '../../../../../images/icons/next-arrow.svg';
+import LastArrow from '../../../../../images/icons/last-arrow.svg';
+
 export interface PaginatedApiResourceListProps {
   activePage: number;
   emptyText?: string;
@@ -32,7 +37,7 @@ class PaginatedApiResourceList extends React.Component<
 
     this.props.onPagination(activePage);
   };
-
+  
   render() {
     const {
       activePage,
@@ -58,16 +63,24 @@ class PaginatedApiResourceList extends React.Component<
                   <ResourceListItem item={item} logging={logging} key={idx} />
                 );
               })}
-            </ul>
-            {totalItemsCount > itemsPerPage && (
-              <Pagination
-                activePage={activePage + 1}
-                itemsCountPerPage={itemsPerPage}
-                totalItemsCount={totalItemsCount}
-                pageRangeDisplayed={Constants.PAGINATION_PAGE_RANGE}
-                onChange={this.onPagination}
-              />
-            )}
+            
+              </ul>
+              <div className="pagination-box">
+                {totalItemsCount > itemsPerPage && (
+                  <Pagination
+                    activePage={activePage + 1}
+                    itemsCountPerPage={itemsPerPage}
+                    totalItemsCount={totalItemsCount}
+                    pageRangeDisplayed={Constants.PAGINATION_PAGE_RANGE}
+                    onChange={this.onPagination}
+                    firstPageText={<img src={FirstArrow} alt="first page"></img>}
+                    prevPageText={<img src={PrevArrow} alt="previous page"></img>}
+                    nextPageText={<img src={NextArrow} alt="next page"></img>}
+                    lastPageText={<img src={LastArrow} alt="last page"></img>}
+                  />
+                )}
+              </div>
+            
           </>
         )}
       </div>
