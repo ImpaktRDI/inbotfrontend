@@ -10,49 +10,43 @@
   margin-right: auto;
   max-width: fit-content;
   background-color: white;
-}
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
-
-  li {
-    > a,
-    > span {
-      background-color: white;
-      border-color: white;
-      color: rgba(3,0,48,0.8);      /* $brand-color-4; */
-
-      &:focus,
-      &:hover {
-        background-color: white;
-        border:white;
-        z-index: 0;
-      }
-    }
-    &.disabled {
-      > a {
-      background-color: white;
-      border-color: white;
-      }
-    }
-
-    &.active {
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+    background-color: white;
+  
+    li {
       > a,
       > span {
-        &,
-        &:active,
-        &:hover,
-        &:focus {
+        color: rgba(3,0,48,0.8);      /* $brand-color-4; */
+        background-color: white;
+        border: none;
+        padding: 7px 13px;
+
+        &:focus,
+        &:hover {
           background-color: white;
-          border-color: white;
-          font-weight: bold;
-          text-decoration: underline;
-          color: rgba(3,0,48,0.8);
           z-index: 0;
         }
       }
+  
+      &.active {
+        > a,
+        > span {
+          &,
+          &:active,
+          &:hover,
+          &:focus {
+            background-color: white;
+            font-weight: bold;
+            text-decoration: underline;
+            color: rgba(3,0,48,0.8);
+            z-index: 0;
+          }
+        }
+      }
     }
-  }
+  }  
 }

@@ -36,7 +36,7 @@ class PersonListItem extends React.Component<PersonListItemProps, {}> {
               <div className="resource-info-text my-auto">
                 <div className="resource-name title-2">
                   <div className="truncated">
-                    {`${person.name}`}
+                    <span>{`${person.name}`}</span>
                   </div>
                 </div>
                 <div className="body-secondary-3 truncated">

@@ -46,7 +46,11 @@
 
       a {
         color:$inbot-font-color;
-        padding: 16px;
+        padding: 22px;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }
