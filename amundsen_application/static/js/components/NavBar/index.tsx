@@ -26,7 +26,7 @@ import SearchBar from 'components/common/SearchBar';
 import './styles.scss';
 
 import exit_icon from '../../../images/icons/exit-icon.svg';
-
+import burger from '../../../images/burger-menu.svg'
 import InbotNoIcon from '../../../images/inbot-transparent-white.svg';
 
 const PROFILE_LINK_TEXT = 'My Profile';
@@ -158,6 +158,48 @@ export class NavBar extends React.Component<NavBarProps> {
     )
   }
 
+  renderBurgerDropdown = (loggedInUser: LoggedInUser) => {
+    const signoutLink = '/logout';
+    // const userLink = `/user/${loggedInUser.user_id}?source=navbar`;
+
+    return (
+      <Dropdown id="user-dropdown" pullRight>
+        <Dropdown.Toggle
+          noCaret
+        >
+          <div className="burger-background">
+            <img src={burger}></img>
+          </div>
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="profile-menu">
+          <div className="logged-in-info">
+            <div className="logged-in-info-name">{loggedInUser.full_name}</div>
+            <div className="logged-in-info-email">{loggedInUser.email}</div>
+          </div>
+          {/* <MenuItem
+            componentClass={Link}
+            id="nav-bar-avatar-link"
+            to={userLink}
+            href={userLink}
+          >
+            {PROFILE_LINK_TEXT}
+          </MenuItem> */}
+          <MenuItem
+            componentClass={Link}
+            id="sign-out"
+            to={signoutLink}
+            href={signoutLink}
+          >
+            <img src={exit_icon} alt=""></img>
+            {SIGNOUT_LINK_TEXT}
+          </MenuItem>
+
+        </Dropdown.Menu>
+      </Dropdown>
+    )
+  }
+
+
   render() {
     const { loggedInUser } = this.props;
 
@@ -171,6 +213,12 @@ export class NavBar extends React.Component<NavBarProps> {
               {/* {this.generateNavLinks(getNavLinks())} */}
               <div className="nav-bar-text">{loggedInUser.full_name}</div>
               {this.renderDropdown(loggedInUser)}
+            </div>
+          </div>
+          <div className="nav-bar mobile-responsive">
+            {this.renderSearchBar()}
+            <div id="nav-bar-right" className="ml-auto nav-bar-right">
+              {this.renderBurgerDropdown(loggedInUser)}
             </div>
           </div>
         </div>

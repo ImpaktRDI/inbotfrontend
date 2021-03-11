@@ -35,3 +35,9 @@
     margin-top: $spacer-1;
   }
 }
+
+@media (max-width: $screen-sm-max) {
+  .search-control-panel {
+    display: none;
+  }
+}

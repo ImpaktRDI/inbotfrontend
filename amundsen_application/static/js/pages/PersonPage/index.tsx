@@ -70,8 +70,8 @@ function PersonPage({ match }): JSX.Element {
   const person_id = match.params.person_id
   const [personState, setPersonState] = useState({ person_details: initialPersonDetails, influence: initialInfluence } as PersonState)
   const [personBox, setPersonBox] = useState(<div>Loading person data...</div>)
-  const [influencedByBox, setInfluencedByBox] = useState(<div>Loading...</div>)
-  const [influencingToBox, setInfluencingToBox] = useState(<div>Loading...</div>)
+  const [influencedByBox, setInfluencedByBox] = useState(<div className="container_person"><h3 className="influence_header">Influenced by</h3><p className="not-available">Loading...</p></div>)
+  const [influencingToBox, setInfluencingToBox] = useState(<div className="container_person"><h3 className="influence_header">Influences</h3><p className="not-available">Loading...</p></div>)
 
   //fetch current person from backend by person_id (given by address parameter 'match.params.person_id')
   useEffect(() => {
@@ -102,7 +102,7 @@ function PersonPage({ match }): JSX.Element {
       </SearchPanel>
       <div className="page_column">
         { personBox }
-        <div className="page_row">
+        <div className="page_row influencers-mobile">
           { influencingToBox }
           { influencedByBox }
         </div>
